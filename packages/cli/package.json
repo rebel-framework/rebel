@@ -6,6 +6,9 @@
   "homepage": "https://rebeljs.com",
   "license": "MIT",
   "main": "src/cli.ts",
+  "bin": {
+    "rebel": "./dist/cli.js"
+  },
   "directories": {
     "lib": "lib",
     "test": "__tests__"
