@@ -1,0 +1,27 @@
+{
+  "name": "@rebel/cli",
+  "version": "0.0.0",
+  "description": "Rebel's CLI for rapid serverless full-stack web application development",
+  "author": "notu <notuart@pm.me>",
+  "homepage": "https://rebeljs.com",
+  "license": "MIT",
+  "main": "src/cli.ts",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rebeljs/rebel.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "node ./__tests__/cli.test.js"
+  },
+  "bugs": {
+    "url": "https://github.com/rebeljs/rebel/issues"
+  }
+}
