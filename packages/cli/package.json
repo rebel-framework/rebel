@@ -1,7 +1,6 @@
 {
   "name": "@rebel/cli",
   "version": "0.0.0",
-  "type": "module",
   "description": "Rebel's CLI for rapid serverless full-stack web application development",
   "author": "Ben Villiere <ben@rebeljs.com>",
   "homepage": "https://rebeljs.com",
@@ -19,12 +18,14 @@
   },
   "scripts": {
     "build": "tsc",
+    "watch": "tsc -w",
     "test": "jest"
   },
   "bugs": {
     "url": "https://github.com/rebeljs/rebel/issues"
   },
   "devDependencies": {
+    "@types/node": "^20.4.2",
     "typescript": "^5.1.6"
   }
 }

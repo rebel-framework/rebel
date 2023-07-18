@@ -19,3 +19,17 @@ yarn workspace @rebel/cli add -D typescript jest
 ```sh
 node packages/cli/dist/cli.js
 ```
+
+### Develop using `rebel`
+
+```sh
+cd packages/cli && npm link
+```
+
+You can now use `rebel`
+
+### Recompile typescript upon changes
+
+```sh
+npx lerna run watch
+```
