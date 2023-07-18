@@ -15,6 +15,15 @@ const templates: { [key in FileTypes]: (name: string) => string } = {
 };
 
 export const generate: Command = async (args: string[]) => {
+  // Check that we're in a project directory
+  const currentDir = process.cwd();
+  try {
+    await fs.access(join(currentDir, ".rebel"));
+  } catch (error) {
+    console.error("This command must be run in a Rebel project directory.");
+    process.exit(1);
+  }
+
   // Parse the args
   const type = args[0] as FileTypes;
   const file = args[1];

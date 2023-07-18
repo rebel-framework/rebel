@@ -21,6 +21,7 @@ composer.lock
 *.swo
 
 # Project Specific
+.rebel
 .yarn
 **/node_modules
 *.log

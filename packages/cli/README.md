@@ -1,4 +1,4 @@
-# `cli`
+# `rebel`
 
 > TODO: description
 
