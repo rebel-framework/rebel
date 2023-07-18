@@ -1,27 +1,36 @@
 #!/usr/bin/env node
-import * as install from "./commands/install";
-import * as generate from "./commands/generate";
+import { generate } from "./commands/generate";
+// import { build } from "./commands/build";
+// import { deploy } from "./commands/deploy";
+import { install } from "./commands/install";
+// import { init } from "./commands/init";
+// import { test } from "./commands/test";
 
-// Get all command line arguments except the first two (node executable and file path)
+interface CommandFunction {
+  (args: string[]): void;
+}
+
+// Map the commands to their corresponding functions
+const commandMap: { [key: string]: CommandFunction } = {
+  //   init: init,
+  install: install,
+  //   build: build,
+  //   test: test,
+  //   deploy: deploy,
+  generate: generate,
+};
+
 const args = process.argv.slice(2);
-
-// Get the command (the first argument)
 const command = args[0];
 
-// Get any options (all remaining arguments)
-const options = args.slice(1);
+// Remove the command from the arguments
+args.shift();
 
-console.log(args, command, options);
-
-// Use a switch statement to route the command to the appropriate function
-// switch (command) {
-//   case "install":
-//     install.run(options);
-//     break;
-//   case "generate":
-//     generate.run(options);
-//     break;
-//   default:
-//     console.error(`Unknown command: ${command}`);
-//     process.exit(1);
-// }
+if (command in commandMap) {
+  commandMap[command](args);
+} else {
+  console.log(`Unknown command: ${command}`);
+  console.log(
+    "Available commands: init, install, build, test, deploy, generate"
+  );
+}
