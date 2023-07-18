@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { ai } from "./commands/ai";
 import { generate } from "./commands/generate";
 // import { build } from "./commands/build";
 // import { deploy } from "./commands/deploy";
@@ -12,6 +13,7 @@ interface CommandFunction {
 
 // Map the commands to their corresponding functions
 const commandMap: { [key: string]: CommandFunction } = {
+  ai: ai,
   //   init: init,
   install: install,
   //   build: build,

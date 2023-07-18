@@ -4,8 +4,14 @@
 
 ## Usage
 
+```sh
+rebel install
 ```
-const cli = require('cli');
 
-// TODO: DEMONSTRATE API
+Creates the `.rebel` directory.
+
+```sh
+rebel generate filetype filename
 ```
+
+Generates a file name of file type

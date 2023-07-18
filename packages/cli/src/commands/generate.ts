@@ -8,6 +8,7 @@ enum FileTypes {
   // add more file types here
 }
 
+// TODO: Instead of an inline string, use actual template files
 const templates: { [key in FileTypes]: (name: string) => string } = {
   [FileTypes.Controller]: (name) => `export class ${name}Controller {}`,
   [FileTypes.Service]: (name) => `export class ${name}Service {}`,
