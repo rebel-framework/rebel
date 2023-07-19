@@ -8,6 +8,7 @@
     "lerna": "^7.1.4"
   },
   "scripts": {
-    "build": "lerna run build"
+    "build": "npx lerna run build",
+    "nuke": "rm -rf node_modules"
   }
 }

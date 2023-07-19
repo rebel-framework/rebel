@@ -33,6 +33,7 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
+    "@rebel/core": "^0.0.0",
     "openai": "^3.3.0"
   }
 }

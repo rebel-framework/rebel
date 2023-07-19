@@ -1,5 +1,7 @@
 import { Command } from "../types";
 
+import { pluralize } from "@rebel/core/dist/str";
+
 interface TemplateContext {
   [key: string]: any;
 }
@@ -105,13 +107,14 @@ function render(template: string, context: TemplateContext): string {
         throw new Error("Mismatched @while/@endwhile");
       }
 
-      const condition = context[whileToken.value];
+      //   const condition = context[whileToken.value];
 
-      if (condition) {
-        stack.push({ type: "WHILE" });
-      }
+      //   if (condition) {
+      //     stack.push({ type: "WHILE" });
+      //   }
     } else if (token.type === "FOR") {
-      const variable = pluralize(token.value);
+      //   const variable = pluralize(token.value);
+      const variable = token.value;
       const items = context[variable];
 
       console.log({ variable, items, context });
@@ -123,7 +126,7 @@ function render(template: string, context: TemplateContext): string {
         // Update the context with the loop item
         context[variable] = loopItem;
 
-        stack.push({ type: "FOR" });
+        // stack.push({ type: "FOR" });
       }
     } else if (token.type === "ENDFOR") {
       const forToken = stack.pop();
@@ -147,7 +150,7 @@ function render(template: string, context: TemplateContext): string {
         context[variable] = nextLoopItem;
 
         loopStack.push({ variable, index: index + 1, length });
-        stack.push({ type: "FOR" });
+        // stack.push({ type: "FOR" });
       }
     }
   }

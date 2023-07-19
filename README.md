@@ -33,3 +33,9 @@ You can now use `rebel`
 ```sh
 npx lerna run watch
 ```
+
+### Run a command against all packages at once
+
+```sh
+yarn lerna exec -- yarn link
+```
