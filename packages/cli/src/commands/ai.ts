@@ -1,4 +1,5 @@
 import { Command } from "../types";
+import { OpenAIApi } from "openai";
 
 export const ai: Command = (args: string[]) => {
   // Parse the args
@@ -46,10 +47,20 @@ export const ai: Command = (args: string[]) => {
   }
 };
 
-const handlePromptCommand = (args: string[]) => {
+// const openai = new OpenAIApi(process.env.OPENAI_API_KEY);
+
+const handlePromptCommand = async (args: string[]) => {
   const promptText = args[0];
-  // Call to AI code generation function with promptText as input
-  console.log(`Generating code for prompt: ${promptText}`);
+
+  // Call to OpenAI's GPT-3 model with the prompt text as input
+  //   const response = await openai.complete({
+  //     engine: "davinci-codex",
+  //     prompt: promptText,
+  //     temperature: 0.5, // Controls the randomness of the output. 0 makes it deterministic.
+  //     max_tokens: 100, // Controls the maximum length of the output.
+  //   });
+
+  //   console.log(`Generated code: ${response.choices[0].text}`);
 };
 
 const handleSuggestCommand = (args: string[]) => {
