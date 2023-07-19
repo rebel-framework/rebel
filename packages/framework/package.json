@@ -1,24 +1,20 @@
 {
-  "name": "@rebel/core",
+  "name": "@rebel/framework",
   "version": "0.0.0",
   "description": "> TODO: description",
-  "author": "notu <notuart@pm.me>",
+  "author": "Ben Villiere <ben@rebeljs.com>",
   "homepage": "https://github.com/rebeljs/rebel#readme",
   "license": "MIT",
   "main": "dist/index.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
   "files": [
-    "lib"
+    "src"
   ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rebeljs/rebel.git"
   },
   "scripts": {
-    "test": "node ./__tests__/core.test.js"
+    "test": "jest"
   },
   "bugs": {
     "url": "https://github.com/rebeljs/rebel/issues"
