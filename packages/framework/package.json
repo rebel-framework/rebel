@@ -14,6 +14,8 @@
     "url": "git+https://github.com/rebeljs/rebel.git"
   },
   "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
     "test": "jest"
   },
   "bugs": {
