@@ -1,8 +1,6 @@
 import { Command } from "../types";
-import { join } from "path";
 import { promises as fs } from "fs";
 import { exec } from "child_process";
-import { resolve } from "path";
 
 // OPPORTUNITY: Move this function to @rebel/core
 async function isDirectoryEmpty(dirPath: string): Promise<boolean> {
