@@ -1,44 +1,39 @@
 import { Command } from "../types";
 import { join } from "path";
 import { promises as fs } from "fs";
+import { exec } from "child_process";
+import { resolve } from "path";
+
+// OPPORTUNITY: Move this function to @rebel/core
+async function isDirectoryEmpty(dirPath: string): Promise<boolean> {
+  try {
+    const files = await fs.readdir(dirPath);
+    return files.length === 0;
+  } catch (error) {
+    // Handle error (directory doesn't exist, or there was a problem reading it)
+    return false;
+  }
+}
 
 export const install: Command = async (args: string[]) => {
   const currentDir = process.cwd();
-  const rebelDir = join(currentDir, ".rebel");
+  const isEmpty = await isDirectoryEmpty(currentDir);
 
-  console.log({ cwd: process.cwd() });
-
-  return;
-
-  try {
-    if (args.includes("--force")) {
-      await fs.rmdir(rebelDir);
-    }
-  } catch (error) {
-    console.warn("Rebel was not installed here before.");
+  if (!isEmpty) {
+    return console.warn(
+      "Cannot install Rebel because the current directory is not empty."
+    );
   }
 
+  // Clone the 'rebeljs/skeleton' repository
+  const gitCloneCommand = `git clone https://github.com/rebeljs/skeleton.git .`;
+
+  // Execute the git clone command
   try {
-    await fs.access(rebelDir);
-    console.log("Rebel is already installed.");
+    await exec(gitCloneCommand);
   } catch (error) {
-    // Create a .rebel directory if it doesn't already exist
-    await fs.mkdir(rebelDir);
-
-    const scaffoldDir = join(currentDir, "node_modules", "@rebel", "scaffold");
-    const files = await fs.readdir(scaffoldDir);
-
-    console.log(files);
-
-    return;
-
-    // Copy all files from @rebel/scaffold to .rebel
-    for (const file of files) {
-      const origin = join(scaffoldDir, file);
-      const destination = join(rebelDir, file);
-      await fs.copyFile(origin, destination);
-    }
-
-    console.log("Rebel was successfully installed.");
+    console.error("Error cloning repository:", error.message);
   }
+
+  console.log("Rebel was successfully installed.");
 };
