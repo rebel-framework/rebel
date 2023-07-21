@@ -25,12 +25,8 @@ export const install: Command = async (args: string[]) => {
     );
   }
 
-  // Clone the 'rebeljs/skeleton' repository
-  const gitCloneCommand = `git clone https://github.com/rebeljs/skeleton.git .`;
-
-  // Execute the git clone command
   try {
-    await exec(gitCloneCommand);
+    await exec(`npx degit https://github.com/rebeljs/skeleton.git`);
   } catch (error) {
     console.error("Error cloning repository:", error.message);
   }
