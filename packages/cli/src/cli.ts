@@ -3,7 +3,6 @@ import { ai } from "./commands/ai";
 import { generate } from "./commands/generate";
 // import { build } from "./commands/build";
 // import { deploy } from "./commands/deploy";
-import { ink } from "./commands/ink";
 import { install } from "./commands/install";
 // import { init } from "./commands/init";
 // import { test } from "./commands/test";
@@ -16,7 +15,6 @@ interface CommandFunction {
 const commandMap: { [key: string]: CommandFunction } = {
   ai: ai,
   //   init: init,
-  ink: ink,
   install: install,
   //   build: build,
   //   test: test,
