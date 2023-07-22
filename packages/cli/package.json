@@ -34,7 +34,6 @@
   },
   "dependencies": {
     "@rebel/core": "^0.0.0",
-    "@rebel/scaffold": "^0.0.0",
     "openai": "^3.3.0"
   }
 }

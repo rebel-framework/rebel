@@ -1,10 +1,10 @@
-import { Command } from "../types";
-import { join } from "path";
-import { promises as fs } from "fs";
+import { Command } from '@rebel/core';
+import { join } from 'path';
+import { promises as fs } from 'fs';
 
 enum FileTypes {
-  Controller = "controller",
-  Service = "service",
+  Controller = 'controller',
+  Service = 'service',
   // add more file types here
 }
 
@@ -19,9 +19,9 @@ export const generate: Command = async (args: string[]) => {
   // Check that we're in a project directory
   const currentDir = process.cwd();
   try {
-    await fs.access(join(currentDir, ".rebel"));
+    await fs.access(join(currentDir, '.rebel'));
   } catch (error) {
-    console.error("This command must be run in a Rebel project directory.");
+    console.error('This command must be run in a Rebel project directory.');
     process.exit(1);
   }
 
@@ -30,21 +30,21 @@ export const generate: Command = async (args: string[]) => {
   const file = args[1];
 
   if (!file) {
-    throw new Error("File name is missing");
+    throw new Error('File name is missing');
   }
 
   if (!Object.values(FileTypes).includes(type)) {
     throw new Error(
       `Invalid file type '${type}'. Valid file types are: ${Object.values(
         FileTypes
-      ).join(", ")}`
+      ).join(', ')}`
     );
   }
 
   // Define your directory structure here
   const directories: { [key in FileTypes]: string } = {
-    [FileTypes.Controller]: "./src/controllers",
-    [FileTypes.Service]: "./src/services",
+    [FileTypes.Controller]: './src/controllers',
+    [FileTypes.Service]: './src/services',
     // add more directories here
   };
 

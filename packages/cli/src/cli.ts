@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-import { ai } from "./commands/ai";
-import { generate } from "./commands/generate";
+import { ai } from './commands/ai';
+import { generate } from './commands/generate';
 // import { build } from "./commands/build";
 // import { deploy } from "./commands/deploy";
-import { install } from "./commands/install";
+import { install } from './commands/install';
 // import { init } from "./commands/init";
 // import { test } from "./commands/test";
 
@@ -33,6 +33,6 @@ if (command in commandMap) {
 } else {
   console.log(`Unknown command: ${command}`);
   console.log(
-    "Available commands: init, install, build, test, deploy, generate"
+    'Available commands: init, install, build, test, deploy, generate'
   );
 }

@@ -1,5 +1,5 @@
-import { Command } from "../types";
-import { OpenAIApi } from "openai";
+import { Command } from '@rebel/core';
+import { OpenAIApi } from 'openai';
 
 export const ai: Command = (args: string[]) => {
   // Parse the args
@@ -7,37 +7,37 @@ export const ai: Command = (args: string[]) => {
   const remainingArgs = args.slice(1);
 
   switch (subCommand) {
-    case "ask":
+    case 'ask':
       // Implementation of the 'ask' sub-command
       handlePromptCommand(remainingArgs);
       break;
 
-    case "refactor":
+    case 'refactor':
       // Implementation of the 'refactor' sub-command
       handlePromptCommand(remainingArgs);
       break;
 
-    case "test":
+    case 'test':
       // Implementation of the 'test' sub-command
       handlePromptCommand(remainingArgs);
       break;
 
-    case "analyze":
+    case 'analyze':
       // Implementation of the 'analyze' sub-command
       handlePromptCommand(remainingArgs);
       break;
 
-    case "doc":
+    case 'doc':
       // Implementation of the 'doc' sub-command
       handlePromptCommand(remainingArgs);
       break;
 
-    case "prompt":
+    case 'prompt':
       // Implementation of the 'prompt' sub-command
       handlePromptCommand(remainingArgs);
       break;
 
-    case "suggest":
+    case 'suggest':
       // Implementation of the 'suggest' sub-command
       handleSuggestCommand(remainingArgs);
       break;
@@ -65,5 +65,5 @@ const handlePromptCommand = async (args: string[]) => {
 
 const handleSuggestCommand = (args: string[]) => {
   // Call to AI code improvement function
-  console.log("Generating code suggestions...");
+  console.log('Generating code suggestions...');
 };

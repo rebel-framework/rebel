@@ -1,6 +1,6 @@
-import { Command } from "../types";
-import { promises as fs } from "fs";
-import { exec } from "child_process";
+import { Command } from '@rebel/core';
+import { promises as fs } from 'fs';
+import { exec } from 'child_process';
 
 // OPPORTUNITY: Move this function to @rebel/core
 async function isDirectoryEmpty(dirPath: string): Promise<boolean> {
@@ -19,15 +19,15 @@ export const install: Command = async (args: string[]) => {
 
   if (!isEmpty) {
     return console.warn(
-      "Cannot install Rebel because the current directory is not empty."
+      'Cannot install Rebel because the current directory is not empty.'
     );
   }
 
   try {
     await exec(`npx degit https://github.com/rebeljs/skeleton.git`);
   } catch (error) {
-    console.error("Error cloning repository:", error.message);
+    console.error('Error cloning repository:', error.message);
   }
 
-  console.log("Rebel was successfully installed.");
+  console.log('Rebel was successfully installed.');
 };
