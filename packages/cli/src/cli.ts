@@ -1,38 +1,53 @@
 #!/usr/bin/env node
-import { ai } from './commands/ai';
-import { generate } from './commands/generate';
-// import { build } from "./commands/build";
-// import { deploy } from "./commands/deploy";
-import { install } from './commands/install';
-// import { init } from "./commands/init";
-// import { test } from "./commands/test";
+
+import { wait } from '@rebel/core';
+import { promises as fs } from 'fs';
+import { join } from 'path';
 
 interface CommandFunction {
   (args: string[]): void;
 }
 
-// Map the commands to their corresponding functions
-const commandMap: { [key: string]: CommandFunction } = {
-  ai: ai,
-  //   init: init,
-  install: install,
-  //   build: build,
-  //   test: test,
-  //   deploy: deploy,
-  generate: generate,
+const commandMap: { [key: string]: CommandFunction } = {};
+
+const loadCommands = async () => {
+  const commandsDir = join(__dirname, 'commands');
+
+  try {
+    const files = await fs.readdir(commandsDir);
+
+    for (const file of files) {
+      const commandName = file.replace('.ts', '');
+      const commandModule = await import(`./commands/${file}`);
+      commandMap[commandName] = commandModule.default;
+    }
+  } catch (error) {
+    console.error('Error loading commands:', error);
+  }
 };
 
-const args = process.argv.slice(2);
-const command = args[0];
+const commands = wait(loadCommands);
+console.log(commands);
 
-// Remove the command from the arguments
-args.shift();
+const runCommand = async () => {
+  const args = process.argv.slice(2);
+  const command = args[0];
 
-if (command in commandMap) {
-  commandMap[command](args);
-} else {
-  console.log(`Unknown command: ${command}`);
-  console.log(
-    'Available commands: init, install, build, test, deploy, generate'
-  );
-}
+  // Remove the command from the arguments
+  args.shift();
+
+  if (!command || !(command in commandMap)) {
+    console.log('Unknown command:', command);
+    console.log('Available commands:', Object.keys(commandMap).join(', '));
+    return;
+  }
+
+  try {
+    await loadCommands();
+    commandMap[command](args);
+  } catch (error) {
+    console.error('Error running command:', error);
+  }
+};
+
+wait(runCommand);

@@ -5,9 +5,9 @@
   "author": "Ben Villiere <ben@rebeljs.com>",
   "homepage": "https://github.com/rebeljs/rebel#readme",
   "license": "MIT",
-  "main": "dist",
+  "main": "dist/index.js",
   "exports": {
-    "./*": "./dist/*"
+    ".": "./dist/index.js"
   },
   "files": [
     "src"
