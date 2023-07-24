@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+import fs from 'fs';
+import path from 'path';
 
 import { ai } from './commands/ai';
 import { generate } from './commands/generate';
@@ -20,6 +22,26 @@ const commandMap: { [key: string]: CommandFunction } = {
   //   deploy: deploy,
   generate: generate,
 };
+
+console.log({ __dirname });
+
+const directoryPath = path.join('.', './backend/commands');
+const commandFiles = fs.readdirSync(directoryPath);
+commandFiles.forEach((file) => {
+  const fullPath = path.join(directoryPath, file);
+
+  // Check if it's a file
+  if (fs.lstatSync(fullPath).isFile()) {
+    // Import or require the file
+    const module = require(fullPath);
+
+    console.log({ module });
+
+    // Use the module (call function, access properties, etc.)
+    // ...
+  }
+});
+console.log({ commandFiles });
 
 const args = process.argv.slice(2);
 const command = args[0];

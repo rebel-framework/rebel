@@ -29,5 +29,7 @@ export const install: Command = async (args: string[]) => {
     console.error('Error cloning repository:', error.message);
   }
 
+  // TODO: git init
+
   console.log('Rebel was successfully installed.');
 };
