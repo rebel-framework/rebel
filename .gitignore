@@ -25,13 +25,13 @@ composer.lock
 .yarn
 **/node_modules
 *.log
-/lib
+lib
+dist
+build
+bin
 tmp
 .changelog
 coverage/
 .nyc_output/
 .eslintcache
 .env
-
-dist
-build

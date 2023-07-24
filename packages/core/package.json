@@ -5,9 +5,10 @@
   "author": "Ben Villiere <ben@rebeljs.com>",
   "homepage": "https://github.com/rebeljs/rebel#readme",
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "bin/index.js",
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./bin/index.js",
+    "./flow": "./bin/flow/index.js"
   },
   "files": [
     "src"
@@ -17,8 +18,8 @@
     "url": "git+https://github.com/rebeljs/rebel.git"
   },
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc -w",
+    "build": "tsc && babel src --out-dir bin --extensions '.ts'",
+    "watch": "tsc && babel src --out-dir bin --extensions '.ts' --watch",
     "test": "jest"
   },
   "bugs": {

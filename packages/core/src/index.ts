@@ -1,2 +1,2 @@
 export type { Command } from './types';
-export { wait } from './flow';
+export { default as flow } from './flow';

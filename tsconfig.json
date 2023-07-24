@@ -1,7 +1,20 @@
 {
   "compilerOptions": {
+    // Generate declaration files (.d.ts) without emitting JavaScript files (.js)
     "declaration": true,
+    "emitDeclarationOnly": true,
+
+    // Allow the use of import = require() and export = module.exports in TypeScript files
+    // This enables compatibility with CommonJS modules and allows Babel to safely transpile the files
     "esModuleInterop": true,
-    "preserveConstEnums": true
+
+    // Preserve const enums in the generated TypeScript declaration files (.d.ts)
+    // Const enums are inlined during transpilation, and this option retains their values in .d.ts files
+    "preserveConstEnums": true,
+
+    // Set this option to true when using Babel to transpile TypeScript files
+    // This flag indicates that each file should be treated as a separate module,
+    // enabling Babel to handle TypeScript files without any additional type checking
+    "isolatedModules": true
   }
 }

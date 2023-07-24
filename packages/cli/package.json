@@ -5,9 +5,9 @@
   "author": "Ben Villiere <ben@rebeljs.com>",
   "homepage": "https://rebeljs.com",
   "license": "MIT",
-  "main": "dist/cli.js",
+  "main": "bin/index.js",
   "bin": {
-    "rebel": "./dist/cli.js"
+    "rebel": "./bin/index.js"
   },
   "files": [
     "src"
@@ -17,14 +17,18 @@
     "url": "git+https://github.com/rebeljs/rebel.git"
   },
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc -w",
+    "build": "tsc && babel src --out-dir bin --extensions '.ts'",
+    "watch": "tsc && babel src --out-dir bin --extensions '.ts' --watch",
     "test": "jest"
   },
   "bugs": {
     "url": "https://github.com/rebeljs/rebel/issues"
   },
   "devDependencies": {
+    "@babel/cli": "^7.22.9",
+    "@babel/core": "^7.22.9",
+    "@babel/preset-env": "^7.22.9",
+    "@babel/preset-typescript": "^7.22.5",
     "@jest/globals": "^29.6.1",
     "@types/jest": "^29.5.3",
     "@types/node": "^20.4.2",
