@@ -7,8 +7,7 @@
   "license": "MIT",
   "main": "bin/index.js",
   "exports": {
-    "./flow": "./bin/flow/index.js",
-    "./router": "./bin/router/index.js"
+    ".": "./bin/index.js"
   },
   "files": [
     "src"

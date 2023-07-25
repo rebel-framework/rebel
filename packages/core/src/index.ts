@@ -1,4 +1,4 @@
-export type { Command } from './types';
+export type { Command, Middleware, Route } from './types';
 export { HttpMethod } from './enums';
-export { default as flow } from './flow';
+export * as flow from './flow';
 export * as router from './router';
