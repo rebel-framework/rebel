@@ -1,6 +1,10 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "esModuleInterop": true,
+    "preserveConstEnums": true,
+    "isolatedModules": true,
     "outDir": "bin",
     "rootDir": "src"
   },
