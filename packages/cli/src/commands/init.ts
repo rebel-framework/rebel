@@ -13,9 +13,16 @@ async function isDirectoryEmpty(dirPath: string): Promise<boolean> {
   }
 }
 
-export const install: Command = async (args: string[]) => {
+const init: Command = async (args: string[]) => {
   const currentDir = process.cwd();
   const isEmpty = await isDirectoryEmpty(currentDir);
+  const [name] = args;
+
+  if (!name) {
+    return console.warn(`Missing argument 'name'`);
+  }
+
+  await exec(`mkdir ${name}`);
 
   if (!isEmpty) {
     return console.warn(
@@ -24,12 +31,15 @@ export const install: Command = async (args: string[]) => {
   }
 
   try {
-    await exec(`npx degit https://github.com/rebeljs/skeleton.git`);
+    await exec(`npx degit https://github.com/rebeljs/skeleton.git ${name}`);
   } catch (error) {
     console.error('Error cloning repository:', error.message);
   }
 
   // TODO: git init
+  // TODO: run npm install
 
   console.log('Rebel was successfully installed.');
 };
+
+export default init;
