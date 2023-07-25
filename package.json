@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build": "npx lerna run build",
-    "nuke": "rm -rf node_modules"
+    "nuke": "rm -rf node_modules",
+    "permission": "chmod +x packages/cli/bin/index.js"
   }
 }
