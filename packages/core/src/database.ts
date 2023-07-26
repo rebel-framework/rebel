@@ -1,8 +1,5 @@
-import {
-  DynamoDB,
-  GetItemCommandInput,
-  AttributeValue,
-} from '@aws-sdk/client-dynamodb';
+import { GetItemCommandInput, AttributeValue } from '@aws-sdk/client-dynamodb';
+import { createClient } from './database/client';
 
 type QueryCondition = {
   field: string;
@@ -11,7 +8,7 @@ type QueryCondition = {
 };
 
 export const createDatabase = (tableName: string) => {
-  const dynamo = new DynamoDB({ region: 'eu-west-1' });
+  const { client } = createClient();
 
   const key = (type: string, id: string | number) => `${type}#${id}`;
 
@@ -24,7 +21,7 @@ export const createDatabase = (tableName: string) => {
       },
     };
 
-    const { Item } = await dynamo.getItem(params);
+    const { Item } = await client.getItem(params);
     return Item;
   };
 
@@ -41,7 +38,7 @@ export const createDatabase = (tableName: string) => {
       },
     };
 
-    await dynamo.putItem(params);
+    await client.putItem(params);
   };
 
   const update = async <T>(
@@ -77,7 +74,7 @@ export const createDatabase = (tableName: string) => {
       ReturnValues: 'UPDATED_NEW', // Returns all of the attributes of the item, as they appear after the UpdateItem operation.
     };
 
-    await dynamo.updateItem(params);
+    await client.updateItem(params);
   };
 
   const softDelete = async (entityType: string, id: string | number) => {
@@ -94,7 +91,7 @@ export const createDatabase = (tableName: string) => {
       },
     };
 
-    await dynamo.updateItem(params);
+    await client.updateItem(params);
   };
 
   const del = async (entityType: string, id: string | number) => {
@@ -106,7 +103,7 @@ export const createDatabase = (tableName: string) => {
       },
     };
 
-    await dynamo.deleteItem(params);
+    await client.deleteItem(params);
   };
 
   const query = (entityType: string, id: string) => {
@@ -146,7 +143,7 @@ export const createDatabase = (tableName: string) => {
         // Add a condition to only return items that are not deleted.
         params.FilterExpression += ` AND attribute_not_exists(deletedAt)`;
 
-        return dynamo.query(params);
+        return client.query(params);
       },
     };
   };
