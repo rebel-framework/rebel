@@ -17,6 +17,24 @@ describe('Router', () => {
     });
   });
 
+  it('handles GET request with multi-segment dynamic route and correctly parses path parameters', async () => {
+    const router = createRouter();
+
+    const mockHandler = jest.fn();
+    router.get('/book/:genre/:bookId/:action', mockHandler);
+
+    await router.handleRequest({
+      path: '/book/science-fiction/42/read',
+      method: HttpMethod.GET,
+    });
+
+    expect(mockHandler).toBeCalledWith({
+      path: '/book/science-fiction/42/read',
+      method: HttpMethod.GET,
+      params: { genre: 'science-fiction', bookId: '42', action: 'read' },
+    });
+  });
+
   it('sets up POST route and handles request', async () => {
     const router = createRouter();
 
