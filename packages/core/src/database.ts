@@ -142,10 +142,14 @@ export const createDatabase = (tableName: string) => {
           }, {} as Record<string, string>),
         };
 
+        // TODO: Use config to add check?
+        // Add a condition to only return items that are not deleted.
+        params.FilterExpression += ` AND attribute_not_exists(deletedAt)`;
+
         return dynamo.query(params);
       },
     };
   };
 
-  return { find, save, update, delete: del, query };
+  return { find, save, update, softDelete, delete: del, query };
 };
