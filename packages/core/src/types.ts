@@ -6,7 +6,7 @@ export interface Command {
 
 export type Middleware = (
   request: any,
-  next: () => Promise<any>
+  next: (request: any) => Promise<any>
 ) => Promise<any>;
 
 export interface Route {

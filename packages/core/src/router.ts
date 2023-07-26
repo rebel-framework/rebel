@@ -81,9 +81,19 @@ export const createRouter = () => {
   ): void => route(HttpMethod.TRACE, path, handler, middleware);
 
   const handleRequest = async (request: any) => {
-    for (const route of routes) {
-      const match = request.path.match(route.path);
-      if (match && request.method === route.method) {
+    // First, find a route that matches the path
+    const matchingRoutes = routes.filter((route) =>
+      request.path.match(route.path)
+    );
+
+    if (matchingRoutes.length === 0) {
+      // No route matches the path
+      throw new Error('Not Found');
+    }
+
+    for (const route of matchingRoutes) {
+      if (request.method === route.method) {
+        const match = request.path.match(route.path);
         const params = match.slice(1).reduce((accum, val, index) => {
           accum[route.keys[index]] = val;
           return accum;
@@ -91,19 +101,19 @@ export const createRouter = () => {
 
         request.params = params;
 
+        let middlewareResponse;
         if (route.middleware) {
           for (const middleware of route.middleware) {
-            await middleware(request, async () => await route.handler(request));
+            middlewareResponse = await middleware(request, route.handler);
           }
         }
 
-        return await route.handler(request);
-      } else {
-        throw new Error('Method Not Allowed');
+        return middlewareResponse || (await route.handler(request));
       }
     }
 
-    throw new Error('Not Found');
+    // A route matches the path, but none match the method
+    throw new Error('Method Not Allowed');
   };
 
   return {
