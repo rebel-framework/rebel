@@ -10,8 +10,9 @@ export type Middleware = (
 ) => Promise<any>;
 
 export interface Route {
-  path: string;
+  path: RegExp;
   method: HttpMethod;
   handler: (request: any) => Promise<any>;
   middleware?: Middleware[];
+  keys: string[];
 }

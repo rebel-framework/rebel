@@ -19,7 +19,8 @@
   "scripts": {
     "build": "tsc && babel src --out-dir bin --extensions '.ts'",
     "watch": "tsc && babel src --out-dir bin --extensions '.ts' --watch",
-    "test": "jest"
+    "test": "jest",
+    "coverage": "jest --coverage"
   },
   "devDependencies": {
     "@babel/cli": "^7.22.9",
