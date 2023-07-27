@@ -117,6 +117,7 @@ export const useRouter = () => {
   };
 
   return {
+    routes,
     get,
     post,
     put,
