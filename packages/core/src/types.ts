@@ -4,6 +4,21 @@ export interface Command {
   (args: string[]): void;
 }
 
+export interface Manifest {
+  name: string;
+  domain: string;
+  environment: string;
+  debug: boolean;
+  aws: {
+    key: string;
+    secret: string;
+    region: string;
+  };
+  database: {
+    softDeletes: boolean;
+  };
+}
+
 export type Middleware = (
   request: any,
   next: (request: any) => Promise<any>

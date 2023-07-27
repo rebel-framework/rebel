@@ -1,9 +1,9 @@
 import { HttpMethod } from '../src/enums';
-import { createRouter } from '../src/router';
+import { useRouter } from '../src/router';
 
 describe('Router', () => {
   it('sets up GET route and handles request', async () => {
-    const router = createRouter();
+    const router = useRouter();
 
     const mockHandler = jest.fn();
     router.get('/test/:id', mockHandler);
@@ -18,7 +18,7 @@ describe('Router', () => {
   });
 
   it('handles GET request with multi-segment dynamic route and correctly parses path parameters', async () => {
-    const router = createRouter();
+    const router = useRouter();
 
     const mockHandler = jest.fn();
     router.get('/book/:genre/:bookId/:action', mockHandler);
@@ -36,7 +36,7 @@ describe('Router', () => {
   });
 
   it('sets up POST route and handles request', async () => {
-    const router = createRouter();
+    const router = useRouter();
 
     const mockHandler = jest.fn();
     router.post('/test/:id', mockHandler);
@@ -51,7 +51,7 @@ describe('Router', () => {
   });
   // PUT method
   it('should route a PUT request to the correct handler', async () => {
-    const router = createRouter();
+    const router = useRouter();
 
     router.put('/user/:id', async ({ params }) => {
       return { success: true, userId: params.id };
@@ -67,7 +67,7 @@ describe('Router', () => {
 
   // DELETE method
   it('should route a DELETE request to the correct handler', async () => {
-    const router = createRouter();
+    const router = useRouter();
 
     router.delete('/user/:id', async ({ params }) => {
       return { success: true, userId: params.id };
@@ -83,7 +83,7 @@ describe('Router', () => {
 
   // PATCH method
   it('should route a PATCH request to the correct handler', async () => {
-    const router = createRouter();
+    const router = useRouter();
 
     router.patch('/user/:id', async ({ params }) => {
       return { success: true, userId: params.id };
@@ -99,7 +99,7 @@ describe('Router', () => {
 
   // OPTIONS method
   it('should route an OPTIONS request to the correct handler', async () => {
-    const router = createRouter();
+    const router = useRouter();
 
     router.options('/user', async () => {
       return { success: true };
@@ -117,7 +117,7 @@ describe('Router', () => {
   //       handling for these methods may vary based on the use case. They're included here for completeness.
   // HEAD method
   it('should route a HEAD request to the correct handler', async () => {
-    const router = createRouter();
+    const router = useRouter();
 
     router.head('/user', async () => {
       return { success: true };
@@ -133,7 +133,7 @@ describe('Router', () => {
 
   // CONNECT method
   it('should route a CONNECT request to the correct handler', async () => {
-    const router = createRouter();
+    const router = useRouter();
 
     router.connect('/user', async () => {
       return { success: true };
@@ -149,7 +149,7 @@ describe('Router', () => {
 
   // TRACE method
   it('should route a TRACE request to the correct handler', async () => {
-    const router = createRouter();
+    const router = useRouter();
 
     router.trace('/user', async () => {
       return { success: true };
@@ -164,7 +164,7 @@ describe('Router', () => {
   });
 
   it('should throw "Method Not Allowed" when an incorrect method is used', async () => {
-    const router = createRouter();
+    const router = useRouter();
 
     router.get('/article/:id', async ({ id }) => ({ id }));
 
@@ -178,7 +178,7 @@ describe('Router', () => {
 
 describe('Middleware', () => {
   it('handles request with middleware', async () => {
-    const router = createRouter();
+    const router = useRouter();
 
     const mockHandler = jest.fn();
     const mockMiddleware = jest.fn((request, next) => next());
@@ -198,7 +198,7 @@ describe('Middleware', () => {
 
 describe('Errors', () => {
   it('throws error for unhandled route', async () => {
-    const router = createRouter();
+    const router = useRouter();
 
     await expect(
       router.handleRequest({ path: '/test/1', method: HttpMethod.GET })

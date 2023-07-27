@@ -1,6 +1,6 @@
 import { DynamoDB } from '@aws-sdk/client-dynamodb';
 
-export const createClient = () => {
+export const useClient = () => {
   const isTest = () => process.env.NODE_ENV === 'test';
 
   // TODO: Grab region from configuration

@@ -1,4 +1,4 @@
-import { createDatabase } from '../src/database';
+import { useDatabase } from '../src/database';
 import {
   DynamoDB,
   GetItemCommandInput,

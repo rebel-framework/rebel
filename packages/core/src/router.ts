@@ -11,7 +11,7 @@ export const parsePath = (path: string) => {
   return { pattern: new RegExp(`^${path}$`), keys };
 };
 
-export const createRouter = () => {
+export const useRouter = () => {
   // Initialize an empty state for the router.
   const routes: Route[] = [];
 

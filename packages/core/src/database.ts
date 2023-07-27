@@ -1,5 +1,5 @@
 import { GetItemCommandInput, AttributeValue } from '@aws-sdk/client-dynamodb';
-import { createClient } from './database/client';
+import { useClient } from './database/client';
 
 type QueryCondition = {
   field: string;
@@ -7,8 +7,8 @@ type QueryCondition = {
   value: any;
 };
 
-export const createDatabase = (tableName: string) => {
-  const { client } = createClient();
+export const useDatabase = (tableName: string) => {
+  const { client } = useClient();
 
   const key = (type: string, id: string | number) => `${type}#${id}`;
 
