@@ -17,6 +17,9 @@ export interface Manifest {
   database: {
     softDeletes: boolean;
   };
+  app?: {
+    [key: string]: any;
+  };
 }
 
 export type Middleware = (
