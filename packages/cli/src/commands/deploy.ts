@@ -1,4 +1,4 @@
-import { Command } from '@rebel/core';
+import { Command, useDeployer } from '@rebel/core';
 import path from 'path';
 import frontend from './deploy/frontend';
 import backend from './deploy/backend';
@@ -12,6 +12,10 @@ export default async <Command>(args: string[]) => {
     console.log('deploy frontend && backend');
     return;
   }
+
+  // deploy();
+
+  return;
 
   // npx aws-cdk
 

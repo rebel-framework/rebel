@@ -1,11 +1,47 @@
-import { Stack, StackProps, App } from 'aws-cdk-lib/core';
+import { App, Stack, StackProps, Duration } from 'aws-cdk-lib';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as apigateway from 'aws-cdk-lib/aws-apigateway';
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment';
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
+import * as sns from 'aws-cdk-lib/aws-sns';
+import * as subs from 'aws-cdk-lib/aws-sns-subscriptions';
+import * as sqs from 'aws-cdk-lib/aws-sqs';
 import { Construct } from 'constructs';
+
+export const useDeployer = (stackName: string, stackProps?: StackProps) => {
+  const app = new App();
+  const stack = new Stack(app, stackName, stackProps);
+
+  const deployQueue = (queueName: string, queueProps: sqs.QueueProps) => {
+    const queue = new sqs.Queue(stack, queueName, queueProps);
+    return queue;
+  };
+
+  const deployTopic = (topicName: string) => {
+    const topic = new sns.Topic(stack, topicName);
+    return topic;
+  };
+
+  const addSubscription = (topic: sns.Topic, queue: sqs.Queue) => {
+    topic.addSubscription(new subs.SqsSubscription(queue));
+  };
+
+  const deploy = () => {
+    const queue = deployQueue('CdkTemplateQueue', {
+      visibilityTimeout: Duration.seconds(300),
+    });
+
+    const topic = deployTopic('CdkTemplateTopic');
+
+    addSubscription(topic, queue);
+  };
+
+  return { deploy };
+};
+
+/**
 
 export const useDeployer = (
   stackName: string,
@@ -108,3 +144,4 @@ export const useDeployer = (
     deployFrontend,
   };
 };
+*/
