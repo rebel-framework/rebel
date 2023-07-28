@@ -13,6 +13,8 @@ export default async <Command>(args: string[]) => {
     return;
   }
 
+  // npx aws-cdk
+
   // Get the current working directory
   const currentDirectory = process.cwd();
 
