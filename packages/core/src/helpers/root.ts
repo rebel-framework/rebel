@@ -3,9 +3,9 @@ import * as path from 'path';
 
 let cachedRebelRoot;
 
-export const root = (suffix?: string): string => {
+export const root = (suffix?: string, dir = process.cwd()): string => {
   if (!cachedRebelRoot) {
-    let currentDir = process.cwd();
+    let currentDir = dir;
 
     while (!fs.existsSync(path.join(currentDir, '.rebel'))) {
       const parentDir = path.dirname(currentDir);
@@ -21,4 +21,8 @@ export const root = (suffix?: string): string => {
   }
 
   return suffix ? path.join(cachedRebelRoot, suffix) : cachedRebelRoot;
+};
+
+export const resetRootCache = (): void => {
+  cachedRebelRoot = undefined;
 };
