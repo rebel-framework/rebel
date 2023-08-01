@@ -1,3 +1,4 @@
+import { root } from '@rebel/core';
 import { spawn } from 'child_process';
 import path from 'path';
 
@@ -5,7 +6,14 @@ const deploy = (name: string) => {
   const executableFilePath = path.resolve(`${__dirname}/deploy/${name}.js`);
   const child = spawn(
     'npx',
-    ['aws-cdk', 'deploy', '--app', executableFilePath],
+    [
+      'aws-cdk',
+      'deploy',
+      '--app',
+      executableFilePath,
+      '--output',
+      root('.rebel/cdk'),
+    ],
     {
       stdio: 'inherit',
     }

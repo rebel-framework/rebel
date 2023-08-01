@@ -3,4 +3,6 @@ export { HttpMethod } from './enums';
 export { useDatabase } from './database';
 export { useDeployer } from './deployer';
 export { useRouter } from './router';
+export { useStack } from './stack';
 export { env } from './helpers/env';
+export { root } from './helpers/root';
