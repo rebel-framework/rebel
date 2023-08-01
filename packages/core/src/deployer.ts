@@ -14,28 +14,28 @@ export const useDeployer = (stackName: string, stackProps?: StackProps) => {
   const app = new App();
   const stack = new Stack(app, stackName, stackProps);
 
-  const deployQueue = (queueName: string, queueProps: sqs.QueueProps) => {
+  const createQueue = (queueName: string, queueProps: sqs.QueueProps) => {
     const queue = new sqs.Queue(stack, queueName, queueProps);
     return queue;
   };
 
-  const deployTopic = (topicName: string) => {
+  const createTopic = (topicName: string) => {
     const topic = new sns.Topic(stack, topicName);
     return topic;
   };
 
-  const addSubscription = (topic: sns.Topic, queue: sqs.Queue) => {
+  const createSubscription = (topic: sns.Topic, queue: sqs.Queue) => {
     topic.addSubscription(new subs.SqsSubscription(queue));
   };
 
   const deploy = () => {
-    const queue = deployQueue('CdkTemplateQueue', {
+    const queue = createQueue('CdkTemplateQueue', {
       visibilityTimeout: Duration.seconds(300),
     });
 
-    const topic = deployTopic('CdkTemplateTopic');
+    const topic = createTopic('CdkTemplateTopic');
 
-    addSubscription(topic, queue);
+    createSubscription(topic, queue);
   };
 
   return { deploy };

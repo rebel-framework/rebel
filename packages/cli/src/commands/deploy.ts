@@ -1,61 +1,43 @@
-import { Command, useDeployer } from '@rebel/core';
+import { spawn } from 'child_process';
 import path from 'path';
-import frontend from './deploy/frontend';
-import backend from './deploy/backend';
+
+const deploy = (name: string) => {
+  const executableFilePath = path.resolve(`${__dirname}/deploy/${name}.js`);
+  const child = spawn(
+    'npx',
+    ['aws-cdk', 'deploy', '--app', executableFilePath],
+    {
+      stdio: 'inherit',
+    }
+  );
+
+  child.on('exit', (code) => {
+    if (code !== 0) {
+      console.error(`CDK deployment failed with exit code ${code}`);
+    }
+  });
+};
 
 export default async <Command>(args: string[]) => {
+  console.log('Deploying backend');
+
   // Get the desired stack name
   const stack = args[0];
 
   if (stack === undefined) {
+    // Deploy both stacks? Should ask for confirmation first
     console.log('build frontend && backend');
     console.log('deploy frontend && backend');
-    return;
-  }
-
-  // deploy();
-
-  return;
-
-  // npx aws-cdk
-
-  // Get the current working directory
-  const currentDirectory = process.cwd();
-
-  // Optionally, you can resolve the absolute path if needed.
-  const absolutePath = path.resolve(currentDirectory);
-
-  // const fileToImportAsJavascript = `${absolutePath}/bin/backend/index.js`;
-  const routesFilePath = path.resolve(`${absolutePath}/bin/backend/routes.js`);
-
-  console.log('Current directory:', currentDirectory);
-  console.log('Absolute path:', absolutePath);
-  console.log('Routes path:', routesFilePath);
-
-  try {
-    const projectRoutesModule = require(routesFilePath);
-    const router = projectRoutesModule.default;
-
-    if (!router.routes) {
-      throw new Error(`No routes were found for this project.`);
-    }
-
-    console.log(router);
-  } catch (err) {
-    console.error('Error while importing/running the file:', err);
-  }
-
-  console.log('Current directory:', currentDirectory);
-  console.log('Absolute path:', absolutePath);
-
-  if (stack.match(/front/)) {
-    console.log({ frontend });
+    // deploy('frontend');
+    // deploy('backend');
+  } else if (stack.match(/front/)) {
     console.log('build frontend');
     console.log('deploy frontend');
+    // deploy('frontend');
   } else if (stack.match(/back/)) {
-    console.log({ backend });
-    console.log('build frontend');
-    console.log('deploy frontend');
+    console.log('build backend');
+    console.log('deploy backend');
+    deploy('backend');
   } else {
     console.log(`Did not recognize stack ${stack}`);
   }
