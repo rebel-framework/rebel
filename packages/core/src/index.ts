@@ -6,4 +6,5 @@ export { useManifest } from './manifest';
 export { useRouter } from './router';
 export { useStack } from './stack';
 export { env } from './helpers/env';
+export { include } from './helpers/include';
 export { root } from './helpers/root';

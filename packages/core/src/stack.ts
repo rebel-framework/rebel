@@ -1,4 +1,9 @@
-import { App, Stack, StackProps, Duration } from 'aws-cdk-lib';
+import {
+  App as CloudFormationApp,
+  Stack as CloudFormationStack,
+  StackProps as CloudFormationStackProps,
+  Duration,
+} from 'aws-cdk-lib';
 import * as AppConfig from 'aws-cdk-lib/aws-appconfig';
 import * as Lambda from 'aws-cdk-lib/aws-lambda';
 import * as ApiGateway from 'aws-cdk-lib/aws-apigateway';
@@ -20,9 +25,46 @@ import * as Targets from 'aws-cdk-lib/aws-events-targets';
 
 import { Construct } from 'constructs';
 
-export const useStack = (stackName: string, stackProps?: StackProps) => {
-  const app = new App();
-  const stack = new Stack(app, stackName, stackProps);
+export interface Stack {
+  appConfigApplication;
+  appConfigEnvironment;
+  appConfigConfigurationProfile;
+  appConfigDeploymentStrategy;
+  appConfigDeployment;
+  alarm;
+  deploy: () => void;
+  queue;
+  topic;
+  lambda;
+  subscription;
+  role;
+  attachPolicy;
+  logGroup;
+  table;
+  bucket;
+  bucketDeployment;
+  apiGateway;
+  resource;
+  method;
+  originAccessIdentity;
+  cloudFrontWebDistribution;
+  hostedZone;
+  userPool;
+  userPoolClient;
+  identityPool;
+  secret;
+  secretValue;
+  eventBus;
+  rule;
+  targetLambda;
+}
+
+export const useStack = (
+  stackName: string,
+  stackProps?: CloudFormationStackProps
+): Stack => {
+  const app = new CloudFormationApp();
+  const stack = new CloudFormationStack(app, stackName, stackProps);
 
   const appConfigApplication = (
     appName: string,

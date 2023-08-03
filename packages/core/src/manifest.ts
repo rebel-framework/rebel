@@ -1,7 +1,7 @@
-import { root } from './helpers/root';
+import { include } from './helpers/include';
 import { Manifest } from './types';
 
 export const useManifest = (): Manifest => {
-  const { default: manifest } = require(root('bin/manifest'));
+  const { default: manifest } = include('manifest');
   return manifest;
 };

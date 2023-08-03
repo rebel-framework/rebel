@@ -22,6 +22,11 @@ export interface Manifest {
   };
 }
 
+export interface Module {
+  default: any;
+  [key: string]: any;
+}
+
 export type Middleware = (
   request: any,
   next: (request: any) => Promise<any>

@@ -1,6 +1,15 @@
 #!/usr/bin/env node
-import { useStack } from '@rebel/core';
+import { root, useStack } from '@rebel/core';
 
-const backend = useStack('Lads');
+// TODO:
+// - Load stack from project
+// - Deploy stack
+// - Make command to destroy stack
+// - Investigate how to revert
 
-backend.deploy();
+const from = (path): NodeRequire => require(root(`bin/${path}`));
+
+const stack = from('stack');
+// const backend = useStack('Lads');
+
+// backend.deploy();
