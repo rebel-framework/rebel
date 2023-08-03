@@ -1,34 +1,53 @@
 import { App, Stack, StackProps, Duration } from 'aws-cdk-lib';
+import * as AppConfig from 'aws-cdk-lib/aws-appconfig';
 import * as Lambda from 'aws-cdk-lib/aws-lambda';
 import * as ApiGateway from 'aws-cdk-lib/aws-apigateway';
 import * as DynamoDB from 'aws-cdk-lib/aws-dynamodb';
 import * as S3 from 'aws-cdk-lib/aws-s3';
 import * as S3Deployment from 'aws-cdk-lib/aws-s3-deployment';
 import * as CloudFront from 'aws-cdk-lib/aws-cloudfront';
+import * as CloudWatch from 'aws-cdk-lib/aws-cloudwatch';
+import * as Cognito from 'aws-cdk-lib/aws-cognito';
 import * as SNS from 'aws-cdk-lib/aws-sns';
 import * as Subs from 'aws-cdk-lib/aws-sns-subscriptions';
 import * as SQS from 'aws-cdk-lib/aws-sqs';
 import * as IAM from 'aws-cdk-lib/aws-iam';
 import * as Logs from 'aws-cdk-lib/aws-logs';
 import * as Route53 from 'aws-cdk-lib/aws-route53';
+import * as SecretsManager from 'aws-cdk-lib/aws-secretsmanager';
+import * as Events from 'aws-cdk-lib/aws-events';
+import * as Targets from 'aws-cdk-lib/aws-events-targets';
 
 import { Construct } from 'constructs';
-
-// const app = () => {
-//   // Get the current working directory
-//   const currentDirectory = process.cwd();
-
-//   // Optionally, you can resolve the absolute path if needed.
-//   const absolutePath = path.resolve(currentDirectory);
-
-//   // const fileToImportAsJavascript = `${absolutePath}/bin/backend/index.js`;
-//   const commandFilePath = path.resolve(`${absolutePath}/bin/backend/commands`);
-//   `${commandFilePath}.rebel/cdk/out`;
-// };
 
 export const useStack = (stackName: string, stackProps?: StackProps) => {
   const app = new App();
   const stack = new Stack(app, stackName, stackProps);
+
+  const appConfigApplication = (
+    appName: string,
+    appProps?: AppConfig.CfnApplicationProps
+  ) => new AppConfig.CfnApplication(stack, appName, appProps);
+
+  const appConfigEnvironment = (
+    envName: string,
+    envProps?: AppConfig.CfnEnvironmentProps
+  ) => new AppConfig.CfnEnvironment(stack, envName, envProps);
+
+  const appConfigConfigurationProfile = (
+    profileName: string,
+    profileProps?: AppConfig.CfnConfigurationProfileProps
+  ) => new AppConfig.CfnConfigurationProfile(stack, profileName, profileProps);
+
+  const appConfigDeploymentStrategy = (
+    strategyName: string,
+    strategyProps?: AppConfig.CfnDeploymentStrategyProps
+  ) => new AppConfig.CfnDeploymentStrategy(stack, strategyName, strategyProps);
+
+  const appConfigDeployment = (
+    deploymentName: string,
+    deploymentProps?: AppConfig.CfnDeploymentProps
+  ) => new AppConfig.CfnDeployment(stack, deploymentName, deploymentProps);
 
   const queue = (queueName: string, queueProps: SQS.QueueProps) =>
     new SQS.Queue(stack, queueName, queueProps);
@@ -44,8 +63,19 @@ export const useStack = (stackName: string, stackProps?: StackProps) => {
   const role = (roleName: string, roleProps: IAM.RoleProps) =>
     new IAM.Role(stack, roleName, roleProps);
 
+  const attachPolicy = (role: IAM.IRole, policyArn: string) =>
+    role.addManagedPolicy(
+      IAM.ManagedPolicy.fromAwsManagedPolicyName(policyArn)
+    );
+
   const logGroup = (logGroupName: string, logGroupProps: Logs.LogGroupProps) =>
     new Logs.LogGroup(stack, logGroupName, logGroupProps);
+
+  const alarm = (
+    alarmName: string,
+    metric: CloudWatch.Metric,
+    alarmProps: CloudWatch.AlarmProps
+  ) => new CloudWatch.Alarm(stack, alarmName, { metric, ...alarmProps });
 
   const table = (tableName: string, tableProps: DynamoDB.TableProps) =>
     new DynamoDB.Table(stack, tableName, tableProps);
@@ -98,17 +128,65 @@ export const useStack = (stackName: string, stackProps?: StackProps) => {
     hostedZoneProps?: Route53.HostedZoneProps
   ) => new Route53.HostedZone(stack, zoneName, hostedZoneProps);
 
+  const userPool = (
+    userPoolName: string,
+    userPoolProps: Cognito.UserPoolProps = {}
+  ) => new Cognito.UserPool(stack, userPoolName, userPoolProps);
+
+  const userPoolClient = (
+    clientName: string,
+    userPool: Cognito.UserPool,
+    clientProps: Cognito.UserPoolClientProps
+  ) =>
+    new Cognito.UserPoolClient(stack, clientName, {
+      userPool,
+      ...clientProps,
+    });
+
+  const identityPool = (
+    identityPoolName: string,
+    identityPoolProps: Cognito.CfnIdentityPoolProps
+  ) => new Cognito.CfnIdentityPool(stack, identityPoolName, identityPoolProps);
+
+  const secret = (
+    secretName: string,
+    secretProps?: SecretsManager.SecretProps
+  ) => new SecretsManager.Secret(stack, secretName, secretProps);
+
+  const secretValue = (
+    secret: SecretsManager.ISecret,
+    versionStage: string = 'AWSCURRENT'
+  ) => secret.secretValueFromJson(versionStage);
+
+  const eventBus = (
+    eventBusName: string,
+    eventBusProps?: Events.EventBusProps
+  ) => new Events.EventBus(stack, eventBusName, eventBusProps);
+
+  const rule = (ruleName: string, ruleProps: Events.RuleProps) =>
+    new Events.Rule(stack, ruleName, ruleProps);
+
+  const targetLambda = (lambdaFunction: Lambda.Function) =>
+    new Targets.LambdaFunction(lambdaFunction);
+
   const deploy = () => {
-    // app.synth();
+    app.synth();
   };
 
   return {
+    appConfigApplication,
+    appConfigEnvironment,
+    appConfigConfigurationProfile,
+    appConfigDeploymentStrategy,
+    appConfigDeployment,
+    alarm,
     deploy,
     queue,
     topic,
     lambda,
     subscription,
     role,
+    attachPolicy,
     logGroup,
     table,
     bucket,
@@ -119,5 +197,13 @@ export const useStack = (stackName: string, stackProps?: StackProps) => {
     originAccessIdentity,
     cloudFrontWebDistribution,
     hostedZone,
+    userPool,
+    userPoolClient,
+    identityPool,
+    secret,
+    secretValue,
+    eventBus,
+    rule,
+    targetLambda,
   };
 };
