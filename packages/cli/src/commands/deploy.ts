@@ -2,18 +2,12 @@ import { root } from '@rebel/core';
 import { spawn } from 'child_process';
 import path from 'path';
 
-const deploy = (name: string) => {
-  const executableFilePath = path.resolve(`${__dirname}/deploy/${name}.js`);
+export default async <Command>(args: string[]) => {
+  const app = path.resolve(`${__dirname}/deploy/stack.js`);
+
   const child = spawn(
     'npx',
-    [
-      'aws-cdk',
-      'deploy',
-      '--app',
-      executableFilePath,
-      '--output',
-      root('.rebel/cdk'),
-    ],
+    ['aws-cdk', 'deploy', '--app', app, '--output', root('.rebel/cdk')],
     {
       stdio: 'inherit',
     }
@@ -24,29 +18,4 @@ const deploy = (name: string) => {
       console.error(`CDK deployment failed with exit code ${code}`);
     }
   });
-};
-
-export default async <Command>(args: string[]) => {
-  console.log('Deploying backend');
-
-  // Get the desired stack name
-  const stack = args[0];
-
-  if (stack === undefined) {
-    // Deploy both stacks? Should ask for confirmation first
-    console.log('build frontend && backend');
-    console.log('deploy frontend && backend');
-    // deploy('frontend');
-    // deploy('backend');
-  } else if (stack.match(/front/)) {
-    console.log('build frontend');
-    console.log('deploy frontend');
-    // deploy('frontend');
-  } else if (stack.match(/back/)) {
-    console.log('build backend');
-    console.log('deploy backend');
-    deploy('backend');
-  } else {
-    console.log(`Did not recognize stack ${stack}`);
-  }
 };
