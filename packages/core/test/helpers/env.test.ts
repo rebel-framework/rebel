@@ -1,6 +1,6 @@
 import { env } from '../../src/helpers/env';
 
-describe('env helper function', () => {
+describe('env', () => {
   beforeEach(() => {
     jest.resetModules();
     process.env = {};
