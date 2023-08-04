@@ -11,19 +11,21 @@ export const parsePath = (path: string) => {
   return { pattern: new RegExp(`^${path}$`), keys };
 };
 
-export interface Router {
-  routes: Route[];
-  get: () => void;
-  post: () => void;
-  put: () => void;
-  patch: () => void;
-  del: () => void;
-  head: () => void;
-  options: () => void;
-  connect: () => void;
-  trace: () => void;
-  handleRequest: () => any;
-}
+// export interface Router {
+//   routes: Route[];
+//   get: () => void;
+//   post: () => void;
+//   put: () => void;
+//   patch: () => void;
+//   del: () => void;
+//   head: () => void;
+//   options: () => void;
+//   connect: () => void;
+//   trace: () => void;
+//   handleRequest: () => any;
+// }
+
+export type Router = any;
 
 export const useRouter = (): Router => {
   // Initialize an empty state for the router.

@@ -3,11 +3,17 @@ import { spawn } from 'child_process';
 import path from 'path';
 
 export default async <Command>(args: string[]) => {
+  // TODO:
+  // - Get current aws-cdk-lib version from package.json
+  // - Use that version in command
+
+  const cdk = 'aws-cdk@^2.89.0';
   const app = path.resolve(`${__dirname}/deploy/stack.js`);
+  const output = root('.rebel/cdk');
 
   const child = spawn(
     'npx',
-    ['aws-cdk', 'deploy', '--app', app, '--output', root('.rebel/cdk')],
+    [cdk, 'deploy', '--app', app, '--output', output],
     {
       stdio: 'inherit',
     }
