@@ -1,4 +1,4 @@
-import { env } from '../../src/helpers/env';
+import { env } from '../src/env';
 
 describe('env', () => {
   beforeEach(() => {

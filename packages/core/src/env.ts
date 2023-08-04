@@ -1,30 +1,14 @@
 import { root } from './helpers/root';
 
-let hasRegisteredEnvironmentVariables = false;
-
 export function registerEnvironmentVariables() {
-  // Only run this once
-  if (hasRegisteredEnvironmentVariables) {
-    return;
-  }
-
   // File path from the project root
   const envFilePath = root('.env');
 
   // Load env file using dotenv
   require('dotenv').config(envFilePath);
-
-  // Ensure we won't do this twice
-  hasRegisteredEnvironmentVariables = true;
 }
 
 export function env<T>(key: string, defaultValue?: T): T {
-  if (!hasRegisteredEnvironmentVariables) {
-    console.warn(
-      'Rebel: Trying to access env variable before .env file was loaded'
-    );
-  }
-
   const value = process.env[key];
 
   if (value === undefined) {
