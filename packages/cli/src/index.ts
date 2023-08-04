@@ -1,8 +1,11 @@
 #!/usr/bin/env node
 
+import { registerEnvironmentVariables } from '@rebel/core';
 import * as commands from './commands';
 
-const main = async () => {
+registerEnvironmentVariables();
+
+async function main() {
   const args = process.argv.slice(2);
   const command = args[0];
 
@@ -17,6 +20,6 @@ const main = async () => {
   } else {
     await commands[command](args);
   }
-};
+}
 
 main();

@@ -4,7 +4,7 @@ export interface Command {
   (args: string[]): void;
 }
 
-export interface Manifest {
+export interface Config {
   name: string;
   domain: string;
   environment: string;
