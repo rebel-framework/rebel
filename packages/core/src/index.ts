@@ -6,7 +6,14 @@ export { registerEnvironmentVariables, env } from './env';
 export { useConfig } from './config';
 export { useDatabase } from './database';
 export { useDeployer } from './deployer';
-export type { Handler, Middleware, Request, Route, Router } from './router';
+export type {
+  Context,
+  Handler,
+  Middleware,
+  Request,
+  Route,
+  Router,
+} from './router';
 export { useRouter } from './router';
 export { useStack } from './stack';
 export type { Stack } from './stack';

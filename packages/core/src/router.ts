@@ -9,15 +9,17 @@ export type Request = {
   [key: string]: any;
 };
 
+export type Context = any;
+
 export type RequestParams = {
   [key: string]: any;
 };
 
-export type Handler = (request: Request, context: any) => Promise<any>;
+export type Handler = (request: Request, context: Context) => Promise<any>;
 
 export type Middleware = (
   request: Request,
-  context: any,
+  context: Context,
   next: Handler
 ) => Promise<any>;
 
@@ -114,7 +116,7 @@ export function useRouter(): Router {
     middleware?: Middleware[]
   ): void => route(HttpMethod.TRACE, path, handler, middleware);
 
-  const handle = async (request: Request, context: any) => {
+  const handle = async (request: Request, context: Context) => {
     // First, find a route that matches the path
     const matchingRoutes = routes.filter((route) =>
       request.path.match(route.path)
