@@ -2,6 +2,13 @@ import { Command } from '@rebel/core';
 import { join } from 'path';
 import { promises as fs } from 'fs';
 
+// TODO:
+// This needs to be fleshed out, it won't work as of now.
+// Tried to work on it too early, before I even knew how
+// a project would loook like... This will be revisited
+// when we have a working proof of concept app and its
+// battle tested.
+
 enum FileTypes {
   Controller = 'controller',
   Service = 'service',
@@ -15,7 +22,7 @@ const templates: { [key in FileTypes]: (name: string) => string } = {
   // add more templates here
 };
 
-export const generate: Command = async (args: string[]) => {
+export default async function generate(args: string[]) {
   // Check that we're in a project directory
   const currentDir = process.cwd();
   try {
@@ -61,4 +68,4 @@ export const generate: Command = async (args: string[]) => {
   } catch (error) {
     console.error(`Error creating ${type} ${file}:`, error);
   }
-};
+}

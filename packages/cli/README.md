@@ -5,7 +5,7 @@
 ## Usage
 
 ```sh
-rebel install
+rebel init project-name
 ```
 
 Creates the `.rebel` directory.

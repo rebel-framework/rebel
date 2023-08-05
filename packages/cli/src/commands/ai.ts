@@ -1,7 +1,7 @@
 import { Command } from '@rebel/core';
 import { OpenAIApi } from 'openai';
 
-export const ai: Command = (args: string[]) => {
+export default async function ai(args: string[]) {
   // Parse the args
   const subCommand = args[0];
   const remainingArgs = args.slice(1);
@@ -45,7 +45,7 @@ export const ai: Command = (args: string[]) => {
     default:
       throw new Error(`Unknown sub-command: ${subCommand}`);
   }
-};
+}
 
 // const openai = new OpenAIApi(process.env.OPENAI_API_KEY);
 

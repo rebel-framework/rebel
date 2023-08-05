@@ -1,6 +1,6 @@
 import path from 'path';
 
-export default async <Command>(args: string[]) => {
+export default async function run(args: string[]) {
   // Get the desired command name
   const commandName = args[0];
 
@@ -32,4 +32,4 @@ export default async <Command>(args: string[]) => {
   } catch (err) {
     console.error('Error while importing/running the file:', err);
   }
-};
+}

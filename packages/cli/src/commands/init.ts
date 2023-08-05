@@ -1,7 +1,6 @@
-import { Command } from '@rebel/core';
 import { exec } from 'child_process';
 
-const init: Command = async (args: string[]) => {
+export default async function init(args: string[]) {
   const [directory] = args;
 
   const commands = [
@@ -16,6 +15,4 @@ const init: Command = async (args: string[]) => {
   }
 
   console.log('Rebel was successfully installed.');
-};
-
-export default init;
+}

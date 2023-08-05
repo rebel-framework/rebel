@@ -2,7 +2,7 @@ import { root } from '@rebel/core';
 import { spawn } from 'child_process';
 import path from 'path';
 
-export default async <Command>(args: string[]) => {
+export default async function deploy<Command>(args: string[]) {
   // TODO:
   // - Get current aws-cdk-lib version from package.json
   // - Use that version in command
@@ -24,4 +24,4 @@ export default async <Command>(args: string[]) => {
       console.error(`CDK deployment failed with exit code ${code}`);
     }
   });
-};
+}
