@@ -1,12 +1,12 @@
 export { include } from './helpers/include';
 export { root } from './helpers/root';
-export type { Command, Config, Middleware, Route } from './types';
+export type { Command, Config } from './types';
 export { HttpMethod } from './enums';
 export { registerEnvironmentVariables, env } from './env';
 export { useConfig } from './config';
 export { useDatabase } from './database';
 export { useDeployer } from './deployer';
-export type { Router } from './router';
+export type { Handler, Middleware, Request, Route, Router } from './router';
 export { useRouter } from './router';
 export { useStack } from './stack';
 export type { Stack } from './stack';

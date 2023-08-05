@@ -22,6 +22,7 @@ import * as Route53 from 'aws-cdk-lib/aws-route53';
 import * as SecretsManager from 'aws-cdk-lib/aws-secretsmanager';
 import * as Events from 'aws-cdk-lib/aws-events';
 import * as Targets from 'aws-cdk-lib/aws-events-targets';
+import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 
 import { Construct } from 'constructs';
 
@@ -57,6 +58,7 @@ export interface Stack {
   eventBus;
   rule;
   targetLambda;
+  handler;
 }
 
 export const useStack = (
@@ -98,6 +100,9 @@ export const useStack = (
 
   const lambda = (lambdaName: string, lambdaProps: Lambda.FunctionProps) =>
     new Lambda.Function(stack, lambdaName, lambdaProps);
+
+  const handler = (name: string, props: Lambda.FunctionProps) =>
+    new NodejsFunction(stack, name, props);
 
   const subscription = (topic: SNS.Topic, queue: SQS.Queue) =>
     topic.addSubscription(new Subs.SqsSubscription(queue));
@@ -247,5 +252,6 @@ export const useStack = (
     eventBus,
     rule,
     targetLambda,
+    handler,
   };
 };

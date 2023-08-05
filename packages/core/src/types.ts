@@ -26,16 +26,3 @@ export interface Module {
   default: any;
   [key: string]: any;
 }
-
-export type Middleware = (
-  request: any,
-  next: (request: any) => Promise<any>
-) => Promise<any>;
-
-export interface Route {
-  path: RegExp;
-  method: HttpMethod;
-  handler: (request: any) => Promise<any>;
-  middleware?: Middleware[];
-  keys: string[];
-}

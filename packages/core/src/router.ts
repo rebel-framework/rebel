@@ -1,102 +1,120 @@
 import { HttpMethod } from './enums';
-import { Route, Middleware } from './types';
+
+export type Router = any;
+
+export type Request = {
+  path: string;
+  httpMethod: HttpMethod;
+  params?: RequestParams;
+  [key: string]: any;
+};
+
+export type RequestParams = {
+  [key: string]: any;
+};
+
+export type Handler = (request: Request, context: any) => Promise<any>;
+
+export type Middleware = (
+  request: Request,
+  context: any,
+  next: Handler
+) => Promise<any>;
+
+export interface Route {
+  path: RegExp;
+  httpMethod: HttpMethod;
+  handler: Handler;
+  middleware?: Middleware[];
+  keys: string[];
+}
 
 // Helper function to transform the path string into a RegExp and extract parameter names
-export const parsePath = (path: string) => {
+export function parsePath(path: string) {
   const keys: string[] = [];
   path = path.replace(/:([^\s/]+)/g, (_, key) => {
     keys.push(key);
     return '([\\w-]+)';
   });
   return { pattern: new RegExp(`^${path}$`), keys };
-};
+}
 
-// export interface Router {
-//   routes: Route[];
-//   get: () => void;
-//   post: () => void;
-//   put: () => void;
-//   patch: () => void;
-//   del: () => void;
-//   head: () => void;
-//   options: () => void;
-//   connect: () => void;
-//   trace: () => void;
-//   handleRequest: () => any;
-// }
-
-export type Router = any;
-
-export const useRouter = (): Router => {
+export function useRouter(): Router {
   // Initialize an empty state for the router.
   const routes: Route[] = [];
 
   const route = (
-    method: HttpMethod,
+    httpMethod: HttpMethod,
     path: string,
-    handler: (request: any) => Promise<any>,
+    handler: Handler,
     middleware?: Middleware[]
   ): void => {
     const { pattern, keys } = parsePath(path);
-    const route: Route = { method, path: pattern, handler, middleware, keys };
+    const route: Route = {
+      httpMethod,
+      path: pattern,
+      handler,
+      middleware,
+      keys,
+    };
     routes.push(route);
   };
 
   const get = (
     path: string,
-    handler: (request: any) => Promise<any>,
+    handler: Handler,
     middleware?: Middleware[]
   ): void => route(HttpMethod.GET, path, handler, middleware);
 
   const post = (
     path: string,
-    handler: (request: any) => Promise<any>,
+    handler: Handler,
     middleware?: Middleware[]
   ): void => route(HttpMethod.POST, path, handler, middleware);
 
   const put = (
     path: string,
-    handler: (request: any) => Promise<any>,
+    handler: Handler,
     middleware?: Middleware[]
   ): void => route(HttpMethod.PUT, path, handler, middleware);
 
   const patch = (
     path: string,
-    handler: (request: any) => Promise<any>,
+    handler: Handler,
     middleware?: Middleware[]
   ): void => route(HttpMethod.PATCH, path, handler, middleware);
 
   const del = (
     path: string,
-    handler: (request: any) => Promise<any>,
+    handler: Handler,
     middleware?: Middleware[]
   ): void => route(HttpMethod.DELETE, path, handler, middleware);
 
   const head = (
     path: string,
-    handler: (request: any) => Promise<any>,
+    handler: Handler,
     middleware?: Middleware[]
   ): void => route(HttpMethod.HEAD, path, handler, middleware);
 
   const options = (
     path: string,
-    handler: (request: any) => Promise<any>,
+    handler: Handler,
     middleware?: Middleware[]
   ): void => route(HttpMethod.OPTIONS, path, handler, middleware);
 
   const connect = (
     path: string,
-    handler: (request: any) => Promise<any>,
+    handler: Handler,
     middleware?: Middleware[]
   ): void => route(HttpMethod.CONNECT, path, handler, middleware);
 
   const trace = (
     path: string,
-    handler: (request: any) => Promise<any>,
+    handler: Handler,
     middleware?: Middleware[]
   ): void => route(HttpMethod.TRACE, path, handler, middleware);
 
-  const handleRequest = async (request: any) => {
+  const handle = async (request: Request, context: any) => {
     // First, find a route that matches the path
     const matchingRoutes = routes.filter((route) =>
       request.path.match(route.path)
@@ -108,7 +126,7 @@ export const useRouter = (): Router => {
     }
 
     for (const route of matchingRoutes) {
-      if (request.method === route.method) {
+      if (request.httpMethod === route.httpMethod) {
         const match = request.path.match(route.path);
         const params = match.slice(1).reduce((accum, val, index) => {
           accum[route.keys[index]] = val;
@@ -118,13 +136,18 @@ export const useRouter = (): Router => {
         request.params = params;
 
         let middlewareResponse;
+
         if (route.middleware) {
           for (const middleware of route.middleware) {
-            middlewareResponse = await middleware(request, route.handler);
+            middlewareResponse = await middleware(
+              request,
+              context,
+              route.handler
+            );
           }
         }
 
-        return middlewareResponse || (await route.handler(request));
+        return middlewareResponse || (await route.handler(request, context));
       }
     }
 
@@ -143,6 +166,6 @@ export const useRouter = (): Router => {
     options,
     connect,
     trace,
-    handleRequest,
+    handle,
   };
-};
+}
