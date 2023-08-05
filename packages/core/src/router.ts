@@ -1,4 +1,5 @@
 import { HttpMethod } from './enums';
+import { MethodNotAllowedError, NotFoundError } from './errors';
 
 export type Router = any;
 
@@ -124,7 +125,7 @@ export function useRouter(): Router {
 
     if (matchingRoutes.length === 0) {
       // No route matches the path
-      throw new Error('Not Found');
+      throw new NotFoundError();
     }
 
     for (const route of matchingRoutes) {
@@ -154,7 +155,7 @@ export function useRouter(): Router {
     }
 
     // A route matches the path, but none match the method
-    throw new Error('Method Not Allowed');
+    throw new MethodNotAllowedError();
   };
 
   return {
