@@ -156,8 +156,8 @@ export const useStack = (
     methodOptions?: ApiGateway.MethodOptions
   ) => resource.addMethod(httpMethod, integration, methodOptions);
 
-  const originAccessIdentity = () =>
-    new CloudFront.OriginAccessIdentity(stack, 'MyOriginAccessIdentity');
+  const originAccessIdentity = (id: string) =>
+    new CloudFront.OriginAccessIdentity(stack, id);
 
   const cloudFrontWebDistribution = (
     webDistributionProps: CloudFront.CloudFrontWebDistributionProps
