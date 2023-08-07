@@ -4,6 +4,7 @@ import {
   StackProps as CloudFormationStackProps,
   Duration,
 } from 'aws-cdk-lib';
+import * as cdk from 'aws-cdk-lib';
 import * as AppConfig from 'aws-cdk-lib/aws-appconfig';
 import * as Lambda from 'aws-cdk-lib/aws-lambda';
 import * as ApiGateway from 'aws-cdk-lib/aws-apigateway';
@@ -58,7 +59,7 @@ export interface Stack {
   eventBus;
   rule;
   targetLambda;
-  handler;
+  output;
 }
 
 export const useStack = (
@@ -98,10 +99,7 @@ export const useStack = (
 
   const topic = (topicName: string) => new SNS.Topic(stack, topicName);
 
-  const lambda = (lambdaName: string, lambdaProps: Lambda.FunctionProps) =>
-    new Lambda.Function(stack, lambdaName, lambdaProps);
-
-  const handler = (name: string, props: Lambda.FunctionProps) =>
+  const lambda = (name: string, props: Lambda.FunctionProps) =>
     new NodejsFunction(stack, name, props);
 
   const subscription = (topic: SNS.Topic, queue: SQS.Queue) =>
@@ -216,6 +214,9 @@ export const useStack = (
   const targetLambda = (lambdaFunction: Lambda.Function) =>
     new Targets.LambdaFunction(lambdaFunction);
 
+  const output = (outputName: string, outputProps: cdk.CfnOutputProps) =>
+    new cdk.CfnOutput(stack, outputName, outputProps);
+
   const deploy = () => {
     app.synth();
   };
@@ -252,6 +253,6 @@ export const useStack = (
     eventBus,
     rule,
     targetLambda,
-    handler,
+    output,
   };
 };
