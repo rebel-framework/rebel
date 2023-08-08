@@ -4,7 +4,7 @@ import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import { LambdaIntegration } from 'aws-cdk-lib/aws-apigateway';
 
 export default function useApiGateway(stack: CloudFormationStack) {
-  const apiGateway = (apiName: string, apiProps: ApiGateway.RestApiProps) =>
+  const restApi = (apiName: string, apiProps: ApiGateway.RestApiProps) =>
     new ApiGateway.RestApi(stack, apiName, apiProps);
 
   const resource = (
@@ -33,5 +33,5 @@ export default function useApiGateway(stack: CloudFormationStack) {
     methodOptions?: ApiGateway.MethodOptions
   ) => resource.addMethod(httpMethod, integration, methodOptions);
 
-  return { apiGateway, resource, proxyResource, method };
+  return { restApi, resource, proxyResource, method };
 }

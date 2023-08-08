@@ -5,7 +5,7 @@ export default function useCloudFront(stack: CloudFormationStack) {
   const originAccessIdentity = (id: string) =>
     new CloudFront.OriginAccessIdentity(stack, id);
 
-  const cloudFrontWebDistribution = (
+  const webDistribution = (
     webDistributionProps: CloudFront.CloudFrontWebDistributionProps
   ) =>
     new CloudFront.CloudFrontWebDistribution(
@@ -14,5 +14,5 @@ export default function useCloudFront(stack: CloudFormationStack) {
       webDistributionProps
     );
 
-  return { originAccessIdentity, cloudFrontWebDistribution };
+  return { originAccessIdentity, webDistribution };
 }
