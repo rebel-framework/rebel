@@ -26,41 +26,7 @@ import * as Targets from 'aws-cdk-lib/aws-events-targets';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 
 import { Construct } from 'constructs';
-
-export interface Stack {
-  appConfigApplication;
-  appConfigEnvironment;
-  appConfigConfigurationProfile;
-  appConfigDeploymentStrategy;
-  appConfigDeployment;
-  alarm;
-  deploy: () => void;
-  queue;
-  topic;
-  lambda;
-  subscription;
-  role;
-  attachPolicy;
-  logGroup;
-  table;
-  bucket;
-  bucketDeployment;
-  apiGateway;
-  resource;
-  method;
-  originAccessIdentity;
-  cloudFrontWebDistribution;
-  hostedZone;
-  userPool;
-  userPoolClient;
-  identityPool;
-  secret;
-  secretValue;
-  eventBus;
-  rule;
-  targetLambda;
-  output;
-}
+import { Stack } from './types';
 
 export const useStack = (
   stackName: string,

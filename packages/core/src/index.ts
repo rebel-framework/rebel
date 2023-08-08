@@ -19,5 +19,3 @@ export type {
   Router,
 } from './router';
 export { useRouter } from './router';
-export { useStack } from './stack';
-export type { Stack } from './stack';

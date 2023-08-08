@@ -1,0 +1,34 @@
+export interface Stack {
+  appConfigApplication;
+  appConfigEnvironment;
+  appConfigConfigurationProfile;
+  appConfigDeploymentStrategy;
+  appConfigDeployment;
+  alarm;
+  deploy: () => void;
+  queue;
+  topic;
+  lambda;
+  subscription;
+  role;
+  attachPolicy;
+  logGroup;
+  table;
+  bucket;
+  bucketDeployment;
+  apiGateway;
+  resource;
+  method;
+  originAccessIdentity;
+  cloudFrontWebDistribution;
+  hostedZone;
+  userPool;
+  userPoolClient;
+  identityPool;
+  secret;
+  secretValue;
+  eventBus;
+  rule;
+  targetLambda;
+  output;
+}
