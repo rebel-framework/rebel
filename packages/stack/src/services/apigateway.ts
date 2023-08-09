@@ -18,12 +18,19 @@ export default function useApiGateway(stack: CloudFormationStack) {
     lambda: NodejsFunction
   ): ApiGateway.Resource => {
     // Create a catch-all proxy resource
-    const proxyResource = api.root.addResource('{proxy+}');
+    const res = api.root.addResource('{proxy+}');
 
     // Add a ANY method to the catch-all proxy resource, connected to your Lambda function
-    proxyResource.addMethod('ANY', new LambdaIntegration(lambda));
+    res.addMethod('ANY', new LambdaIntegration(lambda));
 
-    return proxyResource;
+    // Add CORS options to this resource
+    res.addCorsPreflight({
+      allowOrigins: ApiGateway.Cors.ALL_ORIGINS,
+      allowMethods: ApiGateway.Cors.ALL_METHODS,
+      allowHeaders: ['*'], // Or specify certain headers if needed
+    });
+
+    return res;
   };
 
   const method = (

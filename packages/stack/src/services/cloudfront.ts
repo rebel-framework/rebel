@@ -10,7 +10,7 @@ export default function useCloudFront(stack: CloudFormationStack) {
   ) =>
     new CloudFront.CloudFrontWebDistribution(
       stack,
-      'MyCDN',
+      'RebelWebDistribution',
       webDistributionProps
     );
 

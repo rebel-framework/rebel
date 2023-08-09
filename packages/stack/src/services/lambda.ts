@@ -25,7 +25,7 @@ export default function useLambda(stack: CloudFormationStack) {
       memorySize: 256, // Optionally set the amount of memory allocated
       bundling: {
         minify: false,
-        externalModules: externalModules,
+        // externalModules: externalModules,
       },
     });
 

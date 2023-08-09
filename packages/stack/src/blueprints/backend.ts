@@ -1,4 +1,3 @@
-import { root } from '@rebel/core';
 import { Stack } from '../types';
 
 export function backend(
@@ -6,7 +5,7 @@ export function backend(
   environment: { [key: string]: any } = {}
 ) {
   // Create the mono lambda function
-  const lambda = stack.lambda.lambdaFunction('RebelMonoLambda', {
+  const lambda = stack.lambda.nodeFunction('RebelMonoLambda', {
     environment: { ...environment },
   });
 

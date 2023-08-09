@@ -10,7 +10,12 @@ export function response(
   headers?: any
 ): Response {
   body = JSON.stringify(body);
-  headers = headers || { 'Content-Type': 'application/json' };
+
+  headers = headers || {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Credentials': true,
+  };
 
   return {
     statusCode,
