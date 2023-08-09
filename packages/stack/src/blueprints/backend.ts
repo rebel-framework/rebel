@@ -1,8 +1,5 @@
 import { root } from '@rebel/core';
 import { Stack } from '../types';
-import * as S3Deployment from 'aws-cdk-lib/aws-s3-deployment';
-import { PolicyStatement, Effect } from 'aws-cdk-lib/aws-iam';
-import { Stack as CloudFormationStack } from 'aws-cdk-lib';
 
 export function backend(
   stack: Stack,
