@@ -6,8 +6,7 @@ export function backend(
   environment: { [key: string]: any } = {}
 ) {
   // Create the mono lambda function
-  const lambda = stack.lambda.nodeFunction('RebelMonoLambda', {
-    entry: root('src/backend/handler.ts'),
+  const lambda = stack.lambda.lambdaFunction('RebelMonoLambda', {
     environment: { ...environment },
   });
 

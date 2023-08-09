@@ -49,6 +49,6 @@ export function frontend(stack: Stack) {
 
   // Print out the domain name of the CloudFront distribution
   stack.cdk.output('DistributionDomainName', {
-    value: distribution.domainName,
+    value: distribution.distributionDomainName,
   });
 }
