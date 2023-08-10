@@ -1,16 +1,24 @@
-import { Stack as CloudFormationStack } from 'aws-cdk-lib';
+import {
+  Stack as CloudFormationStack,
+  SecretValue,
+  SecretsManagerSecretOptions,
+} from 'aws-cdk-lib';
 import * as SecretsManager from 'aws-cdk-lib/aws-secretsmanager';
 
 export default function useSecretsManager(stack: CloudFormationStack) {
   const secret = (
-    secretName: string,
-    secretProps?: SecretsManager.SecretProps
-  ) => new SecretsManager.Secret(stack, secretName, secretProps);
+    name: string,
+    value: string,
+    props?: SecretsManager.SecretProps
+  ) =>
+    new SecretsManager.Secret(stack, name, {
+      ...props,
+      secretName: name,
+      secretStringValue: new SecretValue(value),
+    });
 
-  const secretValue = (
-    secret: SecretsManager.ISecret,
-    versionStage: string = 'AWSCURRENT'
-  ) => secret.secretValueFromJson(versionStage);
+  const value = (name: string, options?: SecretsManagerSecretOptions) =>
+    SecretValue.secretsManager(name, options);
 
-  return { secret, secretValue };
+  return { secret, value };
 }
