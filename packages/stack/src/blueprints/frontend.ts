@@ -2,12 +2,26 @@ import { root } from '@rebel/core';
 import { Stack } from '../types';
 import * as S3Deployment from 'aws-cdk-lib/aws-s3-deployment';
 import { PolicyStatement, Effect } from 'aws-cdk-lib/aws-iam';
+import { RemovalPolicy } from 'aws-cdk-lib';
+import { Bucket } from 'aws-cdk-lib/aws-s3';
+import {
+  CloudFrontWebDistribution,
+  OriginAccessIdentity,
+} from 'aws-cdk-lib/aws-cloudfront';
 
-export function frontend(stack: Stack) {
+export type Frontend = {
+  siteBucket: Bucket;
+  originAccessIdentity: OriginAccessIdentity;
+  bucketPolicy: PolicyStatement;
+  distribution: CloudFrontWebDistribution;
+};
+
+export function useFrontend(stack: Stack): Frontend {
   // Define the S3 bucket
   const siteBucket = stack.s3.bucket('RebelStaticWebsiteBucket', {
     websiteIndexDocument: 'index.html',
     publicReadAccess: false, // Since publicReadAccess is false, we need to define our own bucket policy
+    removalPolicy: RemovalPolicy.DESTROY,
   });
 
   // Define the Origin Access Identity
@@ -51,4 +65,11 @@ export function frontend(stack: Stack) {
   stack.cdk.output('DistributionDomainName', {
     value: distribution.distributionDomainName,
   });
+
+  return {
+    siteBucket,
+    originAccessIdentity,
+    bucketPolicy,
+    distribution,
+  };
 }

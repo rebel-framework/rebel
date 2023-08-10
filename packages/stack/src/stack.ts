@@ -21,6 +21,8 @@ import useCognito from './services/cognito';
 import useSecretsManager from './services/secretsmanager';
 import useEvents from './services/events';
 import useCDK from './services/cdk';
+import useCodeBuild from './services/codebuild';
+import useCodePipeline from './services/codepipeline';
 
 export const useStack = (
   stackName: string,
@@ -34,6 +36,8 @@ export const useStack = (
   const cdk = useCDK(stack);
   const cloudFront = useCloudFront(stack);
   const cloudWatch = useCloudWatch(stack);
+  const codeBuild = useCodeBuild(stack);
+  const codePipeline = useCodePipeline(stack);
   const cognito = useCognito(stack);
   const dynamoDB = useDynamoDB(stack);
   const events = useEvents(stack);
@@ -53,6 +57,8 @@ export const useStack = (
     apiGateway,
     appConfig,
     cdk,
+    codeBuild,
+    codePipeline,
     cloudFront,
     cloudWatch,
     cognito,

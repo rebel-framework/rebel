@@ -5,7 +5,6 @@ export { HttpMethod } from './enums';
 export { registerEnvironmentVariables, env } from './env';
 export { useConfig } from './config';
 export { useDatabase } from './database';
-export { useDeployer } from './deployer';
 export { errorHandler, NotFoundError, MethodNotAllowedError } from './errors';
 export { handler } from './handler';
 export type { Response } from './response';

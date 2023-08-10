@@ -1,5 +1,3 @@
-import { HttpMethod } from './enums';
-
 export interface Command {
   (args: string[]): void;
 }
@@ -13,6 +11,11 @@ export interface Config {
     key: string;
     secret: string;
     region: string;
+  };
+  github: {
+    username: string;
+    repository: string;
+    token: string;
   };
   database: {
     softDeletes: boolean;
