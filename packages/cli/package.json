@@ -2,8 +2,7 @@
   "name": "@rebel/cli",
   "version": "0.0.0",
   "description": "Rebel's CLI for rapid serverless full-stack web application development",
-  "author": "Ben Villiere <ben@rebeljs.com>",
-  "homepage": "https://rebeljs.com",
+  "author": "Ben Villiere",
   "license": "MIT",
   "main": "bin/index.js",
   "bin": {
@@ -14,7 +13,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rebeljs/rebel.git"
+    "url": "git+https://github.com/rebel-framework/rebel.git"
   },
   "scripts": {
     "build": "tsc && babel src --out-dir bin --extensions '.ts'",
@@ -22,7 +21,7 @@
     "test": "jest"
   },
   "bugs": {
-    "url": "https://github.com/rebeljs/rebel/issues"
+    "url": "https://github.com/rebel-framework/rebel/issues"
   },
   "devDependencies": {
     "@babel/cli": "^7.22.9",

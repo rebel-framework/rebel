@@ -5,7 +5,7 @@ export default async function init(args: string[]) {
 
   const commands = [
     `mkdir ${directory}`,
-    `npx degit https://github.com/rebeljs/skeleton.git ${directory} --force`,
+    `npx degit https://github.com/rebel-framework/skeleton.git ${directory} --force`,
     `git init ${directory}`,
     `mkdir ${directory}/.rebel`,
   ];
