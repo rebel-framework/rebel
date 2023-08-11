@@ -1,4 +1,4 @@
-import { Command } from '@rebel/core';
+import { Command } from '@rebel-framework/core';
 import { OpenAIApi } from 'openai';
 
 export default async function ai(args: string[]) {

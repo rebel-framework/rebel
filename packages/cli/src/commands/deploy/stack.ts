@@ -1,4 +1,4 @@
-import { include } from '@rebel/core';
+import { include } from '@rebel-framework/core';
 
 /**
  * This file is used to load the stack from the

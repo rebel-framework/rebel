@@ -1,4 +1,4 @@
-import { Command } from '@rebel/core';
+import { Command } from '@rebel-framework/core';
 import { join } from 'path';
 import { promises as fs } from 'fs';
 

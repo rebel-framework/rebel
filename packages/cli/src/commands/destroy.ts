@@ -1,4 +1,4 @@
-import { root } from '@rebel/core';
+import { root } from '@rebel-framework/core';
 import { spawn } from 'child_process';
 import path from 'path';
 

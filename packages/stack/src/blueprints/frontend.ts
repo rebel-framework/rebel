@@ -1,4 +1,4 @@
-import { root } from '@rebel/core';
+import { root } from '@rebel-framework/core';
 import { Stack } from '../types';
 import * as S3Deployment from 'aws-cdk-lib/aws-s3-deployment';
 import { PolicyStatement, Effect } from 'aws-cdk-lib/aws-iam';

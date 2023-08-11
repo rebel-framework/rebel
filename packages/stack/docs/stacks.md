@@ -3,7 +3,7 @@
 ## Cognito
 
 ```ts
-import { useStack } from '@rebel/core';
+import { useStack } from '@rebel-framework/core';
 
 const myApp = useStack('MyApp');
 
@@ -31,7 +31,7 @@ myApp.deploy();
 ## CloudWatch Alarms
 
 ```ts
-import { useStack } from '@rebel/core';
+import { useStack } from '@rebel-framework/core';
 import * as CloudWatch from 'aws-cdk-lib/aws-cloudwatch';
 import * as Lambda from 'aws-cdk-lib/aws-lambda';
 

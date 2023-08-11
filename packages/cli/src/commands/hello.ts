@@ -1,4 +1,4 @@
-import { Command } from '@rebel/core';
+import { Command } from '@rebel-framework/core';
 
 export default async function hello(args: string[]) {
   console.log('Hello!');

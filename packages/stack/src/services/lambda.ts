@@ -1,4 +1,4 @@
-import { root } from '@rebel/core';
+import { root } from '@rebel-framework/core';
 import { Duration, Stack as CloudFormationStack } from 'aws-cdk-lib';
 import * as Lambda from 'aws-cdk-lib/aws-lambda';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';

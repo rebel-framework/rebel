@@ -1,5 +1,5 @@
 import { Stack } from '../types';
-import { env } from '@rebel/core';
+import { env } from '@rebel-framework/core';
 import { PipelineProject } from 'aws-cdk-lib/aws-codebuild';
 import {
   Artifact,
