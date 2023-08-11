@@ -1,6 +1,7 @@
 {
   "name": "@rebel/core",
   "version": "0.0.0",
+  "private": false,
   "description": "Rebel Frameworks's core functions",
   "author": "Ben Villiere",
   "homepage": "https://github.com/rebel-framework/rebel#readme",

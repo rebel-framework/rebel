@@ -1,7 +1,8 @@
 {
   "name": "@rebel/stack",
   "version": "0.0.0",
-  "description": "> TODO: description",
+  "private": false,
+  "description": "Rebel Framework's CDK abstraction layer",
   "author": "Ben Villiere",
   "homepage": "https://github.com/rebel-framework/rebel#readme",
   "license": "MIT",

@@ -1,7 +1,8 @@
 {
   "name": "@rebel/cli",
   "version": "0.0.0",
-  "description": "Rebel's CLI for rapid serverless full-stack web application development",
+  "private": false,
+  "description": "Rebel Framework's CLI utility for rapid serverless full-stack web application development",
   "author": "Ben Villiere",
   "license": "MIT",
   "main": "bin/index.js",
