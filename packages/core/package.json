@@ -40,5 +40,12 @@
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.378.0"
-  }
+  },
+  "keywords": [
+    "serverless",
+    "typescript",
+    "aws",
+    "framework",
+    "full-stack"
+  ]
 }

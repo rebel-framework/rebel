@@ -39,5 +39,12 @@
   },
   "bugs": {
     "url": "https://github.com/rebel-framework/rebel/issues"
-  }
+  },
+  "keywords": [
+    "serverless",
+    "typescript",
+    "aws",
+    "framework",
+    "full-stack"
+  ]
 }
