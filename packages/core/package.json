@@ -1,5 +1,5 @@
 {
-  "name": "@rebel/core",
+  "name": "@rebel-framework/core",
   "version": "0.0.0",
   "private": false,
   "description": "Rebel Frameworks's core functions",
