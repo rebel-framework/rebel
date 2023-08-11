@@ -12,20 +12,10 @@ jobs:
         with:
           node-version: '18.x'
           registry-url: 'https://registry.npmjs.org'
-
-      - name: Install dependencies
-        run: npm install --workspaces
-
-      - name: Build @rebel-framework/core
-        run: cd packages/core && npm run build
-
-      - name: Build @rebel-framework/stack
-        run: cd packages/stack && npm run build
-
-      - name: Build @rebel-framework/cli
-        run: cd packages/cli && npm run build
-
-      - name: Publish
+      - run: npm install --workspaces
+      - run: cd packages/core && npm run build
+      - run: cd packages/stack && npm run build
+      - run: cd packages/cli && npm run build
       - run: npm publish --workspaces
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
