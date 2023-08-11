@@ -24,6 +24,9 @@
     "coverage": "jest --coverage",
     "prepublishOnly": "npm run build"
   },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.378.0"
+  },
   "devDependencies": {
     "@babel/cli": "^7.22.9",
     "@babel/core": "^7.22.9",
@@ -38,9 +41,6 @@
   },
   "bugs": {
     "url": "https://github.com/rebel-framework/rebel/issues"
-  },
-  "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.378.0"
   },
   "keywords": [
     "serverless",
