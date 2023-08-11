@@ -21,8 +21,7 @@
     "build": "tsc && babel src --out-dir bin --extensions '.ts'",
     "watch": "tsc && babel src --out-dir bin --extensions '.ts' --watch",
     "test": "jest",
-    "coverage": "jest --coverage",
-    "prepublishOnly": "npm run build"
+    "coverage": "jest --coverage"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.378.0"
