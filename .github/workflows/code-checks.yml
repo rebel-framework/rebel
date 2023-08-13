@@ -1,0 +1,40 @@
+name: Code Checks
+on:
+  workflow_dispatch: # for testing purposes, this should be deleted
+  pull_request:
+    branches:
+      - main
+      - release
+jobs:
+  build:
+    name: Build Packages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - run: npm install --workspaces
+      - run: npm run build-packages
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - run: npm run lint --workspaces
+  type-check:
+    name: TypeScript Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - run: npm run lint --workspaces
+  test-coverage:
+    name: Test Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - run: npm run coverage --workspaces
