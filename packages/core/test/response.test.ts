@@ -4,9 +4,14 @@ describe('response', () => {
   let headers: any;
   let body: string | object;
   let statusCode: number;
+  const defaultHeaders = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Credentials': true,
+  };
 
   beforeEach(() => {
-    headers = { 'Content-Type': 'application/json' };
+    headers = defaultHeaders;
     body = { data: 'test data' };
     statusCode = 200;
   });
@@ -35,7 +40,6 @@ describe('response', () => {
 
   it('should return default headers if none are provided', () => {
     const result: Response = response(statusCode, body);
-    const defaultHeaders = { 'Content-Type': 'application/json' };
     expect(result.headers).toEqual(defaultHeaders);
   });
 });

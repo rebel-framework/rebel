@@ -19,7 +19,9 @@
   "scripts": {
     "build": "tsc && babel src --out-dir bin --extensions '.ts'",
     "watch": "tsc && babel src --out-dir bin --extensions '.ts' --watch",
-    "test": "jest"
+    "test": "jest",
+    "coverage": "jest --coverage",
+    "typecheck": "npx tsc"
   },
   "bugs": {
     "url": "https://github.com/rebel-framework/rebel/issues"
