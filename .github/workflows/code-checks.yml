@@ -23,21 +23,43 @@ jobs:
           key: ${{ runner.OS }}-node-modules-${{ hashFiles('**/package-lock.json') }}
       - run: npm install --workspaces
       - run: npm run build --workspaces
+      - name: Create Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: packages
+          path: ./rebel/
   lint:
     name: Lint
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: packages
+          path: ./rebel/
       - run: npm run lint --workspaces
   type-check:
     name: Type Check
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: packages
+          path: ./rebel/
       - run: npm run lint --workspaces
   test-coverage:
     name: Test Coverage
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: packages
+          path: ./rebel/
       - run: npm run coverage --workspaces
