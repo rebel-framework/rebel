@@ -39,3 +39,7 @@ npx lerna run watch
 ```sh
 yarn lerna exec -- yarn link
 ```
+
+### TODO
+
+[ ] Replace `/bin` with `/build`
