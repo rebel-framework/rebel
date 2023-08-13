@@ -23,11 +23,11 @@ jobs:
           key: ${{ runner.OS }}-node-modules-${{ hashFiles('**/package-lock.json') }}
       - run: npm install --workspaces
       - run: npm run build --workspaces
-      - name: Create Artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: packages
-          path: ./rebel/
+          path: /home/runner/work/rebel/rebel/
   lint:
     name: Lint
     needs: build
@@ -39,7 +39,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: packages
-          path: ./rebel/
+          path: /home/runner/work/rebel/rebel/
       - run: npm run lint --workspaces
   type-check:
     name: Type Check
