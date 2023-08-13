@@ -50,7 +50,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: packages
-          path: ./rebel/
+          path: /home/runner/work/rebel/rebel/
       - run: npm run lint --workspaces
   test-coverage:
     name: Test Coverage
@@ -61,5 +61,5 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: packages
-          path: ./rebel/
+          path: /home/runner/work/rebel/rebel/
       - run: npm run coverage --workspaces
