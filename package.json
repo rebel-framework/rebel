@@ -8,7 +8,7 @@
     "lerna": "^7.1.4"
   },
   "scripts": {
-    "build": "npx lerna run build",
+    "build-packages": "cd packages/core && npm run build && cd ../stack && npm run build && cd ../cli && npm run build",
     "nuke": "rm -rf node_modules",
     "permission": "chmod +x packages/cli/bin/index.js"
   }
