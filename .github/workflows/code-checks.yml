@@ -25,16 +25,19 @@ jobs:
       - run: npm run build-packages
   lint:
     name: Lint
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - run: npm run lint --workspaces
   type-check:
     name: TypeScript Type Check
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - run: npm run lint --workspaces
   test-coverage:
     name: Test Coverage
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - run: npm run coverage --workspaces
