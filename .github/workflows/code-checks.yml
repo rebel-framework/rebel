@@ -23,23 +23,24 @@ jobs:
           key: ${{ runner.OS }}-node-modules-${{ hashFiles('**/package-lock.json') }}
       - run: npm install --workspaces
       - run: npm run build --workspaces
+      - name: Create Artifact
+        run: tar -czf packages.tar.gz -C /home/runner/work/rebel/rebel/ .
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: packages
-          path: /home/runner/work/rebel/rebel/
+          path: packages.tar.gz
   lint:
     name: Lint
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
       - name: Download Artifact
         uses: actions/download-artifact@v3
         with:
           name: packages
-          path: /home/runner/work/rebel/rebel/
+      - name: Decompress Artifact
+        run: tar -xzf packages.tar.gz -C /home/runner/work/rebel/rebel/
       - run: npm run lint --workspaces
   type-check:
     name: Type Check
@@ -50,7 +51,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: packages
-          path: /home/runner/work/rebel/rebel/
+      - name: Decompress Artifact
+        run: tar -xzf packages.tar.gz -C /home/runner/work/rebel/rebel/
       - run: npm run lint --workspaces
   test-coverage:
     name: Test Coverage
@@ -61,5 +63,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: packages
-          path: /home/runner/work/rebel/rebel/
+      - name: Decompress Artifact
+        run: tar -xzf packages.tar.gz -C /home/runner/work/rebel/rebel/
       - run: npm run coverage --workspaces
