@@ -31,10 +31,13 @@ export const useDatabase = (tableName: string) => {
       Item: {
         pk: { S: key(entityType, id) },
         sk: { S: key(entityType, id) },
-        ...Object.entries(item).reduce((acc, [k, v]) => {
-          acc[k] = { S: String(v) };
-          return acc;
-        }, {} as Record<string, AttributeValue>),
+        ...Object.entries(item).reduce(
+          (acc, [k, v]) => {
+            acc[k] = { S: String(v) };
+            return acc;
+          },
+          {} as Record<string, AttributeValue>
+        ),
       },
     };
 
@@ -125,18 +128,24 @@ export const useDatabase = (tableName: string) => {
           ExpressionAttributeValues: {
             ':pk': { S: `${entityType}#${id}` },
             ':sk': { S: `${entityType}#${id}` },
-            ...conditions.reduce((acc, c) => {
-              acc[`:${c.field}`] = { S: c.value };
-              return acc;
-            }, {} as Record<string, AttributeValue>),
+            ...conditions.reduce(
+              (acc, c) => {
+                acc[`:${c.field}`] = { S: c.value };
+                return acc;
+              },
+              {} as Record<string, AttributeValue>
+            ),
           },
           FilterExpression: conditions
             .map((_, i) => `#${_.field} ${_.operator} :${_.field}`)
             .join(' AND '),
-          ExpressionAttributeNames: conditions.reduce((names, condition) => {
-            names[`#${condition.field}`] = condition.field;
-            return names;
-          }, {} as Record<string, string>),
+          ExpressionAttributeNames: conditions.reduce(
+            (names, condition) => {
+              names[`#${condition.field}`] = condition.field;
+              return names;
+            },
+            {} as Record<string, string>
+          ),
         };
 
         // TODO: Use config to add check?
