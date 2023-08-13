@@ -30,7 +30,7 @@ jobs:
     steps:
       - run: npm run lint --workspaces
   type-check:
-    name: TypeScript Type Check
+    name: Type Check
     needs: build
     runs-on: ubuntu-latest
     steps:
