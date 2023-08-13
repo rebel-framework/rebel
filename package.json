@@ -2,13 +2,14 @@
   "name": "root",
   "private": false,
   "workspaces": [
-    "packages/*"
+    "packages/core",
+    "packages/stack",
+    "packages/cli"
   ],
   "devDependencies": {
     "lerna": "^7.1.4"
   },
   "scripts": {
-    "build-packages": "cd packages/core && npm run build && cd ../stack && npm run build && cd ../cli && npm run build && cd ../../ && pwd",
     "nuke": "rm -rf node_modules",
     "permission": "chmod +x packages/cli/bin/index.js"
   }
