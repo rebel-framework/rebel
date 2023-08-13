@@ -22,7 +22,7 @@
     "watch": "tsc && babel src --out-dir bin --extensions '.ts' --watch",
     "test": "jest --passWithNoTests",
     "coverage": "jest --coverage --passWithNoTests",
-    "typecheck": "npx tsc",
+    "type-check": "npx tsc",
     "format": "npx prettier . --write"
   },
   "dependencies": {
