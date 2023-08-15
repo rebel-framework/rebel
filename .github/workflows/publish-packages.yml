@@ -29,7 +29,7 @@ jobs:
       - name: Push
         run: |
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git push || echo "Push failed with error: $?"
+          git push
   publish:
     name: Publish Packages
     needs: update-version
