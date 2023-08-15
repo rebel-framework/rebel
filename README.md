@@ -1,12 +1,12 @@
-# Rebel
+# Rebel Framework
 
-## Tools
+Monorepo used to build @rebel-framework packages published on npm:
 
-### Adding a new package
+- @rebel-framework/core:
+- @rebel-framework/cli
+- @rebel-framework/stack
 
-```sh
-npx lerna create @rebel/name
-```
+## Development
 
 ### Add a new dependency to a specific workspace
 
@@ -17,7 +17,7 @@ yarn workspace @rebel/cli add -D typescript jest
 ### Run cli tool
 
 ```sh
-node packages/cli/dist/cli.js
+node packages/cli/build/cli.js
 ```
 
 ### Develop using `rebel`
@@ -39,8 +39,3 @@ npx lerna run watch
 ```sh
 yarn lerna exec -- yarn link
 ```
-
-### TODO
-
-- [x] Replace `/bin` with `/build`
-- [x] Add automated version bump
