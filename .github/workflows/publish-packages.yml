@@ -2,7 +2,6 @@ name: Publish Packages
 on:
   release:
     types: [published]
-permissions: read-all|write-all
 jobs:
   update-version:
     runs-on: ubuntu-latest
@@ -25,6 +24,9 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add .
           git commit -m "Release $RELEASE_VERSION"
+      - name: Push
+        run: |
+          git remote set-url origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}
           git push
   publish:
     needs: update-version
