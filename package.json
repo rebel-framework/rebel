@@ -1,14 +1,11 @@
 {
-  "name": "root",
+  "name": "@rebel-framework/monorepo",
   "private": false,
   "workspaces": [
     "packages/core",
     "packages/stack",
     "packages/cli"
   ],
-  "devDependencies": {
-    "lerna": "^7.1.4"
-  },
   "scripts": {
     "nuke": "rm -rf node_modules",
     "permission": "chmod +x packages/cli/build/index.js",
