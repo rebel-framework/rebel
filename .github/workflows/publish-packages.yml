@@ -22,13 +22,10 @@ jobs:
         run: npm run update-version $RELEASE_VERSION
       - name: Commit updated package.json
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name github-actions
+          git config user.email github-actions@github.com
           git add .
           git commit -m "Release $RELEASE_VERSION"
-      - name: Push
-        run: |
-          git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}
           git push
   publish:
     name: Publish Packages
