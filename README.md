@@ -43,5 +43,4 @@ yarn lerna exec -- yarn link
 ### TODO
 
 - [x] Replace `/bin` with `/build`
-- [ ] Introduce `release` branch?
 - [ ] Add automated version bump
