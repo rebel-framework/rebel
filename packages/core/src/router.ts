@@ -1,25 +1,11 @@
 import { HttpMethod } from './enums';
 import { MethodNotAllowedError, NotFoundError } from './errors';
 
-export type HttpMethodRoute = (
+export type Method = (
   path: string,
   handler: Handler,
   middleware?: Middleware[]
 ) => void;
-
-export type Router = {
-  routes: Route[];
-  get: HttpMethodRoute;
-  post: HttpMethodRoute;
-  put: HttpMethodRoute;
-  patch: HttpMethodRoute;
-  delete: HttpMethodRoute;
-  head: HttpMethodRoute;
-  options: HttpMethodRoute;
-  connect: HttpMethodRoute;
-  trace: HttpMethodRoute;
-  handle: (request: Request, context: Context) => Promise<unknown>;
-};
 
 export type Request = {
   path: string;
@@ -34,7 +20,7 @@ export type RequestParams = {
   [key: string]: unknown;
 };
 
-export type Handler = (request: Request, context: Context) => Promise<unknown>;
+export type Handler = (request: Request, context?: Context) => Promise<unknown>;
 
 export type Middleware = (
   request: Request,
@@ -48,6 +34,20 @@ export type Route = {
   handler: Handler;
   middleware?: Middleware[];
   keys: string[];
+};
+
+export type Router = {
+  routes: Route[];
+  get: Method;
+  post: Method;
+  put: Method;
+  patch: Method;
+  delete: Method;
+  head: Method;
+  options: Method;
+  connect: Method;
+  trace: Method;
+  handle: Handler;
 };
 
 // Helper function to transform the path string into a RegExp and extract parameter names
@@ -81,31 +81,31 @@ export function useRouter(): Router {
     routes.push(route);
   };
 
-  const get: HttpMethodRoute = (path, handler, middleware) =>
+  const get: Method = (path, handler, middleware) =>
     route(HttpMethod.GET, path, handler, middleware);
 
-  const post: HttpMethodRoute = (path, handler, middleware) =>
+  const post: Method = (path, handler, middleware) =>
     route(HttpMethod.POST, path, handler, middleware);
 
-  const put: HttpMethodRoute = (path, handler, middleware) =>
+  const put: Method = (path, handler, middleware) =>
     route(HttpMethod.PUT, path, handler, middleware);
 
-  const patch: HttpMethodRoute = (path, handler, middleware) =>
+  const patch: Method = (path, handler, middleware) =>
     route(HttpMethod.PATCH, path, handler, middleware);
 
-  const del: HttpMethodRoute = (path, handler, middleware) =>
+  const del: Method = (path, handler, middleware) =>
     route(HttpMethod.DELETE, path, handler, middleware);
 
-  const head: HttpMethodRoute = (path, handler, middleware) =>
+  const head: Method = (path, handler, middleware) =>
     route(HttpMethod.HEAD, path, handler, middleware);
 
-  const options: HttpMethodRoute = (path, handler, middleware) =>
+  const options: Method = (path, handler, middleware) =>
     route(HttpMethod.OPTIONS, path, handler, middleware);
 
-  const connect: HttpMethodRoute = (path, handler, middleware) =>
+  const connect: Method = (path, handler, middleware) =>
     route(HttpMethod.CONNECT, path, handler, middleware);
 
-  const trace: HttpMethodRoute = (path, handler, middleware) =>
+  const trace: Method = (path, handler, middleware) =>
     route(HttpMethod.TRACE, path, handler, middleware);
 
   const handle = async (request: Request, context: Context) => {

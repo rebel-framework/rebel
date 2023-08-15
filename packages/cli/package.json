@@ -19,8 +19,8 @@
   "scripts": {
     "build": "tsc && babel src --out-dir bin --extensions '.ts'",
     "watch": "tsc && babel src --out-dir bin --extensions '.ts' --watch",
-    "test": "jest",
-    "coverage": "jest --coverage",
+    "test": "jest --passWithNoTests",
+    "coverage": "jest --coverage --passWithNoTests",
     "type-check": "npx tsc",
     "format": "npx prettier .",
     "lint": "npx eslint src/**.ts"
