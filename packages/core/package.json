@@ -23,7 +23,7 @@
     "test": "jest",
     "coverage": "jest --coverage",
     "type-check": "npx tsc",
-    "format": "npx prettier . --write",
+    "format": "npx prettier .",
     "lint": "npx eslint src/**.ts"
   },
   "dependencies": {
