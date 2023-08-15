@@ -18,8 +18,10 @@ export default async function run(args: string[]) {
   // Optionally, you can resolve the absolute path if needed.
   const absolutePath = path.resolve(currentDirectory);
 
-  // const fileToImportAsJavascript = `${absolutePath}/bin/backend/index.js`;
-  const commandFilePath = path.resolve(`${absolutePath}/bin/backend/commands`);
+  // const fileToImportAsJavascript = `${absolutePath}/build/backend/index.js`;
+  const commandFilePath = path.resolve(
+    `${absolutePath}/build/backend/commands`
+  );
 
   console.log('Current directory:', currentDirectory);
   console.log('Absolute path:', absolutePath);

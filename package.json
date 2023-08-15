@@ -11,6 +11,6 @@
   },
   "scripts": {
     "nuke": "rm -rf node_modules",
-    "permission": "chmod +x packages/cli/bin/index.js"
+    "permission": "chmod +x packages/cli/build/index.js"
   }
 }

@@ -8,7 +8,7 @@ export default function useLambda(stack: CloudFormationStack) {
     new Lambda.Function(stack, name, {
       ...props,
       functionName: name,
-      code: Lambda.Code.fromAsset(root('bin/backend')),
+      code: Lambda.Code.fromAsset(root('build/backend')),
       runtime: Lambda.Runtime.NODEJS_18_X,
       handler: 'handler.handler',
     });

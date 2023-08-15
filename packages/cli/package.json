@@ -5,9 +5,9 @@
   "description": "Rebel Framework's CLI utility for rapid serverless full-stack web application development",
   "author": "Ben Villiere",
   "license": "MIT",
-  "main": "bin/index.js",
+  "main": "build/index.js",
   "bin": {
-    "rebel": "./bin/index.js"
+    "rebel": "./build/index.js"
   },
   "files": [
     "src"
@@ -17,8 +17,8 @@
     "url": "git+https://github.com/rebel-framework/rebel.git"
   },
   "scripts": {
-    "build": "tsc && babel src --out-dir bin --extensions '.ts'",
-    "watch": "tsc && babel src --out-dir bin --extensions '.ts' --watch",
+    "build": "tsc && babel src --out-dir build --extensions '.ts'",
+    "watch": "tsc && babel src --out-dir build --extensions '.ts' --watch",
     "test": "jest --passWithNoTests",
     "coverage": "jest --coverage --passWithNoTests",
     "type-check": "npx tsc",

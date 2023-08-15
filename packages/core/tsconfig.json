@@ -5,7 +5,7 @@
     "esModuleInterop": true,
     "preserveConstEnums": true,
     "isolatedModules": true,
-    "outDir": "bin",
+    "outDir": "build",
     "rootDir": "src"
   },
   "include": ["src/**/*"],

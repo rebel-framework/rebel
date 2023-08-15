@@ -6,9 +6,9 @@
   "author": "Ben Villiere",
   "homepage": "https://github.com/rebel-framework/rebel#readme",
   "license": "MIT",
-  "main": "bin/index.js",
+  "main": "build/index.js",
   "exports": {
-    ".": "./bin/index.js"
+    ".": "./build/index.js"
   },
   "files": [
     "src"
@@ -18,8 +18,8 @@
     "url": "git+https://github.com/rebel-framework/rebel.git"
   },
   "scripts": {
-    "build": "tsc && babel src --out-dir bin --extensions '.ts'",
-    "watch": "tsc && babel src --out-dir bin --extensions '.ts' --watch",
+    "build": "tsc && babel src --out-dir build --extensions '.ts'",
+    "watch": "tsc && babel src --out-dir build --extensions '.ts' --watch",
     "test": "jest --passWithNoTests",
     "coverage": "jest --coverage --passWithNoTests",
     "type-check": "npx tsc",

@@ -16,7 +16,7 @@ export default function useCodeBuild(stack: CloudFormationStack) {
           },
         },
         artifacts: {
-          'base-directory': 'bin',
+          'base-directory': 'build',
           files: ['**/*'],
         },
       }),
