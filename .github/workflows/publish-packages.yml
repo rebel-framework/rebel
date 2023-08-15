@@ -4,11 +4,13 @@ on:
     types: [published]
 jobs:
   update-version:
+    name: Update Packages Version
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           ref: main
+          fetch-depth: 0
       - uses: actions/setup-node@v3
         with:
           node-version: '18.x'
@@ -26,13 +28,17 @@ jobs:
           git commit -m "Release $RELEASE_VERSION"
       - name: Push
         run: |
-          git remote set-url origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}
-          git push
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git push || echo "Push failed with error: $?"
   publish:
+    name: Publish Packages
     needs: update-version
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: main
+          fetch-depth: 0
       - uses: actions/setup-node@v3
         with:
           node-version: '18.x'

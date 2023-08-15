@@ -4,9 +4,8 @@ on:
   pull_request:
     branches:
       - main
-      - release
 jobs:
-  code_checks:
+  code-checks:
     name: Code Checks
     runs-on: ubuntu-latest
     steps:
@@ -16,9 +15,15 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
-      - run: npm install --workspaces
-      - run: npm run format --workspaces
-      - run: npm run build --workspaces
-      - run: npm run lint --workspaces
-      - run: npm run type-check --workspaces
-      - run: npm run coverage --workspaces
+      - name: Install Dependencies
+        run: npm install --workspaces
+      - name: Build Packages
+        run: npm run build --workspaces
+      - name: Format Code
+        run: npm run format --workspaces
+      - name: Lint
+        run: npm run lint --workspaces
+      - name: Type Checking
+        run: npm run type-check --workspaces
+      - name: Test Coverage
+        run: npm run coverage --workspaces
