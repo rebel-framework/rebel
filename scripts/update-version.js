@@ -30,10 +30,10 @@ function updatePackageVersion(directory) {
       }
       updatePackageVersion(filepath); // Recursively check directories
     } else if (path.basename(filepath) === 'package.json') {
+      // Update package.json version field
       const packageData = require(filepath);
       packageData.version = newVersion;
-      // fs.writeFileSync(filepath, JSON.stringify(packageData, null, 2) + '\n');
-      console.log(filepath, packageData.version); // , JSON.stringify(packageData, null, 2) + '\n');
+      fs.writeFileSync(filepath, JSON.stringify(packageData, null, 2) + '\n');
     }
   }
 }
