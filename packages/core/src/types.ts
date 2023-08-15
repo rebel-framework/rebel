@@ -1,8 +1,8 @@
-export interface Command {
+export type Command = {
   (args: string[]): void;
-}
+};
 
-export interface Config {
+export type Config = {
   name: string;
   domain: string;
   environment: string;
@@ -21,11 +21,11 @@ export interface Config {
     softDeletes: boolean;
   };
   app?: {
-    [key: string]: any;
+    [key: string]: boolean | number | string;
   };
-}
+};
 
-export interface Module {
-  default: any;
-  [key: string]: any;
-}
+export type Module = {
+  default: unknown;
+  [key: string]: unknown;
+};

@@ -16,7 +16,7 @@ import useSNS from './services/sns';
 import useSQS from './services/sqs';
 import useSecretsManager from './services/secretsmanager';
 
-export interface Stack {
+export type Stack = {
   apiGateway: ReturnType<typeof useApiGateway>;
   appConfig: ReturnType<typeof useAppConfig>;
   cdk: ReturnType<typeof useCDK>;
@@ -35,4 +35,4 @@ export interface Stack {
   sqs: ReturnType<typeof useSQS>;
   sns: ReturnType<typeof useSNS>;
   deploy: () => void;
-}
+};

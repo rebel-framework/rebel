@@ -1,13 +1,13 @@
 export type Response = {
   statusCode: number;
-  headers: any;
+  headers: object;
   body: string;
 };
 
 export function response(
   statusCode: number,
   body: string | object,
-  headers?: any
+  headers?: object
 ): Response {
   body = JSON.stringify(body);
 

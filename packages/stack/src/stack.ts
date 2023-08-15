@@ -2,7 +2,6 @@ import {
   App as CloudFormationApp,
   Stack as CloudFormationStack,
   StackProps as CloudFormationStackProps,
-  Duration,
 } from 'aws-cdk-lib';
 
 import { Stack } from './types';

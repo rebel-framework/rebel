@@ -3,5 +3,5 @@ import { Config } from './types';
 
 export function useConfig(): Config {
   const { default: config } = include('config');
-  return config;
+  return config as Config;
 }

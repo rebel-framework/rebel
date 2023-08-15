@@ -1,36 +1,54 @@
 import { HttpMethod } from './enums';
 import { MethodNotAllowedError, NotFoundError } from './errors';
 
-export type Router = any;
+export type HttpMethodRoute = (
+  path: string,
+  handler: Handler,
+  middleware?: Middleware[]
+) => void;
+
+export type Router = {
+  routes: Route[];
+  get: HttpMethodRoute;
+  post: HttpMethodRoute;
+  put: HttpMethodRoute;
+  patch: HttpMethodRoute;
+  delete: HttpMethodRoute;
+  head: HttpMethodRoute;
+  options: HttpMethodRoute;
+  connect: HttpMethodRoute;
+  trace: HttpMethodRoute;
+  handle: (request: Request, context: Context) => Promise<unknown>;
+};
 
 export type Request = {
   path: string;
   httpMethod: HttpMethod;
   params?: RequestParams;
-  [key: string]: any;
+  [key: string]: unknown;
 };
 
-export type Context = any;
+export type Context = unknown;
 
 export type RequestParams = {
-  [key: string]: any;
+  [key: string]: unknown;
 };
 
-export type Handler = (request: Request, context: Context) => Promise<any>;
+export type Handler = (request: Request, context: Context) => Promise<unknown>;
 
 export type Middleware = (
   request: Request,
   context: Context,
   next: Handler
-) => Promise<any>;
+) => Promise<unknown>;
 
-export interface Route {
+export type Route = {
   path: RegExp;
   httpMethod: HttpMethod;
   handler: Handler;
   middleware?: Middleware[];
   keys: string[];
-}
+};
 
 // Helper function to transform the path string into a RegExp and extract parameter names
 export function parsePath(path: string) {
@@ -63,59 +81,32 @@ export function useRouter(): Router {
     routes.push(route);
   };
 
-  const get = (
-    path: string,
-    handler: Handler,
-    middleware?: Middleware[]
-  ): void => route(HttpMethod.GET, path, handler, middleware);
+  const get: HttpMethodRoute = (path, handler, middleware) =>
+    route(HttpMethod.GET, path, handler, middleware);
 
-  const post = (
-    path: string,
-    handler: Handler,
-    middleware?: Middleware[]
-  ): void => route(HttpMethod.POST, path, handler, middleware);
+  const post: HttpMethodRoute = (path, handler, middleware) =>
+    route(HttpMethod.POST, path, handler, middleware);
 
-  const put = (
-    path: string,
-    handler: Handler,
-    middleware?: Middleware[]
-  ): void => route(HttpMethod.PUT, path, handler, middleware);
+  const put: HttpMethodRoute = (path, handler, middleware) =>
+    route(HttpMethod.PUT, path, handler, middleware);
 
-  const patch = (
-    path: string,
-    handler: Handler,
-    middleware?: Middleware[]
-  ): void => route(HttpMethod.PATCH, path, handler, middleware);
+  const patch: HttpMethodRoute = (path, handler, middleware) =>
+    route(HttpMethod.PATCH, path, handler, middleware);
 
-  const del = (
-    path: string,
-    handler: Handler,
-    middleware?: Middleware[]
-  ): void => route(HttpMethod.DELETE, path, handler, middleware);
+  const del: HttpMethodRoute = (path, handler, middleware) =>
+    route(HttpMethod.DELETE, path, handler, middleware);
 
-  const head = (
-    path: string,
-    handler: Handler,
-    middleware?: Middleware[]
-  ): void => route(HttpMethod.HEAD, path, handler, middleware);
+  const head: HttpMethodRoute = (path, handler, middleware) =>
+    route(HttpMethod.HEAD, path, handler, middleware);
 
-  const options = (
-    path: string,
-    handler: Handler,
-    middleware?: Middleware[]
-  ): void => route(HttpMethod.OPTIONS, path, handler, middleware);
+  const options: HttpMethodRoute = (path, handler, middleware) =>
+    route(HttpMethod.OPTIONS, path, handler, middleware);
 
-  const connect = (
-    path: string,
-    handler: Handler,
-    middleware?: Middleware[]
-  ): void => route(HttpMethod.CONNECT, path, handler, middleware);
+  const connect: HttpMethodRoute = (path, handler, middleware) =>
+    route(HttpMethod.CONNECT, path, handler, middleware);
 
-  const trace = (
-    path: string,
-    handler: Handler,
-    middleware?: Middleware[]
-  ): void => route(HttpMethod.TRACE, path, handler, middleware);
+  const trace: HttpMethodRoute = (path, handler, middleware) =>
+    route(HttpMethod.TRACE, path, handler, middleware);
 
   const handle = async (request: Request, context: Context) => {
     // First, find a route that matches the path

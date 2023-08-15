@@ -1,10 +1,10 @@
 import { GetItemCommandInput, AttributeValue } from '@aws-sdk/client-dynamodb';
 import { useClient } from './database/client';
 
-type QueryCondition = {
+export type QueryCondition = {
   field: string;
   operator: 'EQ' | 'LT' | 'LTE' | 'GT' | 'GTE' | 'BEGINS_WITH' | 'BETWEEN';
-  value: any;
+  value: string | number | boolean | object;
 };
 
 export const useDatabase = (tableName: string) => {
@@ -49,8 +49,8 @@ export const useDatabase = (tableName: string) => {
     id: string | number,
     updateExpression: T
   ) => {
-    let expressionAttributeNames = {};
-    let expressionAttributeValues = {};
+    const expressionAttributeNames = {};
+    const expressionAttributeValues = {};
     let updateExpr = 'SET ';
 
     // Loop over the updateExpression object to build the update expression for DynamoDB
@@ -116,7 +116,7 @@ export const useDatabase = (tableName: string) => {
       filterBy: (
         field: string,
         operator: QueryCondition['operator'],
-        value: any
+        value: QueryCondition['value']
       ) => {
         conditions.push({ field, operator, value });
         return query(entityType, id);
@@ -130,14 +130,17 @@ export const useDatabase = (tableName: string) => {
             ':sk': { S: `${entityType}#${id}` },
             ...conditions.reduce(
               (acc, c) => {
-                acc[`:${c.field}`] = { S: c.value };
+                acc[`:${c.field}`] = { S: c.value as string };
                 return acc;
               },
               {} as Record<string, AttributeValue>
             ),
           },
           FilterExpression: conditions
-            .map((_, i) => `#${_.field} ${_.operator} :${_.field}`)
+            .map(
+              (parameter) =>
+                `#${parameter.field} ${parameter.operator} :${parameter.field}`
+            )
             .join(' AND '),
           ExpressionAttributeNames: conditions.reduce(
             (names, condition) => {

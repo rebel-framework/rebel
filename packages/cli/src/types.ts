@@ -1,3 +1,3 @@
-export interface Command {
+export type Command = {
   (args: string[]): void;
-}
+};
