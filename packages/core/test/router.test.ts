@@ -86,7 +86,7 @@ describe('Router', () => {
     const router = useRouter();
 
     router.put('/user/:id', async ({ params }) => {
-      return { success: true, userId: params.id };
+      return { success: true, userId: params?.id };
     });
 
     const response = await router.handle({
@@ -102,7 +102,7 @@ describe('Router', () => {
     const router = useRouter();
 
     router.delete('/user/:id', async ({ params }) => {
-      return { success: true, userId: params.id };
+      return { success: true, userId: params?.id };
     });
 
     const response = await router.handle({
@@ -118,7 +118,7 @@ describe('Router', () => {
     const router = useRouter();
 
     router.patch('/user/:id', async ({ params }) => {
-      return { success: true, userId: params.id };
+      return { success: true, userId: params?.id };
     });
 
     const response = await router.handle({

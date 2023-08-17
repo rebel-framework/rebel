@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "strict": false,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "esModuleInterop": true,
+    "preserveConstEnums": true,
+    "isolatedModules": true
+  }
+}

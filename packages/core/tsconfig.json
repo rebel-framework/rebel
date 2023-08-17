@@ -1,13 +1,9 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "declaration": true,
-    "emitDeclarationOnly": true,
-    "esModuleInterop": true,
-    "preserveConstEnums": true,
-    "isolatedModules": true,
     "outDir": "build",
     "rootDir": "src"
   },
   "include": ["src/**/*"],
-  "exclude": ["test/**.ts", "*.test.ts"]
+  "exclude": ["**/*.test.ts"]
 }

@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-let cachedRebelRoot;
+let cachedRebelRoot: string | undefined;
 
 export const root = (suffix?: string, dir = process.cwd()): string => {
   if (!cachedRebelRoot) {
