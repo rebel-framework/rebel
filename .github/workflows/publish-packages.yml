@@ -20,7 +20,7 @@ jobs:
           key: ${{ runner.OS }}-node-modules-${{ hashFiles('**/package-lock.json') }}
           restore-keys: ${{ runner.OS }}-node-modules-
       - name: Install Dependencies
-        run: npm un install
+        run: npm install --workspaces
       - name: Build Packages
         run: npm run build
       - name: Formatting
@@ -50,7 +50,7 @@ jobs:
           key: ${{ runner.OS }}-node-modules-${{ hashFiles('**/package-lock.json') }}
           restore-keys: ${{ runner.OS }}-node-modules-
       - name: Install node modules
-        run: npm install
+        run: npm install --workspaces
       - name: Extract version from tag
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
       - name: Update package.json version
@@ -81,7 +81,7 @@ jobs:
           path: node_modules
           key: ${{ runner.OS }}-node-modules-${{ hashFiles('**/package-lock.json') }}
           restore-keys: ${{ runner.OS }}-node-modules-
-      - run: npm run install
+      - run: npm install --workspaces
       - run: npm run build
       - run: npm run publish
         env:

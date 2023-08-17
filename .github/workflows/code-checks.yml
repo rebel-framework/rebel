@@ -22,7 +22,7 @@ jobs:
           key: ${{ runner.OS }}-node-modules-${{ hashFiles('**/package-lock.json') }}
           restore-keys: ${{ runner.OS }}-node-modules-
       - name: Install Dependencies
-        run: npm un install
+        run: npm install --workspaces
       - name: Build Packages
         run: npm run build
       - name: Formatting

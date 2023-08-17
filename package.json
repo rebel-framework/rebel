@@ -7,7 +7,6 @@
     "packages/cli"
   ],
   "scripts": {
-    "install": "npm install --workspaces",
     "build": "npm run build --workspaces",
     "watch": "cd packages/core && npm run watch & cd packages/cli && npm run watch & cd packages/stack && npm run watch",
     "coverage": "jest --coverage --passWithNoTests",
