@@ -3,7 +3,29 @@ on:
   release:
     types: [published]
 jobs:
-  update-version:
+  code-checks:
+    name: Code Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+      - name: Install Dependencies
+        run: npm un install
+      - name: Build Packages
+        run: npm run build
+      - name: Formatting
+        run: npm run format
+      - name: Linting
+        run: npm run lint
+      - name: Type Checking
+        run: npm run type-check
+      - name: Test Coverage
+        run: npm run coverage
+  update-packages-version:
     name: Update Packages Version
     runs-on: ubuntu-latest
     steps:
@@ -27,7 +49,7 @@ jobs:
           git add .
           git commit -m "Release $RELEASE_VERSION"
           git push
-  publish:
+  publish-packages:
     name: Publish Packages
     needs: update-version
     runs-on: ubuntu-latest
