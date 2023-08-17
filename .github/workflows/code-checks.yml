@@ -24,6 +24,6 @@ jobs:
       - name: Linting
         run: npm run lint
       - name: Type Checking
-        run: npm run type-check --workspaces
+        run: npm run type-check
       - name: Test Coverage
-        run: npm run coverage --workspaces
+        run: npm run coverage
