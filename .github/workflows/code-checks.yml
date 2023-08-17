@@ -19,9 +19,9 @@ jobs:
         run: npm un install
       - name: Build Packages
         run: npm run build
-      - name: Format Code
+      - name: Formatting
         run: npm run format
-      - name: Lint
+      - name: Linting
         run: npm run lint
       - name: Type Checking
         run: npm run type-check --workspaces
