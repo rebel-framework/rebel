@@ -9,10 +9,15 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
+      - uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: ${{ runner.OS }}-node-modules-
       - name: Install Dependencies
         run: npm un install
       - name: Build Packages
@@ -25,8 +30,8 @@ jobs:
         run: npm run type-check
       - name: Test Coverage
         run: npm run coverage
-  update-packages-version:
-    name: Update Packages Version
+  update-version:
+    name: Update Version
     needs: code-checks
     runs-on: ubuntu-latest
     steps:
@@ -37,6 +42,11 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '18.x'
+      - uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: ${{ runner.OS }}-node-modules-
       - name: Install node modules
         run: npm install
       - name: Extract version from tag
@@ -52,7 +62,7 @@ jobs:
           git push
   publish-packages:
     name: Publish Packages
-    needs: update-packages-version
+    needs: update-version
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -63,6 +73,11 @@ jobs:
         with:
           node-version: '18.x'
           registry-url: 'https://registry.npmjs.org'
+      - uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: ${{ runner.OS }}-node-modules-
       - run: npm run install
       - run: npm run build
       - run: npm run publish
