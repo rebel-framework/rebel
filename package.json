@@ -7,13 +7,18 @@
     "packages/cli"
   ],
   "scripts": {
+    "install": "npm install --workspaces",
     "build": "npm run build --workspaces",
-    "watch": "cd packages/cli && npm run watch --workspaces & cd packages/core && npm run watch --workspaces & cd packages/stack && npm run watch --workspaces",
+    "watch": "cd packages/core && npm run watch & cd packages/cli && npm run watch & cd packages/stack && npm run watch",
     "coverage": "jest --coverage --passWithNoTests",
     "test": "jest --passWithNoTests",
+    "format": "npm run format --workspaces",
+    "lint": "npm run lint --workspaces",
+    "type-check": "npm run type-check --workspaces",
     "nuke": "rm -rf node_modules",
     "permission": "chmod +x packages/cli/build/index.js",
-    "update-version": "node scripts/update-version.js"
+    "update-version": "node scripts/update-version.js",
+    "publish": "npm publish --workspaces"
   },
   "eslintConfig": {
     "extends": [

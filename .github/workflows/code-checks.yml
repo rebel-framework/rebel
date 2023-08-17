@@ -16,13 +16,13 @@ jobs:
         with:
           node-version: '18.x'
       - name: Install Dependencies
-        run: npm install --workspaces
+        run: npm un install
       - name: Build Packages
-        run: npm run build --workspaces
+        run: npm run build
       - name: Format Code
-        run: npm run format --workspaces
+        run: npm run format
       - name: Lint
-        run: npm run lint --workspaces
+        run: npm run lint
       - name: Type Checking
         run: npm run type-check --workspaces
       - name: Test Coverage
