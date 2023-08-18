@@ -14,10 +14,11 @@
     "format": "npm run format --workspaces",
     "lint": "npm run lint --workspaces",
     "type-check": "npm run type-check --workspaces",
+    "publish": "npm publish --workspaces",
     "nuke": "rm -rf node_modules",
     "permission": "chmod +x packages/cli/build/index.js",
     "update-version": "node scripts/update-version.js",
-    "publish": "npm publish --workspaces"
+    "create-package": "node scripts/create-package.js"
   },
   "eslintConfig": {
     "extends": [

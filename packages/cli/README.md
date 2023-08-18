@@ -1,20 +1,7 @@
-# `rebel`
-
-> TODO: description
+# `rebel`, the command-line utility of the Rebel Framework
 
 ## Usage
 
 ```sh
 rebel init project-name
 ```
-
-Creates the `.rebel` directory.
-
-```sh
-rebel generate filetype filename
-```
-
-Generates a file name of file type
-
-brew install cfn-lint
-brew install sam
