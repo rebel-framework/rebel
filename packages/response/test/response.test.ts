@@ -1,4 +1,4 @@
-import { response, Response } from '../src/response'; // adjust the import as per your file location
+import { response, Response } from '../src/response';
 
 describe('response', () => {
   let headers: any;

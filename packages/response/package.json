@@ -1,0 +1,37 @@
+{
+  "name": "@rebel-framework/response",
+  "version": "0.0.4",
+  "private": false,
+  "description": "Rebel Framework response",
+  "author": "Ben Villiere",
+  "homepage": "https://github.com/rebel-framework/rebel#readme",
+  "license": "MIT",
+  "main": "build/index.js",
+  "exports": {
+    ".": "./build/index.js"
+  },
+  "files": [
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rebel-framework/rebel.git"
+  },
+  "scripts": {
+    "build": "tsc && babel src --root-mode upward --out-dir build --extensions '.ts'",
+    "watch": "tsc && babel src --root-mode upward --out-dir build --extensions '.ts' --watch",
+    "type-check": "npx tsc",
+    "format": "npx prettier .",
+    "lint": "npx eslint src/**.ts"
+  },
+  "bugs": {
+    "url": "https://github.com/rebel-framework/rebel/issues"
+  },
+  "keywords": [
+    "serverless",
+    "typescript",
+    "aws",
+    "framework",
+    "full-stack"
+  ]
+}
