@@ -5,11 +5,12 @@
     "packages/core",
     "packages/stack",
     "packages/cli",
-    "packages/router"
+    "packages/router",
+    "packages/database"
   ],
   "scripts": {
     "build": "npm run build --workspaces",
-    "watch": "cd packages/core && npm run watch & cd packages/cli && npm run watch & cd packages/stack && npm run watch",
+    "watch": "node scripts/watch.js",
     "coverage": "jest --coverage --passWithNoTests",
     "test": "jest --passWithNoTests",
     "format": "npm run format --workspaces",
