@@ -42,7 +42,7 @@ async function createPackage(name) {
   await fs.mkdir(`${newPackagePath}/src`);
 
   console.log(`Creating an index file`);
-  const index = `console.log('Hello, router!');
+  const index = `console.log('Hello, ${name}!');
 `;
   await fs.writeFile(`${newPackagePath}/src/index.ts`, index, 'utf-8');
 
