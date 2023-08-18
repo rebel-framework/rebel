@@ -27,6 +27,12 @@ const config: Config = {
       testEnvironment: 'node',
       testMatch: ['<rootDir>/packages/router/**/?(*.)+(spec|test).[jt]s?(x)'],
     },
+    {
+      displayName: 'database',
+      preset: 'ts-jest',
+      testEnvironment: 'node',
+      testMatch: ['<rootDir>/packages/database/**/?(*.)+(spec|test).[jt]s?(x)'],
+    },
   ],
 };
 
