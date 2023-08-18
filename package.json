@@ -6,7 +6,8 @@
     "packages/stack",
     "packages/cli",
     "packages/router",
-    "packages/database"
+    "packages/database",
+    "packages/errors"
   ],
   "scripts": {
     "build": "npm run build --workspaces",

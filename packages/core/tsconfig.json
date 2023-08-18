@@ -4,6 +4,6 @@
     "outDir": "build",
     "rootDir": "src"
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "../router/src/router.ts", "../router/src/errors.ts"],
   "exclude": ["**/*.test.ts"]
 }
