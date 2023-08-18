@@ -11,6 +11,7 @@ async function createPackage(name) {
   const packageJson = await fs.readFile(`${corePath}/package.json`, 'utf-8');
   const packageData = JSON.parse(packageJson);
   packageData.name = `@rebel-framework/${name}`;
+  packageData.description = `Rebel Framework ${name}`;
 
   console.log(
     `Writing updated package.json to: ${newPackagePath}/package.json`
@@ -35,10 +36,40 @@ async function createPackage(name) {
   console.log(`Creating src directory at: ${newPackagePath}/src`);
   await fs.mkdir(`${newPackagePath}/src`);
 
+  console.log(`Creating an index file`);
+  const index = `console.log('Hello, router!');
+`;
+  await fs.writeFile(`${newPackagePath}/src/index.ts`, index, 'utf-8');
+
   console.log(`Creating test directory at: ${newPackagePath}/test`);
   await fs.mkdir(`${newPackagePath}/test`);
 
-  console.log('All operations completed successfully.');
+  console.log(`Creating an index.test.ts file`);
+  const test = `describe(${name}, () => {
+  it('should ensure ${name} works', async () => {
+    expect(true).toBeTruthy();
+  });
+});
+
+`;
+  await fs.writeFile(`${newPackagePath}/test/index.test.ts`, test, 'utf-8');
+
+  console.log(`Adding package package to workspace`);
+  const rootPackageJson = await fs.readFile(`./package.json`, 'utf-8');
+  const rootPackageData = JSON.parse(rootPackageJson);
+  rootPackageData.workspaces = [
+    ...rootPackageData.workspaces,
+    `packages/${name}`,
+  ];
+
+  console.log(`Writing updated root package.json`);
+  await fs.writeFile(
+    `./package.json`,
+    JSON.stringify(packageData, null, 2),
+    'utf-8'
+  );
+
+  console.log(`Created ${name} package successfully!`);
 }
 
 // Check for name parameter and execute
