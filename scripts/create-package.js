@@ -23,7 +23,12 @@ async function createPackage(name) {
   );
 
   console.log(`Creating README.md at: ${newPackagePath}/README.md`);
-  await fs.writeFile(`${newPackagePath}/README.md`, `# ${name}`, 'utf-8');
+  await fs.writeFile(
+    `${newPackagePath}/README.md`,
+    `# ${name}
+  `,
+    'utf-8'
+  );
 
   console.log(
     `Copying tsconfig.json from: ${corePath}/tsconfig.json to ${newPackagePath}/tsconfig.json`
