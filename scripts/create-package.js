@@ -45,7 +45,7 @@ async function createPackage(name) {
   await fs.mkdir(`${newPackagePath}/test`);
 
   console.log(`Creating an index.test.ts file`);
-  const test = `describe(${name}, () => {
+  const test = `describe('${name}', () => {
   it('should ensure ${name} works', async () => {
     expect(true).toBeTruthy();
   });
@@ -65,7 +65,7 @@ async function createPackage(name) {
   console.log(`Writing updated root package.json`);
   await fs.writeFile(
     `./package.json`,
-    JSON.stringify(packageData, null, 2),
+    JSON.stringify(rootPackageData, null, 2),
     'utf-8'
   );
 
