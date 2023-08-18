@@ -24,9 +24,6 @@
     "format": "npx prettier .",
     "lint": "npx eslint src/**.ts"
   },
-  "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.378.0"
-  },
   "bugs": {
     "url": "https://github.com/rebel-framework/rebel/issues"
   },
