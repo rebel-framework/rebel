@@ -1,5 +1,5 @@
 import { GetItemCommandInput, AttributeValue } from '@aws-sdk/client-dynamodb';
-import { useClient } from './database/client';
+import { useClient } from './client';
 
 export type QueryCondition = {
   field: string;

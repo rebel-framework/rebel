@@ -1,1 +1,1 @@
-console.log('Hello, database!');
+export { useDatabase } from './database';

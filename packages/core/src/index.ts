@@ -4,7 +4,6 @@ export type { Command, Config } from './types';
 export { HttpMethod } from './enums';
 export { registerEnvironmentVariables, env } from './env';
 export { useConfig } from './config';
-export { useDatabase } from './database';
 export { errorHandler, NotFoundError, MethodNotAllowedError } from './errors';
 export { handler } from './handler';
 export type { Response } from './response';
