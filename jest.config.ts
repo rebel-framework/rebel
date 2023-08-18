@@ -19,7 +19,13 @@ const config: Config = {
       displayName: 'stack',
       preset: 'ts-jest',
       testEnvironment: 'node',
-      testMatch: ['<rootDir>/packages/cli/**/?(*.)+(spec|test).[jt]s?(x)'],
+      testMatch: ['<rootDir>/packages/stack/**/?(*.)+(spec|test).[jt]s?(x)'],
+    },
+    {
+      displayName: 'router',
+      preset: 'ts-jest',
+      testEnvironment: 'node',
+      testMatch: ['<rootDir>/packages/router/**/?(*.)+(spec|test).[jt]s?(x)'],
     },
   ],
 };
