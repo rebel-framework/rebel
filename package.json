@@ -18,7 +18,7 @@
     "format": "npm run format --workspaces",
     "lint": "npm run lint --workspaces",
     "type-check": "npm run type-check --workspaces",
-    "publish": "npm publish --workspaces",
+    "publish": "npm publish --workspaces --access public",
     "nuke": "rm -rf node_modules",
     "permission": "chmod +x packages/cli/build/index.js",
     "update-version": "node scripts/update-version.js",
