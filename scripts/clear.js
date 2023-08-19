@@ -1,5 +1,5 @@
-const fsSync = require('fs'); // For synchronous operations
-const fs = require('fs').promises; // For promise-based operations
+const fsSync = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 
 const rootDir = path.resolve(__dirname, '..');
@@ -17,6 +17,17 @@ async function deleteFolderRecursive(directory) {
       }
     }
     await fs.rmdir(directory);
+  }
+}
+
+async function deleteTgzFiles() {
+  const files = await fs.readdir(rootDir);
+  for (const file of files) {
+    if (file.endsWith('.tgz')) {
+      const filePath = path.join(rootDir, file);
+      console.log(`Deleting ${filePath}...`);
+      await fs.unlink(filePath);
+    }
   }
 }
 
@@ -43,6 +54,7 @@ async function main() {
   for (const folderName of foldersToDelete) {
     await clearFolder(folderName);
   }
+  await deleteTgzFiles();
   console.log('Clearing process completed.');
 }
 
