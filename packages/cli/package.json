@@ -10,7 +10,7 @@
     "rebel": "./build/index.js"
   },
   "files": [
-    "src"
+    "build"
   ],
   "repository": {
     "type": "git",
