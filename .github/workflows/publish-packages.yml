@@ -81,6 +81,7 @@ jobs:
           path: node_modules
           key: ${{ runner.OS }}-node-modules-${{ hashFiles('**/package-lock.json') }}
           restore-keys: ${{ runner.OS }}-node-modules-
+      - run: npm install
       - run: npm install --workspaces
       - run: npm run build
       - run: npm run publish

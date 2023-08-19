@@ -21,7 +21,9 @@ jobs:
           path: node_modules
           key: ${{ runner.OS }}-node-modules-${{ hashFiles('**/package-lock.json') }}
           restore-keys: ${{ runner.OS }}-node-modules-
-      - name: Install Dependencies
+      - name: Install Root Dependencies
+        run: npm install
+      - name: Install Package Dependencies
         run: npm install --workspaces
       - name: Build Packages
         run: npm run build
