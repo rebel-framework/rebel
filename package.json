@@ -12,17 +12,17 @@
   ],
   "scripts": {
     "build": "npm run build --workspaces",
-    "watch": "node scripts/watch.js",
     "coverage": "jest --coverage --passWithNoTests",
     "test": "jest --passWithNoTests",
     "format": "npm run format --workspaces",
     "lint": "npm run lint --workspaces",
     "type-check": "npm run type-check --workspaces",
     "publish": "npm publish --workspaces --access public",
-    "nuke": "rm -rf node_modules",
     "permission": "chmod +x packages/cli/build/index.js",
+    "clear": "node scripts/clear.js",
     "update-version": "node scripts/update-version.js",
-    "create-package": "node scripts/create-package.js"
+    "create-package": "node scripts/create-package.js",
+    "watch": "node scripts/watch.js"
   },
   "eslintConfig": {
     "extends": [
