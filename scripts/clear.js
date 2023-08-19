@@ -1,4 +1,5 @@
-const fs = require('fs').promises;
+const fsSync = require('fs'); // For synchronous operations
+const fs = require('fs').promises; // For promise-based operations
 const path = require('path');
 
 const rootDir = path.resolve(__dirname, '..');
@@ -6,7 +7,7 @@ const packagesDir = path.join(rootDir, 'packages');
 const foldersToDelete = ['node_modules', 'build', 'coverage'];
 
 async function deleteFolderRecursive(directory) {
-  if (fs.existsSync(directory)) {
+  if (fsSync.existsSync(directory)) {
     for (const entry of await fs.readdir(directory, { withFileTypes: true })) {
       const curPath = path.join(directory, entry.name);
       if (entry.isDirectory()) {
@@ -30,7 +31,7 @@ async function clearFolder(folderName) {
   for (const dir of directories) {
     if (dir.isDirectory()) {
       const targetFolder = path.join(packagesDir, dir.name, folderName);
-      if (fs.existsSync(targetFolder)) {
+      if (fsSync.existsSync(targetFolder)) {
         console.log(`Deleting ${targetFolder}...`);
         await deleteFolderRecursive(targetFolder);
       }
