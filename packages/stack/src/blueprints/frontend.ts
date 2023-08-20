@@ -1,5 +1,4 @@
 import { root } from '@rebel-framework/core';
-import { Stack } from '../types';
 import * as S3Deployment from 'aws-cdk-lib/aws-s3-deployment';
 import { PolicyStatement, Effect } from 'aws-cdk-lib/aws-iam';
 import { RemovalPolicy } from 'aws-cdk-lib';
@@ -8,6 +7,7 @@ import {
   CloudFrontWebDistribution,
   OriginAccessIdentity,
 } from 'aws-cdk-lib/aws-cloudfront';
+import { Stack } from '../types';
 
 export type Frontend = {
   siteBucket: Bucket;

@@ -74,6 +74,26 @@ async function createPackage(name) {
     'utf-8'
   );
 
+  console.log(`Adding package to jest.config.json`);
+  const jestConfigJson = await fs.readFile(`./jest.config.json`, 'utf-8');
+  const jestConfigData = JSON.parse(jestConfigJson);
+  jestConfigData.projects = [
+    ...jestConfigData.projects,
+    {
+      displayName: name,
+      preset: 'ts-jest',
+      testEnvironment: 'node',
+      testMatch: [`<rootDir>/packages/${name}/**/?(*.)+(spec|test).[jt]s?(x)`],
+    },
+  ];
+
+  console.log(`Writing updated jest.config.json`);
+  await fs.writeFile(
+    `./jest.config.json`,
+    JSON.stringify(jestConfigData, null, 2),
+    'utf-8'
+  );
+
   console.log(`Created ${name} package successfully!`);
 }
 

@@ -1,6 +1,6 @@
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
-import { Stack } from '../types';
 import { RestApi } from 'aws-cdk-lib/aws-apigateway';
+import { Stack } from '../types';
 
 export type Backend = {
   lambda: NodejsFunction;
