@@ -1,50 +1,100 @@
-import { env } from '../src/env';
+import fs from 'fs';
+import { useEnv } from '../src';
+import { EnvFileDoesNotExist } from '../src';
 
-describe('env', () => {
+describe('useEnv', () => {
+  // Mock file path for the tests
+  const testEnvPath = './.testenv';
+
   beforeEach(() => {
-    jest.resetModules();
-    process.env = {};
+    // Create a dummy file first
+    if (!fs.existsSync(testEnvPath)) {
+      fs.writeFileSync(testEnvPath, '');
+    }
+    const { clear } = useEnv(testEnvPath);
+    clear(); // Clear the cache after the initial read
   });
 
-  it('should return the default value if the environment variable is not set', () => {
-    const defaultValue = 'default';
-    const result = env('NON_EXISTENT_ENV_VAR', defaultValue);
-    expect(result).toBe(defaultValue);
+  afterEach(() => {
+    // Clean up mock env file after each test
+    if (fs.existsSync(testEnvPath)) {
+      fs.unlinkSync(testEnvPath);
+    }
   });
 
-  it('should return the environment variable value for string type', () => {
-    process.env.STRING_ENV_VAR = 'hello';
-    const result = env('STRING_ENV_VAR', 'fallback');
-    expect(result).toBe('hello');
+  it('should read env variables correctly', () => {
+    fs.writeFileSync(
+      testEnvPath,
+      'TEST_KEY=TEST_VALUE\nSECOND_KEY=SECOND_VALUE'
+    );
+
+    const { env } = useEnv(testEnvPath);
+
+    expect(env('TEST_KEY')).toBe('TEST_VALUE');
+    expect(env('SECOND_KEY')).toBe('SECOND_VALUE');
   });
 
-  it('should convert string "true" to boolean true', () => {
-    process.env.BOOLEAN_ENV_VAR = 'true';
-    const result = env('BOOLEAN_ENV_VAR', false);
-    expect(result).toBe(true);
+  it('should throw EnvFileDoesNotExist if file is missing', () => {
+    // Explicitly remove the file before the test
+    if (fs.existsSync(testEnvPath)) {
+      fs.unlinkSync(testEnvPath);
+    }
+
+    expect(() => {
+      useEnv(testEnvPath);
+    }).toThrow(EnvFileDoesNotExist);
   });
 
-  it('should convert string "false" to boolean false', () => {
-    process.env.BOOLEAN_ENV_VAR = 'false';
-    const result = env('BOOLEAN_ENV_VAR', true);
-    expect(result).toBe(false);
+  it('should ignore malformed lines', () => {
+    const mockEnvVariables = [
+      'TEST_KEY=TEST_VALUE',
+      'MALFORMED_LINE',
+      'SECOND_KEY=SECOND_VALUE',
+    ].join('\n');
+
+    fs.writeFileSync(testEnvPath, mockEnvVariables);
+
+    const { env } = useEnv(testEnvPath);
+
+    expect(env('TEST_KEY')).toBe('TEST_VALUE');
+    expect(env('SECOND_KEY')).toBe('SECOND_VALUE');
+    expect(env('MALFORMED_LINE', null)).toBeNull(); // Using a default value to check non-existent keys.
   });
 
-  it('should return false value for invalid boolean strings', () => {
-    process.env.INVALID_BOOLEAN_ENV_VAR = 'invalid';
-    const result = env('INVALID_BOOLEAN_ENV_VAR', true);
-    expect(result).toBe(false);
+  it('should remove quotes from env variables if present', () => {
+    fs.writeFileSync(testEnvPath, 'TEST_KEY="TEST_VALUE"');
+
+    const { env } = useEnv(testEnvPath);
+
+    expect(env('TEST_KEY')).toBe('TEST_VALUE');
   });
 
-  it('should convert string to number when default value is a number', () => {
-    process.env.NUMERIC_ENV_VAR = '42';
-    const result = env('NUMERIC_ENV_VAR', 0);
-    expect(result).toBe(42);
+  it('should retain quotes within the string value', () => {
+    fs.writeFileSync(testEnvPath, 'TEST_KEY="Some TEST_VALUE with "quotes""');
+
+    const { env } = useEnv(testEnvPath);
+
+    expect(env('TEST_KEY')).toBe('Some TEST_VALUE with "quotes"');
   });
 
-  it('should return NaN for invalid numeric strings', () => {
-    process.env.INVALID_NUMERIC_ENV_VAR = 'invalid';
-    const result = env('INVALID_NUMERIC_ENV_VAR', 100);
-    expect(result).toBe(NaN);
+  it('should handle default values correctly', () => {
+    fs.writeFileSync(testEnvPath, 'BOOLEAN_KEY=true\nNUMBER_KEY=123');
+
+    const { env } = useEnv(testEnvPath);
+
+    expect(env('BOOLEAN_KEY', false)).toBe(true);
+    expect(env('NON_EXISTENT_BOOLEAN_KEY', false)).toBe(false);
+    expect(env('NUMBER_KEY', 0)).toBe(123);
+    expect(env('NON_EXISTENT_NUMBER_KEY', 0)).toBe(0);
+    expect(env('NON_EXISTENT_KEY')).toBeUndefined();
+  });
+
+  it('should interpret binary numbers as booleans', () => {
+    fs.writeFileSync(testEnvPath, 'BOOLEAN_ONE=1\nBOOLEAN_ZERO=0');
+
+    const { env } = useEnv(testEnvPath);
+
+    expect(env('BOOLEAN_ONE', true)).toBe(true);
+    expect(env('BOOLEAN_ZERO', true)).toBe(false);
   });
 });

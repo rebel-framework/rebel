@@ -1,4 +1,9 @@
 import { Module } from '../types';
 import { root } from './root';
 
-export const include = (path: string): Module => require(root(`build/${path}`));
+export function _require(path: string): any {
+  return require(path);
+}
+
+export const include = (path: string): Module =>
+  _require(root(`build/${path}`));
