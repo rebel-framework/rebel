@@ -1,9 +1,6 @@
 #!/usr/bin/env node
 
-// import { registerEnvironmentVariables } from '@rebel-framework/core';
 import * as commands from './commands';
-
-// registerEnvironmentVariables();
 
 async function main() {
   const args = process.argv.slice(2);
