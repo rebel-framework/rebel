@@ -1,5 +1,5 @@
 import { Stack } from '../types';
-import { env } from '@rebel-framework/core';
+import { useEnv } from '@rebel-framework/core';
 import { PipelineProject } from 'aws-cdk-lib/aws-codebuild';
 import {
   Artifact,
@@ -20,6 +20,7 @@ export type Pipeline = {
 };
 
 export function usePipeline(stack: Stack, websiteBucket: Bucket) {
+  const { env } = useEnv(root('.env'));
   const { codeBuild, codePipeline, secretsManager } = stack;
   const buildProject = codeBuild.pipelineProject();
   const sourceOutput = codePipeline.artifact('RebelSourceArtifact');
