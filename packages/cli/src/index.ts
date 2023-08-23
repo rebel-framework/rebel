@@ -31,7 +31,7 @@ async function main() {
       'Available commands: init, install, build, test, deploy, generate'
     );
   } else {
-    await commands[command]([...args, { stack: currentStack }]);
+    await commands[command]({ ...args, stack: currentStack });
   }
 }
 

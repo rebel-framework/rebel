@@ -24,7 +24,7 @@ describe('include', () => {
     const inclusion = include(filePathToInclude);
 
     // Check if root is called with the correct parameter
-    expect(rootMock).toHaveBeenCalledWith(`build/${filePathToInclude}`);
+    expect(rootMock).toHaveBeenCalledWith(filePathToInclude);
 
     // Check if include returns the expected value
     expect(inclusion).toEqual({ test: { passes: true } });

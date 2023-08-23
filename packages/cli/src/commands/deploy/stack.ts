@@ -1,9 +1,11 @@
-import { include } from '@rebel-framework/core';
-
-// TODO: Read stack name
+import { include, root } from '@rebel-framework/core';
 
 /**
  * This file is used to load the stack from the
  * local project and make it available to CDK.
  */
-include('stack');
+
+const name = process.env.REBEL_CURRENT_STACK;
+const path = `.rebel/stacks/${name}/stack.js`;
+
+include(path);
