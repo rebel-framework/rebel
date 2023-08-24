@@ -8,18 +8,19 @@ type Arguments = {
   stack: string;
 };
 
-async function compile(stack: string) {
+async function compileStack(stack: string) {
   const inputFile = root(`stacks/${stack}/stack.ts`);
   const outputDir = root(`.rebel/stacks/${stack}`);
   await exec(`npx tsc ${inputFile} --outDir ${outputDir}`);
   const outputFile = root(`.rebel/stacks/${stack}/stack.js`);
   const babelConfigPath = root(`babel.config.json`);
-  console.log(
-    `npx babel ${inputFile} --out-file ${outputFile} --config-file ${babelConfigPath}`
-  );
   await exec(
     `npx babel ${inputFile} --out-file ${outputFile} --config-file ${babelConfigPath}`
   );
+}
+
+async function buildProject(stack: string) {
+  await exec(`npm run build --workspace ${stack}`);
 }
 
 export default async function deploy(args: Arguments) {
@@ -31,8 +32,11 @@ export default async function deploy(args: Arguments) {
   // by cdk (see ./deploy/stack.ts)
   process.env.REBEL_CURRENT_STACK = stack;
 
-  // First, we need to build the stack file
-  await compile(stack);
+  // Transpiling stack file to to javascript
+  await compileStack(stack);
+
+  // Building project
+  await buildProject(stack);
 
   // TODO: Assert compile stack file exists?
   const cdk = 'aws-cdk@latest';
