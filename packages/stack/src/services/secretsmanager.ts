@@ -12,9 +12,9 @@ export default function useSecretsManager(stack: CloudFormationStack) {
     props?: SecretsManager.SecretProps
   ) =>
     new SecretsManager.Secret(stack, name, {
-      ...props,
       secretName: name,
       secretStringValue: new SecretValue(value),
+      ...props,
     });
 
   const value = (name: string, options?: SecretsManagerSecretOptions) =>
