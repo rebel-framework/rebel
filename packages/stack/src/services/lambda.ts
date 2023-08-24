@@ -17,11 +17,9 @@ export default function useLambda(stack: CloudFormationStack) {
 
   const nodeFunction = (name: string, props: any) =>
     new NodejsFunction(stack, name, {
-      entry: root('stacks/backend/src/handler.ts'),
-      handler: 'handler',
       runtime: Lambda.Runtime.NODEJS_18_X,
       timeout: Duration.seconds(10), // Optionally set a timeout
-      memorySize: 256, // Optionally set the amount of memory allocated
+      memorySize: 128, // Optionally set the amount of memory allocated
       bundling: {
         minify: false,
         // externalModules: externalModules,

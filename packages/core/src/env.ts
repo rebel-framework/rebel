@@ -54,7 +54,7 @@ export function useEnv(filePath: string) {
   };
 
   const clear = () => {
-    for (let key in variables) {
+    for (const key in variables) {
       delete variables[key];
     }
   };

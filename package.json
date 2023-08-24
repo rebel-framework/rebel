@@ -22,7 +22,8 @@
     "clear": "node scripts/clear.js",
     "update-version": "node scripts/update-version.js",
     "create-package": "node scripts/create-package.js",
-    "watch": "node scripts/watch.js"
+    "watch": "node scripts/watch.js",
+    "code-checks": "npm install && npm install --workspaces && npm run build && npm run format && npm run lint && npm run type-check && npm run coverage"
   },
   "eslintConfig": {
     "extends": [
