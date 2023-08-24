@@ -2,6 +2,10 @@ import fs from 'fs';
 import { useEnv } from '../src';
 import { EnvFileDoesNotExist } from '../src';
 
+jest.mock('../src/helpers/root', () => ({
+  root: jest.fn((path) => `./mockRoot/${path}`),
+}));
+
 describe('useEnv', () => {
   // Mock file path for the tests
   const testEnvPath = './.testenv';
@@ -20,6 +24,10 @@ describe('useEnv', () => {
     if (fs.existsSync(testEnvPath)) {
       fs.unlinkSync(testEnvPath);
     }
+  });
+
+  afterAll(() => {
+    jest.restoreAllMocks();
   });
 
   it('should read env variables correctly', () => {
@@ -96,5 +104,24 @@ describe('useEnv', () => {
 
     expect(env('BOOLEAN_ONE', true)).toBe(true);
     expect(env('BOOLEAN_ZERO', true)).toBe(false);
+  });
+
+  it('should read from the default .env file if no filePath is provided', () => {
+    const mockDefaultEnvPath = './mockRoot/.env'; // This is where the mocked root points to
+
+    // Create a dummy file at the mock default location
+    if (!fs.existsSync(mockDefaultEnvPath)) {
+      fs.mkdirSync('./mockRoot', { recursive: true });
+      fs.writeFileSync(mockDefaultEnvPath, 'DEFAULT_KEY=DEFAULT_VALUE');
+    }
+
+    const { env } = useEnv(); // Notice we're not passing in any path
+
+    expect(env('DEFAULT_KEY')).toBe('DEFAULT_VALUE');
+
+    // Clean up the mock .env file after the test
+    if (fs.existsSync(mockDefaultEnvPath)) {
+      fs.unlinkSync(mockDefaultEnvPath);
+    }
   });
 });

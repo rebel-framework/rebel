@@ -1,9 +1,10 @@
 import fs from 'fs';
 import { EnvFileDoesNotExist } from './errors';
+import { root } from './helpers/root';
 
 const variables: Record<string, string> = {};
 
-export function useEnv(filePath: string) {
+export function useEnv(filePath?: string) {
   const read = (filePath: string): Record<string, string> => {
     if (Object.keys(variables).length > 0) {
       return variables;
@@ -59,7 +60,7 @@ export function useEnv(filePath: string) {
     }
   };
 
-  read(filePath);
+  read(filePath || root('.env'));
 
   return {
     read,
