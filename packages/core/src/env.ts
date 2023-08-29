@@ -2,14 +2,10 @@ import fs from 'fs';
 import { EnvFileDoesNotExist } from './errors';
 import { root } from './helpers/root';
 
-const variables: Record<string, string> = {};
-
 export function useEnv(filePath?: string) {
-  const read = (filePath: string): Record<string, string> => {
-    if (Object.keys(variables).length > 0) {
-      return variables;
-    }
+  const setKeys: string[] = []; // Track the keys that are set by read()
 
+  const read = (filePath: string): void => {
     if (!fs.existsSync(filePath)) {
       throw new EnvFileDoesNotExist(filePath);
     }
@@ -23,20 +19,24 @@ export function useEnv(filePath?: string) {
       if (key && rawValue) {
         let value = rawValue.trim();
 
-        // Check if the value is wrapped with double quotes and remove them
+        // Remove surrounding quotes if present
         if (value.startsWith('"') && value.endsWith('"')) {
           value = value.slice(1, -1);
         }
 
-        variables[key.trim()] = value;
+        const trimmedKey = key.trim();
+
+        if (process.env[trimmedKey] === undefined) {
+          setKeys.push(trimmedKey); // Keep track of the keys set by this function
+        }
+
+        process.env[trimmedKey] = value;
       }
     }
-
-    return variables;
   };
 
   const env = <T>(key: string, defaultValue?: T): T => {
-    const value = variables[key];
+    const value = process.env[key];
 
     if (value === undefined) {
       return defaultValue as T;
@@ -44,22 +44,23 @@ export function useEnv(filePath?: string) {
 
     switch (typeof defaultValue) {
       case 'boolean':
-        return value.toLowerCase() === 'true' || value === '1'
-          ? (true as T)
-          : (false as T);
+        return (value.toLowerCase() === 'true' ||
+          value === '1') as unknown as T;
       case 'number':
-        return parseFloat(value) as T;
+        return parseFloat(value) as unknown as T;
       default:
-        return value as T;
+        return value as unknown as T;
     }
   };
 
   const clear = () => {
-    for (const key in variables) {
-      delete variables[key];
+    for (const key of setKeys) {
+      delete process.env[key];
     }
+    setKeys.length = 0; // Clear the tracking array
   };
 
+  // Perform initial read
   read(filePath || root('.env'));
 
   return {
