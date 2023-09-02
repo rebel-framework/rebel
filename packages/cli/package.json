@@ -1,6 +1,6 @@
 {
   "name": "@rebel-framework/cli",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": false,
   "description": "Rebel Framework's CLI utility for rapid serverless full-stack web application development",
   "author": "Ben Villiere",
