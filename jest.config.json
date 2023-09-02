@@ -40,6 +40,12 @@
       "preset": "ts-jest",
       "testEnvironment": "node",
       "testMatch": ["<rootDir>/packages/stack/**/?(*.)+(spec|test).[jt]s?(x)"]
+    },
+    {
+      "displayName": "env",
+      "preset": "ts-jest",
+      "testEnvironment": "node",
+      "testMatch": ["<rootDir>/packages/env/**/?(*.)+(spec|test).[jt]s?(x)"]
     }
   ]
 }

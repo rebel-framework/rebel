@@ -1,6 +1,6 @@
+import { root } from '@rebel-framework/core';
 import fs from 'fs';
 import { EnvFileDoesNotExist } from './errors';
-import { root } from './helpers/root';
 
 export function useEnv(filePath?: string) {
   const setKeys: string[] = []; // Track the keys that are set by read()

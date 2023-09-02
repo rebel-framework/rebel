@@ -3,6 +3,7 @@
   "private": false,
   "workspaces": [
     "packages/core",
+    "packages/env",
     "packages/stack",
     "packages/cli",
     "packages/router",
