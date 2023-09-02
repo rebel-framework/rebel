@@ -5,13 +5,17 @@
       "displayName": "cli",
       "preset": "ts-jest",
       "testEnvironment": "node",
-      "testMatch": ["<rootDir>/packages/cli/**/?(*.)+(spec|test).[jt]s?(x)"]
+      "testMatch": [
+        "<rootDir>/packages/cli/**/?(*.)+(spec|test).[jt]s?(x)"
+      ]
     },
     {
       "displayName": "core",
       "preset": "ts-jest",
       "testEnvironment": "node",
-      "testMatch": ["<rootDir>/packages/core/**/?(*.)+(spec|test).[jt]s?(x)"]
+      "testMatch": [
+        "<rootDir>/packages/core/**/?(*.)+(spec|test).[jt]s?(x)"
+      ]
     },
     {
       "displayName": "database",
@@ -33,19 +37,33 @@
       "displayName": "router",
       "preset": "ts-jest",
       "testEnvironment": "node",
-      "testMatch": ["<rootDir>/packages/router/**/?(*.)+(spec|test).[jt]s?(x)"]
+      "testMatch": [
+        "<rootDir>/packages/router/**/?(*.)+(spec|test).[jt]s?(x)"
+      ]
     },
     {
       "displayName": "stack",
       "preset": "ts-jest",
       "testEnvironment": "node",
-      "testMatch": ["<rootDir>/packages/stack/**/?(*.)+(spec|test).[jt]s?(x)"]
+      "testMatch": [
+        "<rootDir>/packages/stack/**/?(*.)+(spec|test).[jt]s?(x)"
+      ]
     },
     {
       "displayName": "env",
       "preset": "ts-jest",
       "testEnvironment": "node",
-      "testMatch": ["<rootDir>/packages/env/**/?(*.)+(spec|test).[jt]s?(x)"]
+      "testMatch": [
+        "<rootDir>/packages/env/**/?(*.)+(spec|test).[jt]s?(x)"
+      ]
+    },
+    {
+      "displayName": "terminal",
+      "preset": "ts-jest",
+      "testEnvironment": "node",
+      "testMatch": [
+        "<rootDir>/packages/terminal/**/?(*.)+(spec|test).[jt]s?(x)"
+      ]
     }
   ]
 }

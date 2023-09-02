@@ -1,13 +1,14 @@
 {
-  "name": "@rebel-framework/cli",
+  "name": "@rebel-framework/terminal",
   "version": "0.3.3",
   "private": false,
-  "description": "Rebel Framework's CLI utility for rapid serverless full-stack web application development",
+  "description": "Rebel Framework terminal",
   "author": "Ben Villiere",
+  "homepage": "https://github.com/rebel-framework/rebel#readme",
   "license": "MIT",
   "main": "build/index.js",
-  "bin": {
-    "rebel": "./build/index.js"
+  "exports": {
+    ".": "./build/index.js"
   },
   "files": [
     "build"
@@ -25,13 +26,6 @@
   },
   "bugs": {
     "url": "https://github.com/rebel-framework/rebel/issues"
-  },
-  "dependencies": {
-    "@rebel-framework/core": "latest",
-    "@rebel-framework/terminal": "file:../terminal",
-    "aws-cdk-lib": "^2.90.0",
-    "constructs": "^10.2.69",
-    "openai": "^3.3.0"
   },
   "keywords": [
     "serverless",
