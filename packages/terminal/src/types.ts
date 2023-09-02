@@ -1,3 +1,5 @@
+import { TextColor, BackgroundColor, TextStyle } from './enums';
+
 export type QuestionType = 'confirm' | 'list';
 
 export interface BaseQuestion {
@@ -18,3 +20,5 @@ export interface ListQuestion extends BaseQuestion {
 }
 
 export type Question = ConfirmQuestion | ListQuestion;
+
+export type TerminalStyle = TextColor | BackgroundColor | TextStyle;

@@ -1,100 +1,58 @@
+import { input, lineBreak, setRawMode, write } from './io';
 import { Writable } from 'stream';
-import { ConfirmQuestion, Question } from './types';
 
 const stdout = process.stdout as Writable;
+const stdin = process.stdin as any;
 
-export function setRawMode(value: boolean) {
-  const tty = stdout as any;
-  if (tty && tty.isTTY && tty.setRawMode) {
-    tty.setRawMode(value);
-  }
+export async function confirm(question: string): Promise<boolean> {
+  write(`${question} (y/n):`);
+  return (await input()).toLowerCase().startsWith('y');
 }
-
-export function readChar(): Promise<string> {
-  return new Promise((resolve) => {
-    setRawMode(true);
-    process.stdin.once('data', (data) => {
-      const char = data.toString();
-      setRawMode(false);
-      resolve(char);
-    });
-  });
-}
-
-type Answer = Record<string, any>;
-type ConfirmAnswer = boolean;
-
-export function write(message: string) {
-  stdout.write(message);
-}
-
-export function lineBreak() {
-  write('\n');
-}
-
-export function line(message: string) {
-  write(message);
-  lineBreak();
-}
-
-export function exit(success: boolean = true) {
-  process.exit(success ? 0 : 1);
-}
-
-export function error(message: string = 'Command exited with an error') {
-  line(message);
-  exit(false);
-}
-
-export function success(message: string = 'Success!') {
-  line(message);
-  exit(false);
-}
-
-export async function confirm(
+let lastRenderedLines = 0;
+export async function choice(
   question: string,
-  defaultValue?: boolean
-): Promise<ConfirmAnswer> {
-  const confirmDefault =
-    defaultValue === undefined ? 'y/n' : defaultValue ? 'Y/n' : 'y/N';
-  write(`${question} (${confirmDefault}):`);
-  const confirmAnswer = await readChar();
-  return confirmAnswer.toLowerCase().startsWith('y');
-}
+  choices: string[]
+): Promise<string> {
+  const stdin = process.stdin as any;
+  stdin.setRawMode(true);
+  stdin.setEncoding('utf8');
 
-export async function prompt(
-  questions: Question[]
-): Promise<Record<string, any>> {
-  const answers: Record<string, any> = {};
+  let selectedIndex = 0;
 
-  for (const question of questions) {
-    switch (question.type) {
-      case 'confirm':
-        const confirmDefault =
-          question.default === undefined
-            ? 'y/n'
-            : question.default
-            ? 'Y/n'
-            : 'y/N';
-        stdout.write(`${question.message} (${confirmDefault}): `);
-        const confirmAnswer = await readChar();
-        stdout.write('\n');
-        answers[question.name] = confirmAnswer.toLowerCase().startsWith('y');
-        break;
-      case 'list':
-        stdout.write(`${question.message}\n`);
-        question.choices.forEach((choice, index) => {
-          stdout.write(`${index + 1}. ${choice}\n`);
-        });
-        const listDefault = question.default ? question.default : '1';
-        stdout.write(`Choose an option (Default is ${listDefault}): `);
-        const listAnswer = await readChar();
-        stdout.write('\n');
-        const choiceIndex = parseInt(listAnswer) - 1 || 0;
-        answers[question.name] = question.choices[choiceIndex];
-        break;
+  function render() {
+    stdout.write('\x1b[2J'); // Clear screen
+    stdout.write('\x1b[H'); // Move cursor to top-left
+    stdout.write(question + '\n');
+
+    for (let i = 0; i < choices.length; i++) {
+      if (i === selectedIndex) {
+        stdout.write(`> ${choices[i]}\n`);
+      } else {
+        stdout.write(`  ${choices[i]}\n`);
+      }
     }
   }
 
-  return answers;
+  return new Promise((resolve) => {
+    stdin.on('data', function keyListener(char: string) {
+      const upArrow = '\u001B\u005B\u0041';
+      const downArrow = '\u001B\u005B\u0042';
+      const enter = '\r';
+
+      if (char === upArrow) {
+        selectedIndex = Math.max(selectedIndex - 1, 0);
+      } else if (char === downArrow) {
+        selectedIndex = Math.min(selectedIndex + 1, choices.length - 1);
+      } else if (char === enter) {
+        stdin.setRawMode(false);
+        stdin.removeListener('data', keyListener);
+        resolve(choices[selectedIndex]);
+        return;
+      }
+
+      render();
+    });
+
+    render();
+  });
 }

@@ -1,12 +1,34 @@
-import { confirm, line, write, success } from '@rebel-framework/terminal';
+import {
+  choice,
+  confirm,
+  line,
+  write,
+  success,
+  fail,
+} from '@rebel-framework/terminal';
 
 export default async function hello(args: string[]) {
-  const sure = await confirm('Are you sure?', true);
+  const sure = await confirm('Are you sure?', false);
+
+  if (!sure) {
+    fail();
+  }
+
   const reallySure = await confirm('Are you really sure though?', true);
 
   if (sure && reallySure) {
     line('you know what you want in life.');
+  } else {
+    fail("You're not sure.");
   }
 
-  success('We done here');
+  const selected = await choice("What's your favourite fruit?", [
+    'Apple',
+    'Banana',
+    'Cherry',
+  ]);
+
+  line('You selected: ' + selected + '\n');
+
+  success('Done!');
 }
