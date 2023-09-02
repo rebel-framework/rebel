@@ -25,28 +25,6 @@
     "watch": "node scripts/watch.js",
     "code-checks": "npm install && npm install --workspaces && npm run build && npm run format && npm run lint && npm run type-check && npm run coverage"
   },
-  "eslintConfig": {
-    "extends": [
-      "eslint:recommended",
-      "plugin:@typescript-eslint/recommended",
-      "prettier"
-    ],
-    "parser": "@typescript-eslint/parser",
-    "plugins": [
-      "@typescript-eslint",
-      "prettier"
-    ],
-    "root": true,
-    "rules": {
-      "@typescript-eslint/no-var-requires": 0
-    }
-  },
-  "prettier": {
-    "trailingComma": "es5",
-    "tabWidth": 2,
-    "semi": true,
-    "singleQuote": true
-  },
   "devDependencies": {
     "@babel/cli": "^7.22.10",
     "@babel/core": "^7.22.10",
