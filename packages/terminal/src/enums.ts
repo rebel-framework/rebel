@@ -49,3 +49,9 @@ export enum TextStyle {
   Hidden = `8m`,
   Strikethrough = `9m`,
 }
+
+export enum TerminalKey {
+  UpArrow = '\u001B\u005B\u0041',
+  DownArrow = '\u001B\u005B\u0042',
+  Enter = '\r',
+}

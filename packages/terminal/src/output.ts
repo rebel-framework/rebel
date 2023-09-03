@@ -1,5 +1,6 @@
 import { Writable } from 'stream';
-import { backgroundRed, bold, green } from './styling';
+import { backgroundRed, bold, green } from './styles';
+import { escapeAnsii } from './ansii';
 
 const stdout = process.stdout as Writable;
 
@@ -10,15 +11,12 @@ export function setRawMode(value: boolean) {
   }
 }
 
-export function input(): Promise<string> {
-  return new Promise((resolve) => {
-    setRawMode(true);
-    process.stdin.once('data', (data) => {
-      const char = data.toString();
-      setRawMode(false);
-      resolve(char);
-    });
-  });
+export function clearScreen() {
+  write(escapeAnsii('2J'));
+}
+
+export function resetCursor() {
+  write(escapeAnsii('H'));
 }
 
 export function write(message: string) {
