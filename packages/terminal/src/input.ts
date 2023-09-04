@@ -1,9 +1,9 @@
-import { Writable } from 'stream';
+import { ReadStream } from 'node:tty';
 import { TerminalKey } from './enums';
 import * as output from './output';
 import * as styles from './styles';
 
-const stdin = process.stdin as any;
+const stdin = process.stdin as ReadStream;
 
 export function input(): Promise<string> {
   return new Promise((resolve) => {

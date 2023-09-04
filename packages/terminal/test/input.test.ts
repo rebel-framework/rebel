@@ -16,7 +16,7 @@ const mockStdinOn = (data: any, setRawMode: Function = jest.fn()) => {
   (process.stdin.setRawMode as any) = setRawMode;
 };
 
-describe('Terminal Input Functions', () => {
+describe('input', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });

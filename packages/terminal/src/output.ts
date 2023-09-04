@@ -2,10 +2,15 @@ import { Writable } from 'stream';
 import { backgroundRed, bold, green } from './styles';
 import { escapeAnsii } from './ansii';
 
+type TerminalOutput = Writable & {
+  isTTY: boolean;
+  setRawMode: (value: boolean) => void;
+};
+
 const stdout = process.stdout as Writable;
 
 export function setRawMode(value: boolean) {
-  const tty = stdout as any;
+  const tty = stdout as TerminalOutput;
   if (tty && tty.isTTY && tty.setRawMode) {
     tty.setRawMode(value);
   }
@@ -32,12 +37,12 @@ export function line(message: string) {
   lineBreak();
 }
 
-export function fail(message: string = 'Fail') {
+export function fail(message = 'Fail') {
   line(backgroundRed(message));
   process.exit(1);
 }
 
-export function success(message: string = 'Success') {
+export function success(message = 'Success') {
   line(bold(green(message)));
   process.exit(0);
 }
