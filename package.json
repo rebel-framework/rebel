@@ -5,12 +5,12 @@
     "packages/core",
     "packages/env",
     "packages/stack",
+    "packages/terminal",
     "packages/cli",
     "packages/router",
     "packages/database",
     "packages/errors",
-    "packages/response",
-    "packages/terminal"
+    "packages/response"
   ],
   "scripts": {
     "cli": "node ./packages/cli/build/index.js",
