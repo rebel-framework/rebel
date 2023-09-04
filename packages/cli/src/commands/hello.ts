@@ -3,11 +3,8 @@ import {
   choice,
   confirm,
   line,
-  write,
   success,
   fail,
-  clearScreen,
-  lineBreak,
   bold,
 } from '@rebel-framework/terminal';
 
