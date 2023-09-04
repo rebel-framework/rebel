@@ -8,28 +8,30 @@ import {
   fail,
   clearScreen,
   lineBreak,
-  secret,
-  input,
   bold,
 } from '@rebel-framework/terminal';
 
 export default async function hello(args: string[]) {
-  // const name = await ask(`What's your name?`, 'anon');
-  // line(`Your name is: ${bold(name)}`);
-
-  // const sure = await confirm('Are you sure?', false);
-
-  // if (!sure) {
-  //   fail();
-  // }
-
   const selected = await choice("What's your favourite fruit?", [
     'Apple',
     'Banana',
     'Cherry',
   ]);
 
-  line('You selected: ' + selected + '\n');
+  const name = await ask(`What's your name?`, 'anon');
 
-  success('Done!');
+  const fruit =
+    selected[selected.length - 1] === 'y'
+      ? selected.slice(0, -1) + 'ies'
+      : selected;
+
+  line(`Nice to meet you ${bold(name)}! I heard you liked ${bold(fruit)}`);
+
+  const sure = await confirm('Is that correct?', true);
+
+  if (!sure) {
+    fail('Too bad!');
+  }
+
+  success('Alright, see ya!');
 }
