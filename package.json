@@ -15,8 +15,8 @@
   "scripts": {
     "cli": "node ./packages/cli/build/index.js",
     "build": "npm run build --workspaces",
-    "coverage": "jest --coverage --passWithNoTests",
-    "test": "jest --passWithNoTests",
+    "coverage": "jest --coverage --passWithNoTests --runInBand",
+    "test": "jest --passWithNoTests --runInBand",
     "format": "npm run format --workspaces",
     "lint": "npm run lint --workspaces",
     "type-check": "npm run type-check --workspaces",
