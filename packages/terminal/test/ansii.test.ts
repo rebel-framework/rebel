@@ -1,9 +1,5 @@
 import * as os from 'os';
-import {
-  supportsAnsiiEscapes,
-  escapeAnsii,
-  ANSII_ESCAPE_CODE,
-} from '../src/ansii'; // Replace with your actual import path
+import { supportsAnsiiEscapes, escapeAnsii } from '../src/ansii';
 
 jest.mock('os');
 
@@ -59,8 +55,7 @@ describe('ansii', () => {
         value: 'win32',
       });
       (os.release as jest.Mock).mockReturnValue('6.1.7601');
-      const result = escapeAnsii('1m');
-      expect(result).toBe('1m');
+      expect(escapeAnsii('1m')).toBe('1m');
     });
   });
 });
