@@ -1,6 +1,6 @@
 name: Code Checks
 on:
-  workflow_dispatch: # for testing purposes, this should be deleted
+  workflow_dispatch:
   pull_request:
     branches:
       - main
@@ -27,11 +27,13 @@ jobs:
         run: npm install --workspaces
       - name: Build Packages
         run: npm run build
+      - name: Zip node_modules
+        run: tar -czf node_modules.tar.gz node_modules/
       - name: Upload node_modules
         uses: actions/upload-artifact@v3
         with:
           name: node-modules
-          path: node_modules/
+          path: node_modules.tar.gz
   formatting:
     name: Code Formatting
     needs: setup
@@ -43,7 +45,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: node-modules
-          path: node_modules/
+          path: .
+      - name: Unzip node_modules
+        run: tar -xzf node_modules.tar.gz
       - name: Formatting
         run: npm run format
   linting:
@@ -57,7 +61,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: node-modules
-          path: node_modules/
+          path: .
+      - name: Unzip node_modules
+        run: tar -xzf node_modules.tar.gz
       - name: Linting
         run: npm run lint
   type-check:
@@ -71,7 +77,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: node-modules
-          path: node_modules/
+          path: .
+      - name: Unzip node_modules
+        run: tar -xzf node_modules.tar.gz
       - name: Type Checking
         run: npm run type-check
   coverage:
@@ -85,6 +93,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: node-modules
-          path: node_modules/
+          path: .
+      - name: Unzip node_modules
+        run: tar -xzf node_modules.tar.gz
       - name: Test Coverage
         run: npm run coverage
