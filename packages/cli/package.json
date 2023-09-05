@@ -19,8 +19,6 @@
   "scripts": {
     "build": "tsc && babel src --root-mode upward --out-dir build --extensions '.ts'",
     "watch": "tsc && babel src --root-mode upward --out-dir build --extensions '.ts' --watch",
-    "test": "jest --passWithNoTests --runInBand",
-    "coverage": "jest --coverage --passWithNoTests --runInBand",
     "type-check": "npx tsc",
     "format": "npx prettier .",
     "lint": "npx eslint src/**.ts"
