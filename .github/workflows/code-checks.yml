@@ -27,43 +27,60 @@ jobs:
         run: npm install --workspaces
       - name: Build Packages
         run: npm run build
-
+      - name: Upload node_modules
+        uses: actions/upload-artifact@v3
+        with:
+          name: node-modules
+          path: node_modules/
   formatting:
-    name: Code Formatting
     needs: setup
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
+      - name: Download node_modules
+        uses: actions/download-artifact@v3
+        with:
+          name: node-modules
+          path: node_modules/
       - name: Formatting
         run: npm run format
-
   linting:
-    name: Linting
     needs: setup
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
+      - name: Download node_modules
+        uses: actions/download-artifact@v3
+        with:
+          name: node-modules
+          path: node_modules/
       - name: Linting
         run: npm run lint
-
   type-check:
-    name: Type Checking
     needs: setup
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
+      - name: Download node_modules
+        uses: actions/download-artifact@v3
+        with:
+          name: node-modules
+          path: node_modules/
       - name: Type Checking
         run: npm run type-check
-
   coverage:
-    name: Test Coverage
     needs: setup
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
+      - name: Download node_modules
+        uses: actions/download-artifact@v3
+        with:
+          name: node-modules
+          path: node_modules/
       - name: Test Coverage
         run: npm run coverage
