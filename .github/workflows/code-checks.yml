@@ -28,7 +28,7 @@ jobs:
       - name: Build Packages
         run: npm run build
       - name: Zip entire workspace
-        run: tar -czf workspace.tar.gz ./
+        run: tar --warning=no-file-changed -czf workspace.tar.gz ./
       - name: Upload entire workspace
         uses: actions/upload-artifact@v3
         with:
