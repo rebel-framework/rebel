@@ -59,7 +59,7 @@ async function createPackage(name) {
 `;
   await fs.writeFile(`${newPackagePath}/test/index.test.ts`, test, 'utf-8');
 
-  console.log(`Adding package package to workspace`);
+  console.log(`Adding package to workspace`);
   const rootPackageJson = await fs.readFile(`./package.json`, 'utf-8');
   const rootPackageData = JSON.parse(rootPackageJson);
   rootPackageData.workspaces = [
@@ -74,22 +74,24 @@ async function createPackage(name) {
     'utf-8'
   );
 
+  console.log(
+    `Copying jest.config.json from: ${corePath}/jest.config.json to ${newPackagePath}/jest.config.json`
+  );
+  await fs.copyFile(
+    `${corePath}/jest.config.json`,
+    `${newPackagePath}/jest.config.json`
+  );
   console.log(`Adding package to jest.config.json`);
-  const jestConfigJson = await fs.readFile(`./jest.config.json`, 'utf-8');
+  const jestConfigJson = await fs.readFile(
+    `${newPackagePath}/jest.config.json`,
+    'utf-8'
+  );
   const jestConfigData = JSON.parse(jestConfigJson);
-  jestConfigData.projects = [
-    ...jestConfigData.projects,
-    {
-      displayName: name,
-      preset: 'ts-jest',
-      testEnvironment: 'node',
-      testMatch: [`<rootDir>/packages/${name}/**/?(*.)+(spec|test).[jt]s?(x)`],
-    },
-  ];
+  jestConfigData.displayName = name;
 
   console.log(`Writing updated jest.config.json`);
   await fs.writeFile(
-    `./jest.config.json`,
+    `${newPackagePath}/jest.config.json`,
     JSON.stringify(jestConfigData, null, 2),
     'utf-8'
   );
