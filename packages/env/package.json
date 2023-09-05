@@ -29,6 +29,9 @@
   "bugs": {
     "url": "https://github.com/rebel-framework/rebel/issues"
   },
+  "dependencies": {
+    "@rebel-framework/core": "latest"
+  },
   "keywords": [
     "serverless",
     "typescript",
