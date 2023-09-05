@@ -33,6 +33,7 @@ jobs:
           name: node-modules
           path: node_modules/
   formatting:
+    name: Code Formatting
     needs: setup
     runs-on: ubuntu-latest
     steps:
@@ -46,6 +47,7 @@ jobs:
       - name: Formatting
         run: npm run format
   linting:
+    name: Linting
     needs: setup
     runs-on: ubuntu-latest
     steps:
@@ -59,6 +61,7 @@ jobs:
       - name: Linting
         run: npm run lint
   type-check:
+    name: Type Checking
     needs: setup
     runs-on: ubuntu-latest
     steps:
@@ -72,6 +75,7 @@ jobs:
       - name: Type Checking
         run: npm run type-check
   coverage:
+    name: Test Coverage
     needs: setup
     runs-on: ubuntu-latest
     steps:
