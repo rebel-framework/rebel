@@ -27,13 +27,15 @@ jobs:
         run: npm install --workspaces
       - name: Build Packages
         run: npm run build
+      - name: Create Artifacts Directory
+        run: mkdir -p ./artifacts
       - name: Zip entire workspace
-        run: tar --warning=no-file-changed -czf workspace.tar.gz ./
+        run: tar --warning=no-file-changed -czf ./artifacts/workspace.tar.gz ./
       - name: Upload entire workspace
         uses: actions/upload-artifact@v3
         with:
           name: workspace
-          path: workspace.tar.gz
+          path: ./artifacts/workspace.tar.gz
   formatting:
     name: Code Formatting
     needs: setup
