@@ -7,16 +7,10 @@ type TerminalOutput = Writable & {
   setRawMode: (value: boolean) => void;
 };
 
-export function terminal(): NodeJS.Process {
-  return process;
-}
-
-export function stdout() {
-  return process.stdout as Writable;
-}
+const stdout = process.stdout as Writable;
 
 export function setRawMode(value: boolean) {
-  const tty = stdout() as TerminalOutput;
+  const tty = stdout as TerminalOutput;
   if (tty && tty.isTTY && tty.setRawMode) {
     tty.setRawMode(value);
   }
@@ -31,7 +25,7 @@ export function resetCursor() {
 }
 
 export function write(message: string) {
-  stdout().write(message);
+  stdout.write(message);
 }
 
 export function lineBreak() {
