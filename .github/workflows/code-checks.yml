@@ -8,8 +8,6 @@ jobs:
   code-checks:
     name: Code Checks
     runs-on: ubuntu-latest
-    env:
-      NODE_OPTIONS: '--max_old_space_size=4096'
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -24,9 +22,9 @@ jobs:
           key: ${{ runner.OS }}-node-modules-${{ hashFiles('**/package-lock.json') }}
           restore-keys: ${{ runner.OS }}-node-modules-
       - name: Install Root Dependencies
-        run: npm install
+        run: npm ci
       - name: Install Package Dependencies
-        run: npm install --workspaces
+        run: npm ci --workspaces
       - name: Build Packages
         run: npm run build
       - name: Formatting
