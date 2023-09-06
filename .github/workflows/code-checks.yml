@@ -5,8 +5,8 @@ on:
     branches:
       - main
 jobs:
-  setup:
-    name: Setup & Installation
+  code-checks:
+    name: Code Checks
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -21,74 +21,15 @@ jobs:
           path: node_modules
           key: ${{ runner.OS }}-node-modules-${{ hashFiles('**/package-lock.json') }}
           restore-keys: ${{ runner.OS }}-node-modules-
-      - name: Install Root Dependencies
-        run: npm install
-      - name: Install Package Dependencies
+      - name: Install Dependencies
         run: npm install --workspaces
       - name: Build Packages
         run: npm run build
-      - name: Create Artifacts Directory
-        run: mkdir -p ./artifacts
-      - name: Zip entire workspace
-        run: tar --warning=no-file-changed -czf ./artifacts/workspace.tar.gz ./
-      - name: Upload entire workspace
-        uses: actions/upload-artifact@v3
-        with:
-          name: workspace
-          path: ./artifacts/workspace.tar.gz
-  formatting:
-    name: Code Formatting
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download entire workspace
-        uses: actions/download-artifact@v3
-        with:
-          name: workspace
-          path: .
-      - name: Unzip workspace
-        run: tar -xzf workspace.tar.gz
       - name: Formatting
         run: npm run format
-  linting:
-    name: Linting
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download entire workspace
-        uses: actions/download-artifact@v3
-        with:
-          name: workspace
-          path: .
-      - name: Unzip workspace
-        run: tar -xzf workspace.tar.gz
       - name: Linting
         run: npm run lint
-  type-check:
-    name: Type Checking
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download entire workspace
-        uses: actions/download-artifact@v3
-        with:
-          name: workspace
-          path: .
-      - name: Unzip workspace
-        run: tar -xzf workspace.tar.gz
       - name: Type Checking
         run: npm run type-check
-  coverage:
-    name: Test Coverage
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download entire workspace
-        uses: actions/download-artifact@v3
-        with:
-          name: workspace
-          path: .
-      - name: Unzip workspace
-        run: tar -xzf workspace.tar.gz
       - name: Test Coverage
         run: npm run coverage
