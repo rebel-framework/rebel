@@ -1,6 +1,7 @@
 import { Writable } from 'stream';
 import { backgroundRed, bold, green } from './styles';
 import { escapeAnsii } from './ansii';
+import { exit } from './program';
 
 type TerminalOutput = Writable & {
   isTTY: boolean;
@@ -39,10 +40,10 @@ export function line(message: string) {
 
 export function fail(message = 'Fail') {
   line(backgroundRed(message));
-  process.exit(1);
+  exit(1);
 }
 
 export function success(message = 'Success') {
   line(bold(green(message)));
-  process.exit(0);
+  exit(0);
 }
