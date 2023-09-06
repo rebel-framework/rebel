@@ -1,6 +1,5 @@
 import * as input from '../src/input';
 import * as output from '../src/output';
-import * as styles from '../src/styles';
 import { TerminalKey } from '../src/enums';
 
 jest.mock('../src/output');
