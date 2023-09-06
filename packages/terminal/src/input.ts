@@ -22,14 +22,8 @@ export async function ask(
   const hint =
     defaultAnswer === undefined ? '' : styles.lightGray(` (${defaultAnswer})`);
   output.write(`${styles.bold(styles.cyan(question))}${hint} `);
-
   const answer = (await input()).trim();
-
-  if (answer === '') {
-    return defaultAnswer;
-  }
-
-  return answer;
+  return answer || defaultAnswer || '';
 }
 
 export async function confirm(
@@ -49,11 +43,7 @@ export async function confirm(
 
   const answer = (await input()).trim().toLowerCase();
 
-  if (answer === '') {
-    return defaultAnswer !== undefined ? defaultAnswer : false;
-  }
-
-  return answer.startsWith('y');
+  return answer ? answer.startsWith('y') : defaultAnswer || false;
 }
 
 export async function choice(

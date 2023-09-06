@@ -1,63 +1,180 @@
-import { input, ask, confirm, choice } from '../src/input';
+import * as input from '../src/input';
+import * as output from '../src/output';
+import * as styles from '../src/styles';
+import { TerminalKey } from '../src/enums';
 
 jest.mock('../src/output');
-jest.mock('../src/styles');
+jest.mock('../src/styles', () => ({
+  bold: jest.fn((str) => `bold(${str})`),
+  cyan: jest.fn((str) => `cyan(${str})`),
+  lightGray: jest.fn((str) => `lightGray(${str})`),
+}));
 
-const mockStdinOnce = (data: any) => {
-  (process.stdin.once as any) = jest.fn((event, callback) => {
-    callback(data);
-  });
-};
+describe('input.ts', () => {
+  const mockSetRawMode = output.setRawMode as jest.MockedFunction<
+    typeof output.setRawMode
+  >;
 
-const mockStdinOn = (data: any, setRawMode: Function = jest.fn()) => {
-  (process.stdin.on as any) = jest.fn((event, callback) => {
-    callback(data);
-  });
-  (process.stdin.setRawMode as any) = setRawMode;
-};
+  const mockWrite = output.write as jest.MockedFunction<typeof output.write>;
 
-describe('input', () => {
+  // Mocking stdin's functions
+  let mockOnce: jest.SpyInstance;
+  let mockOn: jest.SpyInstance;
+  let mockRemoveListener: jest.SpyInstance;
+  let mockSetEncoding: jest.SpyInstance;
+
   beforeEach(() => {
+    mockOnce = jest.spyOn(process.stdin, 'once').mockImplementation();
+    mockOn = jest.spyOn(process.stdin, 'on').mockImplementation();
+    mockRemoveListener = jest
+      .spyOn(process.stdin, 'removeListener')
+      .mockImplementation();
+    mockSetEncoding = jest
+      .spyOn(process.stdin, 'setEncoding')
+      .mockImplementation();
+  });
+
+  afterEach(() => {
     jest.clearAllMocks();
   });
 
-  describe('input()', () => {
-    it('should resolve to the user input', async () => {
-      mockStdinOnce('testInput');
-      const res = await input();
-      expect(res).toBe('testInput');
-    });
+  it('input should return user input as string', async () => {
+    const mockData = 'mockData';
+
+    // Make the mock implementation of once invoke its callback with mockData
+    mockOnce.mockImplementation((_event, callback) => callback(mockData));
+
+    const result = await input.input();
+    expect(result).toBe(mockData);
+    expect(mockSetRawMode).toHaveBeenCalledWith(true);
+    expect(mockSetRawMode).toHaveBeenCalledWith(false);
   });
 
-  describe('ask()', () => {
-    it('should return defaultAnswer if no input is provided', async () => {
-      mockStdinOnce(' ');
-      const res = await ask('Do you like testing?', 'Yes');
-      expect(res).toBe('Yes');
-    });
+  it('ask should return user answer when no default is provided and user provides input', async () => {
+    const mockData = 'userAnswer';
+
+    // Make the mock implementation of once invoke its callback with mockData
+    mockOnce.mockImplementation((_event, callback) => callback(mockData));
+
+    const question = 'What is your name?';
+    const answer = await input.ask(question);
+
+    expect(answer).toBe(mockData);
+    expect(mockWrite).toHaveBeenCalledWith(
+      expect.stringContaining(`bold(cyan(${question}))`)
+    );
   });
 
-  describe('confirm()', () => {
-    it('should return false if no default and no input', async () => {
-      mockStdinOnce(' ');
-      const res = await confirm('Continue?');
-      expect(res).toBe(false);
-    });
+  it('ask should return an empty string when no default and no user input is provided', async () => {
+    const mockData = ''; // User provides no input
 
-    it('should return true if the user inputs "y"', async () => {
-      mockStdinOnce('y');
-      const res = await confirm('Continue?', false);
-      expect(res).toBe(true);
-    });
+    // Make the mock implementation of once invoke its callback with mockData
+    mockOnce.mockImplementation((_event, callback) => callback(mockData));
+
+    const question = 'What is your name?';
+    const answer = await input.ask(question);
+
+    expect(answer).toBe(''); // Expecting an empty string as the answer
+    expect(mockWrite).toHaveBeenCalledWith(
+      expect.stringContaining(`bold(cyan(${question}))`)
+    );
   });
 
-  describe('choice()', () => {
-    it('should return the selected choice', async () => {
-      const setRawModeMock = jest.fn();
-      mockStdinOn('\r', setRawModeMock); // Simulating Enter key
-      const res = await choice('Choose one', ['option1', 'option2']);
-      expect(res).toBe('option1');
-      expect(setRawModeMock).toHaveBeenCalledWith(true);
+  it('ask should resort to default option when no answer is provided by user', async () => {
+    const mockData = '';
+
+    // Make the mock implementation of once invoke its callback with mockData
+    mockOnce.mockImplementation((_event, callback) => callback(mockData));
+
+    const question = 'Any ideas to share?';
+    const defaultAnswer = 'None';
+    const answer = await input.ask(question, defaultAnswer);
+
+    expect(answer).not.toBe(mockData);
+    expect(answer).toBe(defaultAnswer);
+    expect(mockWrite).toHaveBeenCalledWith(
+      expect.stringContaining(
+        `bold(cyan(${question}))lightGray( (${defaultAnswer}))`
+      )
+    );
+  });
+
+  it('confirm should handle y/n confirmation', async () => {
+    const mockData = 'y';
+
+    // Make the mock implementation of once invoke its callback with mockData
+    mockOnce.mockImplementation((_event, callback) => callback(mockData));
+
+    const question = 'Are you sure?';
+    const answer = await input.confirm(question);
+
+    expect(answer).toBe(true);
+    expect(mockWrite).toHaveBeenCalledWith(
+      expect.stringContaining(`bold(cyan(${question}))`)
+    );
+  });
+
+  it('confirm should return the default answer (true) if no user input is provided', async () => {
+    const mockData = ''; // User provides no input
+
+    // Make the mock implementation of once invoke its callback with mockData
+    mockOnce.mockImplementation((_event, callback) => callback(mockData));
+
+    const question = 'Confirm this action?';
+    const defaultAnswer = true; // Providing a default answer of true
+
+    const answer = await input.confirm(question, defaultAnswer);
+
+    expect(answer).toBe(defaultAnswer); // Expecting the answer to be the default answer provided
+    expect(mockWrite).toHaveBeenCalledWith(
+      expect.stringContaining(`bold(cyan(${question}))`)
+    );
+  });
+
+  it('confirm should return the default answer (false) if no user input is provided', async () => {
+    const mockData = ''; // User provides no input
+
+    // Make the mock implementation of once invoke its callback with mockData
+    mockOnce.mockImplementation((_event, callback) => callback(mockData));
+
+    const question = 'Confirm this action?';
+    const defaultAnswer = false; // Providing a default answer of true
+
+    const answer = await input.confirm(question, defaultAnswer);
+
+    expect(answer).toBe(defaultAnswer); // Expecting the answer to be the default answer provided
+    expect(mockWrite).toHaveBeenCalledWith(
+      expect.stringContaining(`bold(cyan(${question}))`)
+    );
+  });
+
+  it('choice should return selected choice', async () => {
+    const mockChoices = ['choice1', 'choice2', 'choice3'];
+    const question = 'Choose one:';
+
+    // Mocking the keyListener to simulate user selecting the second choice
+    mockOn.mockImplementation((_event, keyListener) => {
+      keyListener(TerminalKey.DownArrow); // Select second choice
+      keyListener(TerminalKey.Enter); // Confirm choice
     });
+
+    const selected = await input.choice(question, mockChoices);
+    expect(selected).toBe(mockChoices[1]);
+  });
+
+  it('choice should return selected choice when navigating down and back up', async () => {
+    const mockChoices = ['choice1', 'choice2', 'choice3'];
+    const question = 'Choose one:';
+
+    // Mocking the keyListener to simulate user selecting the second choice
+    mockOn.mockImplementation((_event, keyListener) => {
+      keyListener(TerminalKey.DownArrow); // Select second choice
+      keyListener(TerminalKey.DownArrow); // Select third choice
+      keyListener(TerminalKey.UpArrow); // Go back to second choice
+      keyListener(TerminalKey.Enter); // Confirm choice
+    });
+
+    const selected = await input.choice(question, mockChoices);
+    expect(selected).toBe(mockChoices[1]);
   });
 });
