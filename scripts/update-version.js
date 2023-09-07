@@ -50,13 +50,9 @@ function updateLockFile() {
     for (const [key, value] of Object.entries(lockfileData.packages)) {
       if (key.startsWith('packages/')) {
         value.version = newVersion;
-        // Update the resolved field as well if it exists
-        if (value.resolved) {
-          value.resolved = value.resolved.replace(
-            /(\d+\.\d+\.\d+)(?=.tgz)/,
-            newVersion
-          );
-        }
+        // Delete resolved and integrity fields when applicable
+        value.resolved && delete value.resolved;
+        value.integrity && delete value.integrity;
       }
     }
   }
