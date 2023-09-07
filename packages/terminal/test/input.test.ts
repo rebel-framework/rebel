@@ -21,12 +21,8 @@ describe('input.ts', () => {
   let mockOn: jest.SpyInstance;
   let mockRemoveListener: jest.SpyInstance;
   let mockSetEncoding: jest.SpyInstance;
-  let mockStdinSetRawMode: jest.SpyInstance;
 
   beforeEach(() => {
-    mockStdinSetRawMode = jest
-      .spyOn(process.stdin, 'setRawMode')
-      .mockImplementation();
     mockOnce = jest.spyOn(process.stdin, 'once').mockImplementation();
     mockOn = jest.spyOn(process.stdin, 'on').mockImplementation();
     mockRemoveListener = jest

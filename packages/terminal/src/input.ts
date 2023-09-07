@@ -4,6 +4,13 @@ import * as styles from './styles';
 
 const stdin = process.stdin;
 
+export function setRawMode(value: boolean) {
+  const tty = stdin;
+  if (tty && tty.isTTY && tty.setRawMode) {
+    tty.setRawMode(value);
+  }
+}
+
 export function input(): Promise<string> {
   return new Promise((resolve) => {
     output.setRawMode(true);
@@ -49,7 +56,7 @@ export async function choice(
   question: string,
   choices: string[]
 ): Promise<string> {
-  stdin.setRawMode(true);
+  setRawMode(true);
   stdin.setEncoding('utf8');
 
   let selectedIndex = 0;
