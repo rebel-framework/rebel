@@ -43,8 +43,6 @@ function updateLockFile() {
   const lockfilePath = path.resolve(__dirname, '../package-lock.json');
   const lockfileData = require(lockfilePath);
 
-  console.log(lockfileData);
-
   // Check if the "packages" property exists
   if (lockfileData.packages) {
     for (const [key, value] of Object.entries(lockfileData.packages)) {
@@ -56,6 +54,8 @@ function updateLockFile() {
       }
     }
   }
+
+  console.log(lockfileData);
 
   // Save the updated package-lock.json file
   fs.writeFileSync(lockfilePath, JSON.stringify(lockfileData, null, 2) + '\n');
