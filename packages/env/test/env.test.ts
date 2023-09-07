@@ -123,5 +123,10 @@ describe('useEnv', () => {
     if (fs.existsSync(mockDefaultEnvPath)) {
       fs.unlinkSync(mockDefaultEnvPath);
     }
+
+    // Delete the mockRoot directory after cleaning up the .env file
+    if (fs.existsSync('./mockRoot')) {
+      fs.rmSync('./mockRoot', { recursive: true });
+    }
   });
 });
