@@ -40,7 +40,7 @@ function updatePackageVersion(directory) {
 
 function updateLockFile() {
   // Load the package-lock.json file
-  const lockfilePath = path.resolve(__dirname, './package-lock.json');
+  const lockfilePath = path.resolve(__dirname, '../package-lock.json');
   const lockfileData = require(lockfilePath);
 
   console.log(lockfileData);
@@ -50,6 +50,13 @@ function updateLockFile() {
     for (const [key, value] of Object.entries(lockfileData.packages)) {
       if (key.startsWith('packages/')) {
         value.version = newVersion;
+        // Update the resolved field as well if it exists
+        if (value.resolved) {
+          value.resolved = value.resolved.replace(
+            /(\d+\.\d+\.\d+)(?=.tgz)/,
+            newVersion
+          );
+        }
       }
     }
   }
