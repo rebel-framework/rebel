@@ -84,7 +84,7 @@ export async function choice(
       } else if (char === TerminalKey.DownArrow) {
         selectedIndex = Math.min(selectedIndex + 1, choices.length - 1);
       } else if (char === TerminalKey.Enter) {
-        stdin.setRawMode(false);
+        setRawMode(false);
         stdin.removeListener('data', keyListener);
         resolve(choices[selectedIndex]);
         return;
