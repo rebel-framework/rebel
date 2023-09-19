@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import * as commands from './commands';
+import parseArguments from './helpers/parse-arguments';
 
 async function main() {
   const args = process.argv.slice(2);
@@ -25,13 +26,24 @@ async function main() {
     args.splice(stackFlagIndex, 2); // Remove the flag and its value from args
   }
 
+  // if (!commands[command]) {
+  //   console.log(`Unknown command: ${command}`);
+  //   console.log(
+  //     'Available commands: init, install, build, test, deploy, generate'
+  //   );
+  // } else {
+  //   await commands[command]({ ...args, stack: currentStack });
+  // }
+
   if (!commands[command]) {
     console.log(`Unknown command: ${command}`);
     console.log(
       'Available commands: init, install, build, test, deploy, generate'
     );
   } else {
-    await commands[command]({ ...args, stack: currentStack });
+    const signature = commands[command].signature || {};
+    const parsedArgs = parseArguments(args, signature);
+    await commands[command].command(parsedArgs);
   }
 }
 

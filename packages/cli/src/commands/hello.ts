@@ -8,27 +8,58 @@ import {
   bold,
 } from '@rebel-framework/terminal';
 
-export default async function hello(args: string[]) {
-  const selected = await choice("What's your favourite fruit?", [
+import { Signature } from '../types';
+
+export const signature: Signature = {
+  name: {
+    type: 'string',
+    longFlag: '--name',
+    shortFlag: '-N',
+    default: 'anon',
+  },
+  fruit: {
+    type: 'choice',
+    longFlag: '--fruit',
+    shortFlag: '-F',
+    choices: ['Apple', 'Banana', 'Cherry'],
+    default: 'Apple',
+  },
+};
+
+async function hello({ fruit, name }) {
+  console.log({ fruit, name });
+
+  success('');
+
+  const selectedFruit = await choice("What's your favourite fruit?", [
     'Apple',
     'Banana',
     'Cherry',
   ]);
 
-  const name = await ask(`What's your name?`, 'anon');
+  const selectedName = await ask(`What's your name?`, 'anon');
 
-  const fruit =
-    selected[selected.length - 1] === 'y'
-      ? selected.slice(0, -1) + 'ies'
-      : selected;
+  const pluralizedFruit =
+    selectedFruit[selectedFruit.length - 1] === 'y'
+      ? selectedFruit.slice(0, -1) + 'ies'
+      : selectedFruit;
 
-  line(`Nice to meet you ${bold(name)}! I heard you liked ${bold(fruit)}`);
+  line(
+    `Nice to meet you ${bold(selectedName)}! I heard you liked ${bold(
+      pluralizedFruit
+    )}`
+  );
 
-  const sure = await confirm('Is that correct?', true);
+  const areYouSure = await confirm('Is that correct?', true);
 
-  if (!sure) {
+  if (!areYouSure) {
     fail('Too bad!');
   }
 
   success('Alright, see ya!');
 }
+
+export default {
+  signature,
+  command: hello,
+};
