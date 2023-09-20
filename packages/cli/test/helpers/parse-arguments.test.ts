@@ -5,20 +5,20 @@ describe('parseArguments', () => {
   const signature: Signature = {
     name: {
       type: 'string',
-      longFlag: '--name',
-      shortFlag: '-N',
+      name: '--name',
+      short: '-N',
       default: 'anon',
     },
     age: {
       type: 'number',
-      longFlag: '--age',
-      shortFlag: '-A',
+      name: '--age',
+      short: '-A',
       default: 25,
     },
     fruit: {
       type: 'choice',
-      longFlag: '--fruit',
-      shortFlag: '-F',
+      name: '--fruit',
+      short: '-F',
       default: 'Apple',
       choices: ['Apple', 'Banana', 'Cherry'],
     },
@@ -88,7 +88,7 @@ describe('parseArguments', () => {
     const customSignature: Signature = {
       customArg: {
         type: 'string',
-        longFlag: '--customArg',
+        name: '--customArg',
       },
     };
     const args = ['-C', 'value'];
@@ -100,8 +100,8 @@ describe('parseArguments', () => {
     const booleanSignature: Signature = {
       active: {
         type: 'boolean',
-        longFlag: '--active',
-        shortFlag: '-a',
+        name: '--active',
+        short: '-a',
         default: false,
       },
     };
@@ -114,8 +114,8 @@ describe('parseArguments', () => {
     const booleanSignature: Signature = {
       active: {
         type: 'boolean',
-        longFlag: '--active',
-        shortFlag: '-a',
+        name: '--active',
+        short: '-a',
         default: true,
       },
     };
@@ -128,8 +128,8 @@ describe('parseArguments', () => {
     const stringSignature: Signature = {
       name: {
         type: 'string',
-        longFlag: '--name',
-        shortFlag: '-n',
+        name: '--name',
+        short: '-n',
         default: 'DefaultName',
       },
     };
@@ -142,8 +142,8 @@ describe('parseArguments', () => {
     const numberSignature: Signature = {
       age: {
         type: 'number',
-        longFlag: '--age',
-        shortFlag: '-a',
+        name: '--age',
+        short: '-a',
         default: 20,
       },
     };
@@ -156,8 +156,8 @@ describe('parseArguments', () => {
     const choiceSignature: Signature = {
       color: {
         type: 'choice',
-        longFlag: '--color',
-        shortFlag: '-c',
+        name: '--color',
+        short: '-c',
         default: 'red',
         choices: ['red', 'blue', 'green'],
       },

@@ -6,12 +6,12 @@ export type ArgumentType = 'string' | 'number' | 'boolean' | 'choice';
 
 export interface Argument {
   type: ArgumentType;
-  longFlag: string;
-  shortFlag?: string;
+  name: string;
+  short?: string;
   default?: any;
   choices?: string[];
 }
 
 export interface Signature {
-  [argName: string]: Argument;
+  [argumentName: string]: Argument;
 }

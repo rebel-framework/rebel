@@ -19,13 +19,13 @@ export default function parseArguments(
     for (const argName in signature) {
       const {
         type,
-        longFlag,
-        shortFlag,
+        name,
+        short,
         default: defaultValue,
         choices,
       } = signature[argName];
 
-      if (currentArg === longFlag || (shortFlag && currentArg === shortFlag)) {
+      if (currentArg === name || (short && currentArg === short)) {
         if (!value && args[i + 1] && !args[i + 1].startsWith('-')) {
           value = args[i + 1];
           i++; // Skip the next item as we've consumed it.

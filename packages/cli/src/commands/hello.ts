@@ -13,14 +13,14 @@ import { Signature } from '../types';
 export const signature: Signature = {
   name: {
     type: 'string',
-    longFlag: '--name',
-    shortFlag: '-N',
+    name: '--name',
+    short: '-N',
     default: 'anon',
   },
   fruit: {
     type: 'choice',
-    longFlag: '--fruit',
-    shortFlag: '-F',
+    name: '--fruit',
+    short: '-F',
     choices: ['Apple', 'Banana', 'Cherry'],
     default: 'Apple',
   },
