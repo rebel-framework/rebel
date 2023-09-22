@@ -1,22 +1,21 @@
 import { success, fail } from '@rebel-framework/terminal';
 import { exec } from 'child_process';
+import fs from 'fs';
 import { join } from 'path';
 import { Signature } from '../types';
 import isDirectoryEmpty from '../helpers/is-directory-empty';
 
 export const signature: Signature = {
-  options: {
+  arguments: {
     directory: {
       type: 'string',
-      name: '--directory',
-      short: '-D',
       default: './',
     },
   },
 };
 
 async function init({ directory }) {
-  directory = directory || signature.options.directory.default;
+  directory = directory || signature.arguments.directory.default;
 
   const empty = await isDirectoryEmpty(directory, true);
 
@@ -25,10 +24,10 @@ async function init({ directory }) {
   }
 
   const commands = [
-    `mkdir "${directory}"`,
+    `npx rebel mkdir -r "${directory}"`,
     `npx degit https://github.com/rebel-framework/skeleton.git "${directory}" --force`,
     `git init "${directory}"`,
-    `mkdir "${join(directory, '.rebel')}"`,
+    `npx rebel mkdir -r "${join(directory, '.rebel')}"`,
   ];
 
   for (let command of commands) {

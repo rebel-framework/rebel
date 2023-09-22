@@ -2,7 +2,7 @@ export type Command = {
   (args: string[]): void;
 };
 
-export type ArgumentType = 'string' | 'number' | 'boolean' | 'choice';
+export type ArgumentType = 'string' | 'number' | 'boolean' | 'choice' | 'flag';
 
 export interface Argument {
   type: ArgumentType;

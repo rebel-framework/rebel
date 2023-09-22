@@ -80,6 +80,8 @@ function extractValue(
       return value === 'true' || argDef.default === true;
     case 'choice':
       return argDef.choices?.includes(value) ? value : argDef.default;
+    case 'flag':
+      return true; // Always return true whenever flag is present
     default:
       return value;
   }

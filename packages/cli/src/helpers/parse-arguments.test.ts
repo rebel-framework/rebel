@@ -306,4 +306,25 @@ describe('parseArguments', () => {
     const result = parseArguments(args, choiceSignature);
     expect(result).toEqual({ color: 'red' }); // Should default to 'red'
   });
+
+  const flagSignature: Signature = {
+    options: {
+      force: {
+        type: 'flag',
+        name: '--force',
+      },
+    },
+  };
+
+  it('should return true whenever a flag is provided as an option', () => {
+    const args = ['--force'];
+    const result = parseArguments(args, flagSignature);
+    expect(result).toEqual({ force: true });
+  });
+
+  it('should return undefined whenever a flag is absent', () => {
+    const args = [];
+    const result = parseArguments(args, flagSignature);
+    expect(result).toEqual({ force: undefined });
+  });
 });

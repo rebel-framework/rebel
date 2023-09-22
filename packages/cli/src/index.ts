@@ -21,7 +21,6 @@ async function main() {
     );
   } else {
     const signature = commands[command].signature || {};
-    console.log({ signature });
     const parsedArgs = parseArguments(args, signature);
     await commands[command].command(parsedArgs);
   }
