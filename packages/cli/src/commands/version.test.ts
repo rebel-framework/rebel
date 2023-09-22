@@ -1,6 +1,6 @@
 import { line } from '@rebel-framework/terminal';
 import readPackageJson from '../helpers/read-package-json';
-import version from './version'; // adjust the path
+import version from './version';
 
 jest.mock('@rebel-framework/terminal', () => ({
   line: jest.fn(),
