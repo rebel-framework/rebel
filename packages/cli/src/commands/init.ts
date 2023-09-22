@@ -1,6 +1,5 @@
 import { success, fail } from '@rebel-framework/terminal';
 import { exec } from 'child_process';
-import fs from 'fs';
 import { join } from 'path';
 import { Signature } from '../types';
 import isDirectoryEmpty from '../helpers/is-directory-empty';
@@ -24,10 +23,10 @@ async function init({ directory }) {
   }
 
   const commands = [
-    `npx rebel mkdir -r "${directory}"`,
+    `mkdir "${directory}"`,
     `npx degit https://github.com/rebel-framework/skeleton.git "${directory}" --force`,
     `git init "${directory}"`,
-    `npx rebel mkdir -r "${join(directory, '.rebel')}"`,
+    `mkdir "${join(directory, '.rebel')}"`,
   ];
 
   for (let command of commands) {

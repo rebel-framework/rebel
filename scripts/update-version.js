@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 
-const rootPackageFile = path.resolve(__dirname, '../package.json');
 const workspacePath = path.resolve(__dirname, '../packages');
 const tag = process.argv[2];
 
@@ -67,6 +66,5 @@ function updateLockFile() {
   fs.writeFileSync(lockfilePath, JSON.stringify(lockfileData, null, 2) + '\n');
 }
 
-updatePackageVersion(rootPackageFile);
 updatePackageVersionRecursive(workspacePath);
 updateLockFile();

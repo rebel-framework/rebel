@@ -1,6 +1,5 @@
 {
   "name": "root",
-  "version": "0.3.9",
   "private": false,
   "workspaces": [
     "packages/core",
