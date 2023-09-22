@@ -1,7 +1,7 @@
 import { response, Response } from './response';
 
 describe('response', () => {
-  let headers: any;
+  let headers: object;
   let body: string | object;
   let statusCode: number;
   const defaultHeaders = {

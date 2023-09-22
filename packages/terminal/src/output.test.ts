@@ -32,7 +32,9 @@ describe('Terminal functions', () => {
 
   it('setRawMode should call setRawMode if tty and isTTY are true', () => {
     const setRawMock = jest.fn();
+    // eslint-disable-next-line
     (process.stdout as any).isTTY = true;
+    // eslint-disable-next-line
     (process.stdout as any).setRawMode = setRawMock;
 
     output.setRawMode(true);

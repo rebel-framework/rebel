@@ -19,18 +19,10 @@ describe('input.ts', () => {
   // Mocking stdin's functions
   let mockOnce: jest.SpyInstance;
   let mockOn: jest.SpyInstance;
-  let mockRemoveListener: jest.SpyInstance;
-  let mockSetEncoding: jest.SpyInstance;
 
   beforeEach(() => {
     mockOnce = jest.spyOn(process.stdin, 'once').mockImplementation();
     mockOn = jest.spyOn(process.stdin, 'on').mockImplementation();
-    mockRemoveListener = jest
-      .spyOn(process.stdin, 'removeListener')
-      .mockImplementation();
-    mockSetEncoding = jest
-      .spyOn(process.stdin, 'setEncoding')
-      .mockImplementation();
   });
 
   afterEach(() => {
@@ -40,7 +32,6 @@ describe('input.ts', () => {
   it('input should return user input as string', async () => {
     const mockData = 'mockData';
 
-    // Make the mock implementation of once invoke its callback with mockData
     mockOnce.mockImplementation((_event, callback) => callback(mockData));
 
     const result = await input.input();
@@ -52,7 +43,6 @@ describe('input.ts', () => {
   it('ask should return user answer when no default is provided and user provides input', async () => {
     const mockData = 'userAnswer';
 
-    // Make the mock implementation of once invoke its callback with mockData
     mockOnce.mockImplementation((_event, callback) => callback(mockData));
 
     const question = 'What is your name?';
@@ -67,7 +57,6 @@ describe('input.ts', () => {
   it('ask should return an empty string when no default and no user input is provided', async () => {
     const mockData = ''; // User provides no input
 
-    // Make the mock implementation of once invoke its callback with mockData
     mockOnce.mockImplementation((_event, callback) => callback(mockData));
 
     const question = 'What is your name?';
@@ -82,7 +71,6 @@ describe('input.ts', () => {
   it('ask should resort to default option when no answer is provided by user', async () => {
     const mockData = '';
 
-    // Make the mock implementation of once invoke its callback with mockData
     mockOnce.mockImplementation((_event, callback) => callback(mockData));
 
     const question = 'Any ideas to share?';
@@ -101,7 +89,6 @@ describe('input.ts', () => {
   it('confirm should handle y/n confirmation', async () => {
     const mockData = 'y';
 
-    // Make the mock implementation of once invoke its callback with mockData
     mockOnce.mockImplementation((_event, callback) => callback(mockData));
 
     const question = 'Are you sure?';
@@ -116,15 +103,14 @@ describe('input.ts', () => {
   it('confirm should return the default answer (true) if no user input is provided', async () => {
     const mockData = ''; // User provides no input
 
-    // Make the mock implementation of once invoke its callback with mockData
     mockOnce.mockImplementation((_event, callback) => callback(mockData));
 
     const question = 'Confirm this action?';
-    const defaultAnswer = true; // Providing a default answer of true
+    const defaultAnswer = true;
 
     const answer = await input.confirm(question, defaultAnswer);
 
-    expect(answer).toBe(defaultAnswer); // Expecting the answer to be the default answer provided
+    expect(answer).toBe(defaultAnswer);
     expect(mockWrite).toHaveBeenCalledWith(
       expect.stringContaining(`bold(cyan(${question}))`)
     );
@@ -133,7 +119,6 @@ describe('input.ts', () => {
   it('confirm should return the default answer (false) if no user input is provided', async () => {
     const mockData = ''; // User provides no input
 
-    // Make the mock implementation of once invoke its callback with mockData
     mockOnce.mockImplementation((_event, callback) => callback(mockData));
 
     const question = 'Confirm this action?';
@@ -151,7 +136,6 @@ describe('input.ts', () => {
     const mockChoices = ['choice1', 'choice2', 'choice3'];
     const question = 'Choose one:';
 
-    // Mocking the keyListener to simulate user selecting the second choice
     mockOn.mockImplementation((_event, keyListener) => {
       keyListener(TerminalKey.DownArrow); // Select second choice
       keyListener(TerminalKey.Enter); // Confirm choice
@@ -165,7 +149,6 @@ describe('input.ts', () => {
     const mockChoices = ['choice1', 'choice2', 'choice3'];
     const question = 'Choose one:';
 
-    // Mocking the keyListener to simulate user selecting the second choice
     mockOn.mockImplementation((_event, keyListener) => {
       keyListener(TerminalKey.DownArrow); // Select second choice
       keyListener(TerminalKey.DownArrow); // Select third choice

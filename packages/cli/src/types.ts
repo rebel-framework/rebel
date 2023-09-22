@@ -4,20 +4,19 @@ export type Command = {
 
 export type ArgumentType = 'string' | 'number' | 'boolean' | 'choice';
 
-export interface ArgumentBase {
+export interface Argument {
   type: ArgumentType;
+  // eslint-disable-next-line
   default?: any;
   choices?: string[];
 }
 
-export interface PositionalArgument extends ArgumentBase {}
-
-export interface OptionalArgument extends ArgumentBase {
+export interface OptionalArgument extends Argument {
   name: string;
   short?: string;
 }
 
 export interface Signature {
-  arguments?: { [argumentName: string]: PositionalArgument };
+  arguments?: { [argumentName: string]: Argument };
   options?: { [optionName: string]: OptionalArgument };
 }
