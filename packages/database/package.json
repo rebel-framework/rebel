@@ -1,6 +1,6 @@
 {
   "name": "@rebel-framework/database",
-  "version": "0.3.9",
+  "version": "0.4.0",
   "private": false,
   "description": "Rebel Framework database utility to work with DynamoDB",
   "author": "Ben Villiere",
