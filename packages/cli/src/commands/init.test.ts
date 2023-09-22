@@ -37,15 +37,13 @@ describe('init', () => {
     await init.command({ directory: undefined });
 
     const defaultDirectory = init.signature.arguments?.directory.default;
-    expect(exec).toHaveBeenCalledWith(
-      `npx rebel mkdir -r "${defaultDirectory}"`
-    );
+    expect(exec).toHaveBeenCalledWith(`mkdir "${defaultDirectory}"`);
     expect(exec).toHaveBeenCalledWith(
       `npx degit https://github.com/rebel-framework/skeleton.git "${defaultDirectory}" --force`
     );
     expect(exec).toHaveBeenCalledWith(`git init "${defaultDirectory}"`);
     expect(exec).toHaveBeenCalledWith(
-      `npx rebel mkdir -r "${join(defaultDirectory, '.rebel')}"`
+      `mkdir "${join(defaultDirectory, '.rebel')}"`
     );
   });
 });
