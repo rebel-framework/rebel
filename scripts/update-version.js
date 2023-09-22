@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const rootPath = path.resolve(__dirname, '../packages');
+const rootPath = path.resolve(__dirname, './');
+const workspacePath = path.resolve(__dirname, '../packages');
 const tag = process.argv[2];
 
 if (!tag) {
@@ -62,4 +63,5 @@ function updateLockFile() {
 }
 
 updatePackageVersion(rootPath);
+updatePackageVersion(workspacePath);
 updateLockFile();
