@@ -1,5 +1,5 @@
 import { DynamoDB } from '@aws-sdk/client-dynamodb';
-import { useClient } from '../src/client';
+import { useClient } from './client';
 
 jest.mock('@aws-sdk/client-dynamodb');
 

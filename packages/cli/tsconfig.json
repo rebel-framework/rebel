@@ -4,6 +4,6 @@
     "outDir": "build",
     "rootDir": "src"
   },
-  "include": ["src/**/*", "test/helpers/parse-arguments.test.ts"],
+  "include": ["src/**/*"],
   "exclude": ["**/*.test.ts"]
 }

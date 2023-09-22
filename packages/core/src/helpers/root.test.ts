@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import { root, resetRootCache } from '../../src/helpers/root';
+import { root, resetRootCache } from './root';
 
 jest.mock('fs');
 

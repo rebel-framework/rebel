@@ -3,5 +3,5 @@
   "displayName": "response",
   "preset": "ts-jest",
   "testEnvironment": "node",
-  "testMatch": ["<rootDir>/test/**/?(*.)+(spec|test).[jt]s?(x)"]
+  "testMatch": ["<rootDir>/src/**/?(*.)+(spec|test).[jt]s?(x)"]
 }

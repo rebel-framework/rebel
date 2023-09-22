@@ -1,5 +1,5 @@
-import { HttpMethod } from '../src/enums';
-import { useRouter } from '../src/router';
+import { HttpMethod } from './enums';
+import { useRouter } from './router';
 
 describe('Router', () => {
   const mockContext = { some: 'context' };

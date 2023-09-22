@@ -1,5 +1,5 @@
-import { Signature } from '../../src/types';
-import parseArguments from '../../src/helpers/parse-arguments';
+import { Signature } from '../types';
+import parseArguments from './parse-arguments';
 
 describe('parseArguments', () => {
   const signature: Signature = {

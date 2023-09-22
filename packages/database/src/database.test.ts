@@ -1,4 +1,4 @@
-import { useDatabase } from '../src/database';
+import { useDatabase } from './database';
 
 // Mocking the methods of the DynamoDB client
 const mockedGetItem = jest.fn();

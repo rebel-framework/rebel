@@ -1,6 +1,6 @@
 import fs from 'fs';
-import { useEnv } from '../src';
-import { EnvFileDoesNotExist } from '../src/errors';
+import { useEnv } from '.';
+import { EnvFileDoesNotExist } from './errors';
 
 jest.mock('@rebel-framework/core', () => ({
   root: jest.fn((path) => `./mockRoot/${path}`),

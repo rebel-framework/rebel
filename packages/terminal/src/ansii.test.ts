@@ -1,5 +1,5 @@
 import * as os from 'os';
-import { supportsAnsiiEscapes, escapeAnsii } from '../src/ansii';
+import { supportsAnsiiEscapes, escapeAnsii } from './ansii';
 
 jest.mock('os');
 
