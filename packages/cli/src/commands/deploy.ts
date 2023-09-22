@@ -1,14 +1,13 @@
 import { root } from '@rebel-framework/core';
-import { spawn } from 'child_process';
+import { exec, spawn } from 'child_process';
 import path from 'path';
-import { exec } from 'child_process';
 
 type Arguments = {
   [key: string]: string;
   stack: string;
 };
 
-async function compileStack(stack: string) {
+export async function compileStack(stack: string) {
   const inputFile = root(`stacks/${stack}/stack.ts`);
   const outputDir = root(`.rebel/stacks/${stack}`);
   await exec(`npx tsc ${inputFile} --outDir ${outputDir}`);
@@ -19,7 +18,7 @@ async function compileStack(stack: string) {
   );
 }
 
-async function buildProject(stack: string) {
+export async function buildProject(stack: string) {
   await exec(`npm run build --workspace ${stack}`);
 }
 

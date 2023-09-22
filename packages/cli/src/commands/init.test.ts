@@ -8,7 +8,7 @@ jest.mock('child_process');
 jest.mock('@rebel-framework/terminal');
 jest.mock('../helpers/is-directory-empty');
 
-describe('init function', () => {
+describe('init', () => {
   afterEach(() => {
     jest.resetAllMocks();
   });
@@ -22,9 +22,7 @@ describe('init function', () => {
 
   it('should initialize Rebel in an empty directory', async () => {
     (isDirectoryEmpty as jest.Mock).mockResolvedValue(true);
-    (exec as unknown as jest.Mock).mockImplementation((cmd, callback) =>
-      console.log('callback')
-    );
+    (exec as unknown as jest.Mock).mockImplementation((cmd, callback) => null);
 
     await init.command({ directory: './test-dir' });
 
@@ -34,9 +32,7 @@ describe('init function', () => {
 
   it('should use default directory if not provided', async () => {
     (isDirectoryEmpty as jest.Mock).mockResolvedValue(true);
-    (exec as unknown as jest.Mock).mockImplementation((cmd, callback) =>
-      console.log('callback')
-    );
+    (exec as unknown as jest.Mock).mockImplementation((cmd, callback) => null);
 
     await init.command({ directory: undefined });
 
