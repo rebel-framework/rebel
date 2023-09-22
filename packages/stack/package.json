@@ -1,6 +1,6 @@
 {
   "name": "@rebel-framework/stack",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "private": false,
   "description": "Rebel Framework's CDK abstraction layer",
   "author": "Ben Villiere",
