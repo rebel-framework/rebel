@@ -3,5 +3,10 @@
   "displayName": "response",
   "preset": "ts-jest",
   "testEnvironment": "node",
-  "testMatch": ["<rootDir>/src/**/?(*.)+(spec|test).[jt]s?(x)"]
+  "testMatch": ["<rootDir>/src/**/*.+(spec|test).ts"],
+  "collectCoverageFrom": [
+    "<rootDir>/src/**/*.ts",
+    "!<rootDir>/src/**/index.ts",
+    "!<rootDir>/src/**/*.+(spec|test).ts"
+  ]
 }
