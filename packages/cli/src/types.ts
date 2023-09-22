@@ -4,14 +4,20 @@ export type Command = {
 
 export type ArgumentType = 'string' | 'number' | 'boolean' | 'choice';
 
-export interface Argument {
+export interface ArgumentBase {
   type: ArgumentType;
-  name: string;
-  short?: string;
   default?: any;
   choices?: string[];
 }
 
+export interface PositionalArgument extends ArgumentBase {}
+
+export interface OptionalArgument extends ArgumentBase {
+  name: string;
+  short?: string;
+}
+
 export interface Signature {
-  [argumentName: string]: Argument;
+  arguments?: { [argumentName: string]: PositionalArgument };
+  options?: { [optionName: string]: OptionalArgument };
 }

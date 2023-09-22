@@ -11,18 +11,20 @@ import {
 import { Signature } from '../types';
 
 export const signature: Signature = {
-  name: {
-    type: 'string',
-    name: '--name',
-    short: '-N',
-    default: 'anon',
-  },
-  fruit: {
-    type: 'choice',
-    name: '--fruit',
-    short: '-F',
-    choices: ['Apple', 'Banana', 'Cherry'],
-    default: 'Apple',
+  options: {
+    name: {
+      type: 'string',
+      name: '--name',
+      short: '-N',
+      default: 'anon',
+    },
+    fruit: {
+      type: 'choice',
+      name: '--fruit',
+      short: '-F',
+      choices: ['Apple', 'Banana', 'Cherry'],
+      default: 'Apple',
+    },
   },
 };
 
