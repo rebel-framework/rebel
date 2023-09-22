@@ -21,7 +21,7 @@ async function init({ directory }) {
   const empty = await isDirectoryEmpty(directory, true);
 
   if (!empty) {
-    fail('Directory is not empty');
+    return fail('Directory is not empty');
   }
 
   const commands = [
@@ -35,7 +35,7 @@ async function init({ directory }) {
     await exec(command);
   }
 
-  success('Rebel was successfully installed.');
+  return success('Rebel was successfully installed.');
 }
 
 export default {
