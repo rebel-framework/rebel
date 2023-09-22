@@ -18,8 +18,8 @@
     "url": "git+https://github.com/rebel-framework/rebel.git"
   },
   "scripts": {
-    "build": "tsc && babel src --root-mode upward --out-dir build --extensions '.ts'",
-    "watch": "tsc && babel src --root-mode upward --out-dir build --extensions '.ts' --watch",
+    "build": "tsc && babel src --root-mode upward --out-dir build --extensions '.ts' --ignore '**/**/*.test.ts'",
+    "watch": "tsc && babel src --root-mode upward --out-dir build --extensions '.ts' --ignore '**/**/*.test.ts' --watch",
     "test": "jest --passWithNoTests --runInBand",
     "coverage": "jest --coverage --passWithNoTests --runInBand",
     "type-check": "npx tsc",
