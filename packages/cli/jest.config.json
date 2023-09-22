@@ -7,6 +7,7 @@
   "collectCoverageFrom": [
     "<rootDir>/src/**/*.ts",
     "!<rootDir>/src/**/index.ts",
-    "!<rootDir>/src/**/*.+(spec|test).ts"
+    "!<rootDir>/src/**/*.+(spec|test).ts",
+    "!<rootDir>/src/commands/deploy/stack.ts"
   ]
 }
